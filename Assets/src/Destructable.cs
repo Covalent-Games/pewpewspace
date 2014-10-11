@@ -7,14 +7,16 @@ public class Destructable : MonoBehaviour {
 	[SerializeField]
 	int health;
 	public int Health {
-		get { return this.health; }
+		get { 
+			return this.health;
+			}
 		set {
-			if (this.health + value <= 0){
+			this.health = value;
+
+			if (this.health <= 0){
 				End();
-			} else if (this.health + value > this.maxHealth){
+			} else if (this.health > this.maxHealth){
 				this.health = this.maxHealth;
-			} else {
-				this.health += value;
 			}
 		}
 	}
