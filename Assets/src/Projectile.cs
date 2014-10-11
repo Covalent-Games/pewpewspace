@@ -42,6 +42,7 @@ public class Projectile : MonoBehaviour {
 		
 		if (destructable != null){
 			destructable.Health -= this.damage;
+			Debug.Log("Shooting an asteroid, and their health is... " + destructable.Health.ToString());
 			Destroy(gameObject);
 		}
 	}
