@@ -4,6 +4,7 @@ using System.Collections;
 public class Projectile : MonoBehaviour {
 
 	float velocity;
+	public Vector3 direction;
 	public int damage;
 	public Camera camera;
 
@@ -19,7 +20,7 @@ public class Projectile : MonoBehaviour {
 		ErrorHandling();
 	
 		// TODO: Needs to work with all angles.
-		transform.position += new Vector3(0f, 0f, this.velocity * Time.deltaTime);
+		transform.position += transform.TransformDirection(this.velocity * Time.deltaTime * direction);
 		
 		Vector3 positionToCamera = this.camera.WorldToViewportPoint(transform.position);
 		
