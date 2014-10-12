@@ -11,8 +11,8 @@ public class MainMenuHandler : MonoBehaviour {
 	public void ButtonPressed(string buttonName) {
 
 		switch(buttonName) {
-			case "Engage":
-				StartGame();
+			case "Enlist":
+				SelectShip();
 				break;
 			case "Resign":
 				Application.Quit();
@@ -22,8 +22,8 @@ public class MainMenuHandler : MonoBehaviour {
 		}
 	}
 
-	void StartGame() {
+	void SelectShip() {
 
-		Application.LoadLevel("main");
+		Application.LoadLevel("ShipSelection");
 	}
 }

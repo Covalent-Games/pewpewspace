@@ -20,7 +20,7 @@ public class ShipAction : MonoBehaviour {
 
 	void HandleInput(){
 	
-		if (Input.GetButton("Fire1") && this.shotTimer >= this.shotDelay){
+		if (Input.GetButton(InputCode.PrimaryAction) && this.shotTimer >= this.shotDelay){
 			this.shotTimer = 0f;
 			Fire();
 		}

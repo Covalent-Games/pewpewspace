@@ -16,6 +16,9 @@ public class Destructable : MonoBehaviour {
 		}
 	}
 
+	public int shields;
+	public float speed;
+
 	void Start () {
 		
 		this.health = this.maxHealth;
