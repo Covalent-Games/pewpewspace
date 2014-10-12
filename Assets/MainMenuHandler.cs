@@ -17,7 +17,7 @@ public class MainMenuHandler : MonoBehaviour {
 			case "Resign":
 				Application.Quit();
 				break;
-			case default:
+			default:
 				break;
 		}
 	}
