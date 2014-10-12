@@ -8,7 +8,7 @@ public class MainMenuHandler : MonoBehaviour {
 	
 	}
 
-	public void ButtonPressed(string buttonName) {
+	public void ButtonPress(string buttonName) {
 
 		switch(buttonName) {
 			case "Enlist":
