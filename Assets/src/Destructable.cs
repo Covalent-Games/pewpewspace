@@ -9,12 +9,9 @@ public class Destructable : MonoBehaviour {
 	public int Health {
 		get { return this.health; }
 		set {
-			if (this.health + value <= 0){
-				End();
-			} else if (this.health + value > this.maxHealth){
-				this.health = this.maxHealth;
-			} else {
-				this.health += value;
+			this.health = value;
+			if(this.health <= 0) {
+				End ();
 			}
 		}
 	}

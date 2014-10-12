@@ -5,8 +5,10 @@ public class ShipMovement : MonoBehaviour {
 
 	float verticalMove;
 	float horizontalMove;
+	float rotation;
 	public float moveSpeed;
 	public float currentMovingSpeed;
+	public float rotationSpeed;
 	public Camera mainCamera;
 
 	// Use this for initialization
@@ -19,17 +21,25 @@ public class ShipMovement : MonoBehaviour {
 	
 		// Calculate total modifier
 		float moveSpeedModifier = this.moveSpeed * Time.deltaTime;
+		float rotationSpeedModifier = this.rotationSpeed * Time.deltaTime;
 		
 		//Get input from player
 		this.verticalMove = Input.GetAxis("Vertical") * moveSpeedModifier;
 		this.horizontalMove = Input.GetAxis("Horizontal") * moveSpeedModifier;
+		this.rotation = Input.GetAxis("Mouse X") * rotationSpeedModifier;
 		
 		// Calculate vectors and move the ship
 		Vector3 moveVector = new Vector3(this.horizontalMove, 0f, this.verticalMove);
 		Vector3 clampedMoveVector = Vector3.ClampMagnitude(moveVector, moveSpeedModifier);
 		currentMovingSpeed = new Vector3(clampedMoveVector.x, 0, clampedMoveVector.z).magnitude;
 		Vector3 oldPosition = transform.position;
-		transform.position += clampedMoveVector;
+		//transform.localPosition += clampedMoveVector;
+
+		transform.position += transform.TransformDirection(Vector3.forward * this.verticalMove);
+
+		Vector3 currentRotation = transform.rotation.eulerAngles;
+		Vector3 newRotation = currentRotation + new Vector3(0, this.rotation, 0);
+		transform.rotation = Quaternion.Euler(newRotation);
 		
 		// Clamp the player to the screen so they can't fly off out of view
 		Vector3 positionToCamera = this.mainCamera.WorldToViewportPoint(transform.position);

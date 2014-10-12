@@ -29,11 +29,13 @@ public class ShipAction : MonoBehaviour {
 	void Fire(){
 	
 		// TODO: Projectile is rotated incorrectly... just rotating the projectileOrigin or the projectile prefab doesn't fix it.
-		Vector3 projectileOrigin = transform.position + new Vector3(0f, 0f, 1f);
-		GameObject projectileGO = (GameObject)Instantiate(this.projectilePrefab, projectileOrigin, Quaternion.identity);
+		// NOTE: The "* 2" at the end moves the bullet ahead of the ship enough not to collide with the ship
+		Vector3 projectileOrigin = transform.position + transform.TransformDirection(Vector3.forward * 2);
+		GameObject projectileGO = (GameObject)Instantiate(this.projectilePrefab, projectileOrigin, transform.localRotation);
 		
 		Projectile projectile = projectileGO.GetComponent<Projectile>();
 		projectile.damage = damage;
+		projectile.direction = Vector3.forward;
 		// This may seem odd, but it's so each projectile can destroy itself once it goes off-screen.
 		projectile.camera = GetComponent<ShipMovement>().mainCamera;
 	}
