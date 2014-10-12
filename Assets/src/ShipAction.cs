@@ -29,6 +29,7 @@ public class ShipAction : MonoBehaviour {
 	void Fire(){
 	
 		// TODO: Projectile is rotated incorrectly... just rotating the projectileOrigin or the projectile prefab doesn't fix it.
+		// NOTE: The "* 2" at the end moves the bullet ahead of the ship enough not to collide with the ship
 		Vector3 projectileOrigin = transform.position + transform.TransformDirection(Vector3.forward * 2);
 		GameObject projectileGO = (GameObject)Instantiate(this.projectilePrefab, projectileOrigin, transform.localRotation);
 		

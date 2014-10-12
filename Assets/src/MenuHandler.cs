@@ -32,6 +32,7 @@ public class MenuHandler : MonoBehaviour {
 
 	void StopEverything() {
 		
+		// TODO: Figure out a better way to do this. Timescale = 0?
 		GameObject player = GameObject.Find("Player");
 		player.GetComponent<ShipMovement>().enabled = false;
 		player.GetComponent<ShipAction>().enabled = false;

@@ -10,16 +10,20 @@ public class MainMenuHandler : MonoBehaviour {
 
 	public void ButtonPressed(string buttonName) {
 
-		if(buttonName == "Engage") {
-			StartGame();
-		} else if(buttonName == "Resign") {
-			Application.Quit();
+		switch(buttonName) {
+			case "Engage":
+				StartGame();
+				break;
+			case "Resign":
+				Application.Quit();
+				break;
+			case default:
+				break;
 		}
 	}
 
 	void StartGame() {
 
-		Debug.Log("Starting game");
 		Application.LoadLevel("main");
 	}
 }
