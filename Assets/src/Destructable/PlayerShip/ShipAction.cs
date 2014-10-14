@@ -41,13 +41,20 @@ public class ShipAction : MonoBehaviour {
 		projectile.transform.Rotate(new Vector3(90, 0, 0));
 		projectile.direction = Vector3.up;
 		projectile.damage = damage;
-		// This may seem odd, but it's so each projectile can destroy itself once it goes off-screen.
-		projectile.camera = GetComponent<ShipMovement>().mainCamera;
 	}
 
 	void Update () {
 		
 		UpdateShotTimer();
 		HandleInput();
+	}
+	
+	public void AIUpdate(){
+	
+		UpdateShotTimer();
+		if (this.shotTimer >= this.shotDelay){
+			this.shotTimer = 0f;
+			Fire();
+		}
 	}
 }
