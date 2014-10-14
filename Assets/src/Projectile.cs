@@ -43,6 +43,7 @@ public class Projectile : MonoBehaviour {
 		
 		if (destructable != null){
 			destructable.Health -= this.damage;
+			//TODO: Trigger destructable.projectileJustHitMe particle effect
 			Destroy(gameObject);
 		}
 	}

@@ -1,11 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class Destructable : MonoBehaviour {
 
-	public int maxHealth;
+	[SerializeField]
+	protected int maxHealth;
+	[SerializeField]
+	protected int maxShields;
+	
 	[SerializeField]
 	int health;
+	[SerializeField]
+	int shields;
+	
+	public float Speed;
+	
 	public int Health {
 		get { return this.health; }
 		set {
@@ -13,11 +23,22 @@ public class Destructable : MonoBehaviour {
 			if(this.health <= 0) {
 				End ();
 			}
+			if (this.health > this.maxHealth){
+				this.health = this.maxHealth;
+			}
 		}
 	}
-
-	public int shields;
-	public float speed;
+	public int Shields {
+		get {
+			return this.shields;
+		}
+		set {
+			this.shields = value;
+			if (this.shields > this.maxShields){
+				this.shields = this.maxShields;
+			}
+		}
+	}
 
 	void Start () {
 		
@@ -29,7 +50,6 @@ public class Destructable : MonoBehaviour {
 		Destroy(gameObject);
 	}	
 
-	void Update () {
-	
+	void Update () {	
 	}
 }

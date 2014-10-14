@@ -12,6 +12,8 @@ public class ShipMovement : MonoBehaviour {
 	public float rotationSpeed;
 	public Camera mainCamera;
 
+	
+		
 	// Use this for initialization
 	void Start () {
 		
@@ -23,13 +25,11 @@ public class ShipMovement : MonoBehaviour {
 		Destructable ship = gameObject.GetComponent<Destructable>();
 
 		// Calculate total modifier
-		float moveSpeedModifier = this.moveSpeed * ship.speed * Time.deltaTime;
-		float rotationSpeedModifier = this.rotationSpeed * ship.speed * Time.deltaTime;
+		float moveSpeedModifier = this.moveSpeed * ship.Speed * Time.deltaTime;
 		
 		//Get input from player
 		this.verticalMove = Input.GetAxis(InputCode.Vertical) * moveSpeedModifier;
 		this.horizontalMove = Input.GetAxis(InputCode.Horizontal) * moveSpeedModifier;
-		this.rotation = Input.GetAxis(InputCode.AltHorizontal) * rotationSpeedModifier;
 		
 		// Calculate vectors and move the ship
 		Vector3 moveVector = new Vector3(this.horizontalMove, 0f, this.verticalMove);
@@ -38,13 +38,29 @@ public class ShipMovement : MonoBehaviour {
 
 		Vector3 oldPosition = transform.position;
 		transform.position = oldPosition + clampedMoveVector;
-
-		Vector3 currentRotation = transform.rotation.eulerAngles;
-		Vector3 newRotation = currentRotation + new Vector3(0, this.rotation, 0);
-		transform.rotation = Quaternion.Euler(newRotation);
 		
 		// Prevent players from moving off screen.
 		ClampToScreen(oldPosition);
+	}
+	
+	void RotateTurret(){
+	
+		float axisX = Input.GetAxis(InputCode.AltHorizontal);
+		float axisY = Input.GetAxis(InputCode.AltVertical);
+		// Modify the thumbstick sensitivity
+		//TODO: I'm still not happy with how this controls. It works well, but *looks* jittery. 
+		float positiveThreshold = InputCode.AxisThresholdPositive - 0.1f;
+		float negativeThreshold = InputCode.AxisThresholdNegative + 0.1f;
+	
+		// If the player isn't touching the joystick.
+		if (axisX > negativeThreshold && axisX < positiveThreshold &&
+		    axisY > negativeThreshold && axisY < positiveThreshold) {
+			axisX = 0f;
+			axisY = 1f;
+		}
+	
+		Transform turret = transform.FindChild("Turret");
+		turret.LookAt(transform.position + new Vector3(axisX, 0, axisY));
 	}
 	
 	void ClampToScreen(Vector3 oldPosition){
@@ -63,5 +79,6 @@ public class ShipMovement : MonoBehaviour {
 	void Update () {
 	
 		MoveShip();
+		RotateTurret();
 	}
 }
