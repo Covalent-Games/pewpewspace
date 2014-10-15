@@ -12,7 +12,7 @@ public class SelectionHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-		ships = GameObject.FindGameObjectsWithTag("Ship");
+		ships = GameObject.FindGameObjectsWithTag("Player");
 		maxSelection = ships.Length - 1;
 		ships[0].GetComponent<MeshRenderer>().enabled = true;
 		for(int i = 0; i < ships.Length; i++) {

@@ -48,7 +48,13 @@ public class Destructable : MonoBehaviour {
 	void End(){
 		
 		Destroy(gameObject);
-	}	
+	}
+	
+	protected void SetUpBaseAttributes(){
+	
+		this.Health = this.maxHealth;
+		this.Shields = this.maxShields;
+	}
 
 	void Update () {	
 	}

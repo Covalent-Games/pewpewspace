@@ -10,14 +10,9 @@ public class ShipMovement : MonoBehaviour {
 	public float moveSpeed;
 	public float currentMovingSpeed;
 	public float rotationSpeed;
-	public Camera mainCamera;
 
-	
-		
-	// Use this for initialization
+
 	void Start () {
-		
-		this.mainCamera = GameObject.FindGameObjectWithTag("MainCamera").camera;
 	}
 	
 	void MoveShip(){
@@ -65,7 +60,7 @@ public class ShipMovement : MonoBehaviour {
 	
 	void ClampToScreen(Vector3 oldPosition){
 	
-		Vector3 positionToCamera = this.mainCamera.WorldToViewportPoint(transform.position);
+		Vector3 positionToCamera = Camera.main.WorldToViewportPoint(transform.position);
 
 		//TODO: Incorporate width of ship
 		if (positionToCamera.x > 1f | positionToCamera.x < 0f){
