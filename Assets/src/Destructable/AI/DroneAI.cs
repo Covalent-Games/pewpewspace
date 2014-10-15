@@ -8,7 +8,7 @@ public class DroneAI : BaseShipAI {
 	void Start () {
 		
 		actions = GetComponent<ShipAction>();
-		SetUpBaseAttributes();
+		actions.SetUpBaseAttributes();
 		AcquireTarget();
 		AcquireDestination();
 	}
@@ -16,7 +16,7 @@ public class DroneAI : BaseShipAI {
 	void Move(){
 	
 		
-		transform.position = Vector3.MoveTowards(transform.position, this.Destination, Time.deltaTime * 5f);
+		transform.position = Vector3.MoveTowards(transform.position, this.Destination, Time.deltaTime * 5 * actions.Speed);
 		if (transform.position == this.Destination){
 			AcquireDestination();
 		}

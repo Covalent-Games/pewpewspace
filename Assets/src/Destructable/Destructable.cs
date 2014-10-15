@@ -4,16 +4,14 @@ using System.Collections;
 
 public class Destructable : MonoBehaviour {
 
-	[SerializeField]
-	protected int maxHealth;
-	[SerializeField]
-	protected int maxShields;
+	public int maxHealth;
+	public int maxShields;
+	public float baseSpeed;
 	
 	[SerializeField]
 	int health;
 	[SerializeField]
 	int shields;
-	
 	public float Speed;
 	
 	public int Health {
@@ -50,10 +48,11 @@ public class Destructable : MonoBehaviour {
 		Destroy(gameObject);
 	}
 	
-	protected void SetUpBaseAttributes(){
+	public void SetUpBaseAttributes(){
 	
 		this.Health = this.maxHealth;
 		this.Shields = this.maxShields;
+		this.Speed = this.baseSpeed;
 	}
 
 	void Update () {	
