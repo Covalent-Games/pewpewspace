@@ -7,7 +7,9 @@ public class MenuHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		
+		//TODO: Put this somewhere at the beginning of the game so it just loads once.
+		AllAbilities.UpdateAbilityDictionaries();
 	}
 	
 	// Update is called once per frame

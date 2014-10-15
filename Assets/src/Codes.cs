@@ -11,6 +11,7 @@ public class InputCode {
 	public const string Select = "return";
 	public const string Cancel = "escape";
 	public const string LeftRightTrigger = "LeftRightTrigger";
+	public const string PlayerOneAbilityOne = "Player1Ability1";
 	
 	public const float AxisThresholdNegative = -0.2f;
 	public const float AxisThresholdPositive = 0.2f;

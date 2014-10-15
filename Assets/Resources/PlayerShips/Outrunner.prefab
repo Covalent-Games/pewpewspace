@@ -270,6 +270,7 @@ MonoBehaviour:
   shotPerSecond: 5
   damage: 8
   triggerValue: 0
+  Type: 3
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1

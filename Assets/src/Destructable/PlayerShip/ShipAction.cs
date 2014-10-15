@@ -5,29 +5,25 @@ using System.Reflection;
 
 public class ShipAction : Destructable {
 
+	public static Dictionary<string, IAbility> AbilityDict = new Dictionary<string, IAbility>();
+
 	public GameObject projectilePrefab;
 	float shotTimer;
 	public float shotPerSecond;
 	public int damage;
 	public float triggerValue;
 	
-	delegate void Ability(ShipAction shipAction);
-	Ability AbilityOne;
-	Ability AbilityTwo;
-	Ability AbilityThree;
-	Ability AbilityFour;
+	IAbility AbilityOne;
+	IAbility AbilityTwo;
+	IAbility AbilityThree;
+	IAbility AbilityFour;
+	public ShipType Type;
 
 	void Start(){
 		
 		SetUpBaseAttributes();
 		this.shotPerSecond = 1f/this.shotPerSecond;
-		PopulateAbilityDict();
-	}
-	
-	void PopulateAbilityDict(){
-		
-		var methods = typeof(GuardianAbilities).GetMethods(BindingFlags.Static | BindingFlags.Public);
-		
+		AbilityOne = ShipAction.AbilityDict["BullRush"];
 	}
 
 	void UpdateShotTimer(){
@@ -41,6 +37,9 @@ public class ShipAction : Destructable {
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
+		}
+		if (Input.GetButtonDown(InputCode.PlayerOneAbilityOne)){
+			AbilityOne.Start(this);
 		}
 	}
 	
