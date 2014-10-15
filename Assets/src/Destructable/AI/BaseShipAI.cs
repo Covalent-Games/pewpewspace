@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-public class BaseShipAI : Destructable {
+public class BaseShipAI : MonoBehaviour {
 
 	[SerializeField]
     public GameObject target;

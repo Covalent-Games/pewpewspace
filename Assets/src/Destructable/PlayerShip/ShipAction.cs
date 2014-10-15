@@ -1,17 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 
-public class ShipAction : MonoBehaviour {
+public class ShipAction : Destructable {
 
 	public GameObject projectilePrefab;
 	float shotTimer;
-	public float shotDelay;
+	public float shotPerSecond;
 	public int damage;
 	public float triggerValue;
+	
+	delegate void Ability(ShipAction shipAction);
+	Ability AbilityOne;
+	Ability AbilityTwo;
+	Ability AbilityThree;
+	Ability AbilityFour;
 
 	void Start(){
 		
-		this.shotDelay = 1f/this.shotDelay;
+		SetUpBaseAttributes();
+		this.shotPerSecond = 1f/this.shotPerSecond;
+		PopulateAbilityDict();
+	}
+	
+	void PopulateAbilityDict(){
+		
+		var methods = typeof(GuardianAbilities).GetMethods(BindingFlags.Static | BindingFlags.Public);
+		
 	}
 
 	void UpdateShotTimer(){
@@ -22,7 +38,7 @@ public class ShipAction : MonoBehaviour {
 	void HandleInput(){
 	
 		triggerValue = Input.GetAxis(InputCode.LeftRightTrigger);
-		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotDelay){
+		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
 		}
@@ -44,7 +60,7 @@ public class ShipAction : MonoBehaviour {
 	}
 
 	void Update () {
-		
+
 		UpdateShotTimer();
 		HandleInput();
 	}
@@ -52,7 +68,7 @@ public class ShipAction : MonoBehaviour {
 	public void AIUpdate(){
 	
 		UpdateShotTimer();
-		if (this.shotTimer >= this.shotDelay){
+		if (this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
 		}
