@@ -11,8 +11,8 @@ GameObject:
   - 33: {fileID: 3300000}
   - 65: {fileID: 6500000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400000}
   - 114: {fileID: 11400002}
+  - 114: {fileID: 11400000}
   m_Layer: 10
   m_Name: Drone
   m_TagString: Enemy
@@ -75,7 +75,7 @@ Renderer:
   - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
+  m_UseLightProbes: 1
   m_LightProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
@@ -110,11 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c5e20556861004a814f6746eea8f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
-  maxShields: 0
-  health: 0
-  shields: 0
-  Speed: 1
   target: {fileID: 0}
   players: []
   Destination: {x: 0, y: 0, z: 0}
@@ -129,9 +124,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 30
+  maxShields: 0
+  baseSpeed: 1
+  health: 0
+  shields: 0
+  Speed: 0
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
-  shotDelay: 2
-  damage: 1
+  shotPerSecond: .5
+  damage: 5
   triggerValue: 0
 --- !u!1001 &100100000
 Prefab:
