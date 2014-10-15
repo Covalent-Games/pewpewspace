@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Priority: -1
+  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:
@@ -2805,7 +2805,6 @@ GameObject:
   - 23: {fileID: 808197103}
   - 114: {fileID: 808197102}
   - 114: {fileID: 808197101}
-  - 114: {fileID: 808197100}
   - 54: {fileID: 808197107}
   m_Layer: 8
   m_Name: Player
@@ -2814,23 +2813,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &808197100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 4c9637b398140c04e8bee818568dd69d,
-    type: 2}
-  m_PrefabInternal: {fileID: 1271562101}
-  m_GameObject: {fileID: 808197099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86036e5c766dc50479e6e4b348943a38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 50
-  maxShields: 0
-  health: 0
-  shields: 0
-  Speed: 0
 --- !u!114 &808197101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2843,10 +2825,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
+  maxShields: 0
+  baseSpeed: 0
+  health: 0
+  shields: 0
+  Speed: 0
   projectilePrefab: {fileID: 100000, guid: 60f857354dd4d054698fb5a8d6a03544, type: 2}
-  shotDelay: 5
+  shotPerSecond: 0
   damage: 1
   triggerValue: 0
+  healthBar: {fileID: 0}
+  shieldBar: {fileID: 0}
+  AbilityOneIcon: {fileID: 0}
+  AbilityTwoIcon: {fileID: 0}
+  AbilityThreeIcon: {fileID: 0}
+  AbilityFourIcon: {fileID: 0}
 --- !u!114 &808197102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3096,7 +3090,8 @@ Prefab:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 4c9637b398140c04e8bee818568dd69d, type: 2}
   m_RootGameObject: {fileID: 808197099}
   m_IsPrefabParent: 0
