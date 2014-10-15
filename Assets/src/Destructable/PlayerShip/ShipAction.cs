@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using UnityEngine.UI;
 
 public class ShipAction : Destructable {
 
@@ -17,17 +18,34 @@ public class ShipAction : Destructable {
 	Ability AbilityThree;
 	Ability AbilityFour;
 
+	// HUD elements
+	public GameObject healthBar;
+	public GameObject shieldBar;
+	public GameObject AbilityOneIcon;
+	public GameObject AbilityTwoIcon;
+	public GameObject AbilityThreeIcon;
+	public GameObject AbilityFourIcon;
+
 	void Start(){
 		
 		SetUpBaseAttributes();
 		this.shotPerSecond = 1f/this.shotPerSecond;
 		PopulateAbilityDict();
+		AcquireHud();
 	}
 	
 	void PopulateAbilityDict(){
 		
 		var methods = typeof(GuardianAbilities).GetMethods(BindingFlags.Static | BindingFlags.Public);
+	}
+
+	/// <summary>
+	/// Assigns the player HUD UI elements
+	/// </summary>
+	void AcquireHud() {
 		
+		healthBar = GameObject.Find("HealthBar");
+		shieldBar = GameObject.Find("ShieldBar");
 	}
 
 	void UpdateShotTimer(){
@@ -59,10 +77,24 @@ public class ShipAction : Destructable {
 		projectile.damage = damage;
 	}
 
+	/// <summary>
+	/// Updates the player's health and shield bars
+	/// </summary>
+	void UpdateData() {
+	
+		float healthRatio = (float)this.Health/(float)this.maxHealth;
+		float shieldRatio = (float)this.Shields/(float)this.maxShields;
+
+		this.healthBar.GetComponent<Slider>().value = healthRatio;
+		this.shieldBar.GetComponent<Slider>().value = shieldRatio;
+		
+	}
+
 	void Update () {
 
 		UpdateShotTimer();
 		HandleInput();
+		UpdateData();
 	}
 	
 	public void AIUpdate(){
