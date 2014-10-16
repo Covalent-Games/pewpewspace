@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class SelectionHandler : MonoBehaviour {
 
@@ -19,6 +20,18 @@ public class SelectionHandler : MonoBehaviour {
 			ships[i].GetComponent<ShipMovement>().enabled = false;
 			ships[i].GetComponent<ShipAction>().enabled = false;
 		}
+
+		if(GameValues.numberOfPlayers > 3) {
+			GameObject.Find("Player4Ship").GetComponent<Canvas>().enabled = true;
+		}
+		if(GameValues.numberOfPlayers > 2) {
+			GameObject.Find("Player3Ship").GetComponent<Canvas>().enabled = true;
+		}
+		if(GameValues.numberOfPlayers > 1) {
+			GameObject.Find("Player2Ship").GetComponent<Canvas>().enabled = true;
+		}
+		GameObject.Find("Player1Ship").GetComponent<Canvas>().enabled = true;
+		Debug.Log("Finished start()");
 	}
 
 	void Update() {
