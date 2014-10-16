@@ -4769,9 +4769,9 @@ RectTransform:
   m_Father: {fileID: 2041249842}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 85.75, y: 0}
-  m_SizeDelta: {x: 171.5, y: 0}
+  m_AnchorMax: {x: .245897755, y: 1}
+  m_AnchoredPosition: {x: -3.25, y: 0}
+  m_SizeDelta: {x: -6.5, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &681277647
 MonoBehaviour:
@@ -4796,7 +4796,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 681277645}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -6004,9 +6004,9 @@ RectTransform:
   m_Father: {fileID: 2041249842}
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -86, y: 0}
-  m_SizeDelta: {x: -169.5, y: 0}
+  m_AnchorMax: {x: .739370406, y: 1}
+  m_AnchoredPosition: {x: -1.5, y: 0}
+  m_SizeDelta: {x: -.5, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1064434291
 MonoBehaviour:
@@ -6031,7 +6031,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1064434289}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -12594,10 +12594,10 @@ RectTransform:
   - {fileID: 1497048737}
   m_Father: {fileID: 2041249842}
   m_RootOrder: 3
-  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMin: {x: .739370406, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -85.25, y: 0}
-  m_SizeDelta: {x: 170.5, y: 0}
+  m_AnchoredPosition: {x: -.75, y: 0}
+  m_SizeDelta: {x: 1.5, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!1 &1904702478
 GameObject:
@@ -14376,10 +14376,10 @@ RectTransform:
   - {fileID: 57471868}
   m_Father: {fileID: 2041249842}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: .245897755, y: 0}
   m_AnchorMax: {x: .5, y: 1}
-  m_AnchoredPosition: {x: 170.5, y: 0}
-  m_SizeDelta: {x: 341, y: 0}
+  m_AnchoredPosition: {x: 84, y: 0}
+  m_SizeDelta: {x: 514, y: 0}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &2097780249
 MonoBehaviour:
@@ -14404,7 +14404,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2097780247}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
