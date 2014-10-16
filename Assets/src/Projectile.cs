@@ -3,17 +3,10 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour {
 
-	float velocity;
+	public float velocity;
 	public Vector3 direction;
 	public int damage;
 
-	// Use this for initialization
-	void Start () {
-	
-		this.velocity = 50;
-	}
-	
-	// Update is called once per frame
 	void Update () {
 	
 		// TODO: Needs to work with all angles.
@@ -33,7 +26,7 @@ public class Projectile : MonoBehaviour {
 		Destructable destructable = collider.GetComponent<Destructable>();
 		
 		if (destructable != null){
-			destructable.Health -= this.damage;
+			destructable.DamageShip(this.damage);
 			//TODO: Trigger destructable.projectileJustHitMe particle effect
 			Destroy(gameObject);
 		}

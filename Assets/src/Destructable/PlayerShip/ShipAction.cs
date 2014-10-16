@@ -62,14 +62,26 @@ public class ShipAction : Destructable {
 
 		UpdateShotTimer();
 		HandleInput();
+		base.Update();
 	}
 	
 	public void AIUpdate(){
 	
 		UpdateShotTimer();
+		// FIXME: this.shotPerSecond is actually seconds per shot, but shots per second for the players. *shrug*.
 		if (this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
 		}
+	}
+	
+	void OnTriggerEnter(Collider collider){
+		
+		Destructable destructable = collider.GetComponent<Destructable>();
+		
+		if (destructable == null) { return; }
+		
+		// On collision with another destructable object, deal 10% of max health as damage
+		destructable.DamageArmor(Mathf.RoundToInt(this.maxHealth/10f));
 	}
 }

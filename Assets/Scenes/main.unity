@@ -4581,7 +4581,6 @@ GameObject:
   - 23: {fileID: 808197103}
   - 114: {fileID: 808197102}
   - 114: {fileID: 808197101}
-  - 54: {fileID: 808197107}
   m_Layer: 8
   m_Name: Guardian
   m_TagString: Player
@@ -4607,6 +4606,9 @@ MonoBehaviour:
   health: 0
   shields: 0
   Speed: 0
+  Invulnerable: 0
+  InvulnerableArmor: 0
+  InvulnerableShield: 0
   projectilePrefab: {fileID: 100000, guid: 60f857354dd4d054698fb5a8d6a03544, type: 2}
   shotPerSecond: 4
   damage: 8
@@ -4657,7 +4659,7 @@ MeshCollider:
   m_PrefabInternal: {fileID: 1157492375}
   m_GameObject: {fileID: 808197099}
   m_Material: {fileID: 13400000, guid: 67db31eead11e8d6d00011d98d76c639, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_SmoothSphereCollisions: 0
@@ -4685,22 +4687,6 @@ Transform:
   - {fileID: 2075041794}
   m_Father: {fileID: 0}
   m_RootOrder: 6
---- !u!54 &808197107
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5400000, guid: b7aafe8549af7cb4191693dcbfd980a5,
-    type: 2}
-  m_PrefabInternal: {fileID: 1157492375}
-  m_GameObject: {fileID: 808197099}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
 --- !u!1 &941490758
 GameObject:
   m_ObjectHideFlags: 0
@@ -5909,7 +5895,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 11400002, guid: b7aafe8549af7cb4191693dcbfd980a5, type: 2}
+      propertyPath: Invulnerable
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5400000, guid: b7aafe8549af7cb4191693dcbfd980a5, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b7aafe8549af7cb4191693dcbfd980a5, type: 2}
   m_RootGameObject: {fileID: 808197099}
   m_IsPrefabParent: 0
