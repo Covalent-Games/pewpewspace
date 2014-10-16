@@ -10,7 +10,7 @@ public class Projectile : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
-		this.velocity = 25;
+		this.velocity = 50;
 	}
 	
 	// Update is called once per frame
