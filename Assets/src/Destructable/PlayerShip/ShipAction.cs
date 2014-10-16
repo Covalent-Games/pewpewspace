@@ -32,7 +32,6 @@ public class ShipAction : Destructable {
 		
 		SetUpBaseAttributes();
 		this.shotPerSecond = 1f/this.shotPerSecond;
-		AbilityOne = ShipAction.AbilityDict["BullRush"];
 		AcquireHud();
 	}
 
@@ -42,7 +41,7 @@ public class ShipAction : Destructable {
 	void AcquireHud() {
 		
 		healthBar = GameObject.Find("HealthBar");
-		shieldBar = GameObject.Find("ShieldsBar");
+		shieldBar = GameObject.Find("ShieldBar");
 	}
 
 	void UpdateShotTimer(){
