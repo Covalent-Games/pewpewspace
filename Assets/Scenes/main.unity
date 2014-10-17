@@ -5146,6 +5146,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: b7aafe8549af7cb4191693dcbfd980a5, type: 2}
+      propertyPath: shields
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: b7aafe8549af7cb4191693dcbfd980a5, type: 2}
+      propertyPath: health
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b7aafe8549af7cb4191693dcbfd980a5, type: 2}
   m_RootGameObject: {fileID: 1967712198}

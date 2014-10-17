@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class SelectionHandler : MonoBehaviour {
-
+ 
 	//HACK: make selection indexes better
 	int currentSelection = 0;
 	int maxSelection;
@@ -12,7 +12,7 @@ public class SelectionHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+
 		ships = GameObject.FindGameObjectsWithTag("Player");
 		maxSelection = ships.Length - 1;
 		ships[0].GetComponent<MeshRenderer>().enabled = true;
@@ -21,16 +21,11 @@ public class SelectionHandler : MonoBehaviour {
 			ships[i].GetComponent<ShipAction>().enabled = false;
 		}
 
-		if(GameValues.numberOfPlayers > 3) {
-			GameObject.Find("Player4Ship").GetComponent<Canvas>().enabled = true;
+		// Displays ship selectors depending on number of players
+		for(int i = 1; i <= GameValues.numberOfPlayers; i++) {
+			GameObject.Find(string.Format("Player{0}ShipScreen", i)).GetComponent<Canvas>().enabled = true;
 		}
-		if(GameValues.numberOfPlayers > 2) {
-			GameObject.Find("Player3Ship").GetComponent<Canvas>().enabled = true;
-		}
-		if(GameValues.numberOfPlayers > 1) {
-			GameObject.Find("Player2Ship").GetComponent<Canvas>().enabled = true;
-		}
-		GameObject.Find("Player1Ship").GetComponent<Canvas>().enabled = true;
+
 		Debug.Log("Finished start()");
 	}
 
