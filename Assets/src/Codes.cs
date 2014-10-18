@@ -8,8 +8,8 @@ public class InputCode {
 	public const string AltHorizontal = "RightJoyHorizontal";
 	public const string AltVertical = "RightJoyVertical";
 	public const string PrimaryAction = "Fire1";
-	public const string Select = "return";
-	public const string Cancel = "escape";
+	public const string Select = "Submit";
+	public const string Cancel = "Cancel";
 	public const string LeftRightTrigger = "LeftRightTrigger";
 	public const string PlayerOneAbilityOne = "Player1Ability1";
 	
