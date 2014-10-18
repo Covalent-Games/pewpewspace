@@ -44,6 +44,7 @@ public class InputCode {
 		RightBumber = string.Format("Player{0}RightBumber", playerNumber);
 		LeftRightTrigger = string.Format("Player{0}LeftRightTrigger", playerNumber);
 		
+
 	}
 	
 	public const float AxisThresholdNegative = -0.2f;

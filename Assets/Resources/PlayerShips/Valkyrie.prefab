@@ -326,11 +326,21 @@ MonoBehaviour:
   health: 0
   shields: 0
   Speed: 0
+  Invulnerable: 0
+  InvulnerableArmor: 0
+  InvulnerableShield: 0
   projectilePrefab: {fileID: 100000, guid: 60f857354dd4d054698fb5a8d6a03544, type: 2}
   shotPerSecond: 6
   damage: 8
   triggerValue: 0
+  PlayerNumber: 0
   Type: 2
+  healthBar: {fileID: 0}
+  shieldBar: {fileID: 0}
+  AbilityOneIcon: {fileID: 0}
+  AbilityTwoIcon: {fileID: 0}
+  AbilityThreeIcon: {fileID: 0}
+  AbilityFourIcon: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
