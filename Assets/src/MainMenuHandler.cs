@@ -6,11 +6,6 @@ public class MainMenuHandler : MonoBehaviour {
 
 	int playerNumber;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-
 	public void ButtonPress(string buttonName) {
 
 		switch(buttonName) {
@@ -34,6 +29,8 @@ public class MainMenuHandler : MonoBehaviour {
 	void SelectShip() {
 
 		GameValues.numberOfPlayers = playerNumber;
+		//TODO: This will likely be where the user login/data loading starts
+		GameValues.Players.Add(1, new Player(1));
 		Application.LoadLevel("ShipSelection");
 	}
 }

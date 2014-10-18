@@ -31,20 +31,22 @@ public class SelectionHandler : MonoBehaviour {
 
 	void Update() {
 
-		if(Input.GetKeyDown(InputCode.Select) || Input.GetKeyDown(KeyCode.Return)) {
-			StartGame();
-		}
-		if(Input.GetKeyDown(InputCode.Cancel) || Input.GetKeyDown(KeyCode.Escape)) {
-			ReturnToMainMenu();
-		}
-		float selectionDirection = Input.GetAxis(InputCode.Vertical);
-		if(selectionDirection < 0 && currentSelection > maxSelection) {
-			currentSelection += 1;
-			RotateSelectionDown();
-		}
-		if(selectionDirection > 0 && currentSelection < 0) {
-			currentSelection -= 1;
-			RotateSelectionUp();
+		foreach (ShipAction ship in SceneHandler.playerShips){
+			if(Input.GetKeyDown(ship.player.Controller.Select) || Input.GetKeyDown(KeyCode.Return)) {
+				StartGame();
+			}
+			if(Input.GetKeyDown(ship.player.Controller.Cancel) || Input.GetKeyDown(KeyCode.Escape)) {
+				ReturnToMainMenu();
+			}
+			float selectionDirection = Input.GetAxis(ship.player.Controller.Vertical);
+			if(selectionDirection < 0 && currentSelection > maxSelection) {
+				currentSelection += 1;
+				RotateSelectionDown();
+			}
+			if(selectionDirection > 0 && currentSelection < 0) {
+				currentSelection -= 1;
+				RotateSelectionUp();
+			}
 		}
 	}
 

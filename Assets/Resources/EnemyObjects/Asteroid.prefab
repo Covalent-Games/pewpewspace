@@ -87,9 +87,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 5
   maxShields: 0
+  baseSpeed: 0
   health: 0
   shields: 0
   Speed: 0
+  Invulnerable: 0
+  InvulnerableArmor: 0
+  InvulnerableShield: 0
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
