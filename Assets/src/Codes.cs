@@ -43,7 +43,6 @@ public class InputCode {
 		LeftBumper = string.Format("Player{0}LeftBumber", playerNumber);
 		RightBumber = string.Format("Player{0}RightBumber", playerNumber);
 		LeftRightTrigger = string.Format("Player{0}LeftRightTrigger", playerNumber);
-		
 
 	}
 	
