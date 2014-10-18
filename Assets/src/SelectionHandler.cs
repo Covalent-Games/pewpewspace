@@ -86,9 +86,7 @@ public class SelectionHandler : MonoBehaviour {
 				availableShips[playerNumber][count].GetComponent<MeshRenderer>().enabled = false;
 				availableShips[playerNumber][count].GetComponent<ShipMovement>().enabled = false;
 				availableShips[playerNumber][count].GetComponent<ShipAction>().enabled = false;
-				foreach(Transform t in availableShips[playerNumber][count].transform.GetComponentsInChildren<Transform>()) {
-					t.GetComponent<MeshRenderer>().enabled = false;
-				}
+
 				//availableShips[playerNumber][count].transform.FindChild("dumbArrow").GetComponent<MeshRenderer>().enabled = false;
 				count++;
 			}
@@ -100,7 +98,7 @@ public class SelectionHandler : MonoBehaviour {
 
 		//TODO: Include ability menu in here
 		foreach (var player in GameValues.Players){
-			if(Input.GetButtonDown(player.Value.Controller.Ability1) || Input.GetKeyDown(KeyCode.Return)) {
+			if(Input.GetButtonDown(player.Value.Controller.ButtonA) || Input.GetKeyDown(KeyCode.Return)) {
 				// If this player is on ship selection, procede
 				if(this.playerStatus[player.Key] == (int)selectionStatus.ship) {
 					this.isReady[player.Key] = true;
@@ -109,16 +107,14 @@ public class SelectionHandler : MonoBehaviour {
 						StartGame();
 					}
 				}
-			}
-			float selectionDirection = Input.GetAxis(player.Value.Controller.Vertical);
-		
+			}		
 			// Player goes left with joystick
-			if(Input.GetAxis(player.Value.Controller.Horizontal) <= 0.5 && currentSelection[player.Key] > 0) {
+			if(Input.GetAxis(player.Value.Controller.LeftStickX) <= 0.5 && currentSelection[player.Key] > 0) {
 				currentSelection[player.Key] += 1;
 				RotateSelectionLeft(player.Key);
 			}
 			// Player goes right with joystick
-			if(Input.GetAxis(player.Value.Controller.Horizontal) >= 0.5 && currentSelection[player.Key] < 0) {
+			if(Input.GetAxis(player.Value.Controller.LeftStickX) >= 0.5 && currentSelection[player.Key] < 0) {
 				currentSelection[player.Key] -= 1;
 				RotateSelectionRight(player.Key);
 			}
