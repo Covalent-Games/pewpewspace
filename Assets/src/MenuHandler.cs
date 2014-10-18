@@ -6,10 +6,10 @@ public class MenuHandler : MonoBehaviour {
 	bool isPaused = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		
 		//TODO: Put this somewhere at the beginning of the game so it just loads once.
-		AllAbilities.UpdateAbilityDictionaries();
+		AbilityUtils.UpdateAbilityDictionaries();
 	}
 	
 	// Update is called once per frame

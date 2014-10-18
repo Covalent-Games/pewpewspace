@@ -39,37 +39,22 @@ public class SelectionHandler : MonoBehaviour {
 
 	void Update() {
 
-		//TODO: Differentiate between player input
-		if(Input.GetButtonDown(InputCode.Select)|| Input.GetKeyDown(KeyCode.Return)) {
-			if(this.selectionStatus[0] == 0) {	// Move player to ability selection screen
-				GameObject.Find(string.Format("Player{0}ShipScreen", 1)).GetComponent<Canvas>().enabled = false;
-				GameObject.Find(string.Format("Player{0}Abilities", 1)).GetComponent<Canvas>().enabled = true;
-				this.selectionStatus[0] = 1;
-			}else {		// player is ready. If all ready, start game.
-				GameObject.Find("P1NextLabel").GetComponent<Text>().text = "Ready";
-				this.isReady[0] = true;
-				if(AllReady()) {
-					StartGame();
-				}
+		foreach (ShipAction ship in SceneHandler.playerShips){
+			if(Input.GetKeyDown(ship.player.Controller.Select) || Input.GetKeyDown(KeyCode.Return)) {
+				StartGame();
 			}
-		}
-		if(Input.GetButtonDown(InputCode.Cancel) || Input.GetKeyDown(KeyCode.Escape)) {
-			if(this.selectionStatus[0] == 0) {	// return to main menu
+			if(Input.GetKeyDown(ship.player.Controller.Cancel) || Input.GetKeyDown(KeyCode.Escape)) {
 				ReturnToMainMenu();
-			} else {	// Move player back to ship selection
-				GameObject.Find(string.Format("Player{0}ShipScreen", 1)).GetComponent<Canvas>().enabled = true;
-				GameObject.Find(string.Format("Player{0}Abilities", 1)).GetComponent<Canvas>().enabled = false;
-				this.selectionStatus[0] = 0;
 			}
-		}
-		float selectionDirection = Input.GetAxis(InputCode.Vertical);
-		if(selectionDirection < 0 && currentSelection > maxSelection) {
-			currentSelection += 1;
-			RotateSelectionDown();
-		}
-		if(selectionDirection > 0 && currentSelection < 0) {
-			currentSelection -= 1;
-			RotateSelectionUp();
+			float selectionDirection = Input.GetAxis(ship.player.Controller.Vertical);
+			if(selectionDirection < 0 && currentSelection > maxSelection) {
+				currentSelection += 1;
+				RotateSelectionDown();
+			}
+			if(selectionDirection > 0 && currentSelection < 0) {
+				currentSelection -= 1;
+				RotateSelectionUp();
+			}
 		}
 	}
 

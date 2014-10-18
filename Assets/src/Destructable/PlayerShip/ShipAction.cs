@@ -13,12 +13,14 @@ public class ShipAction : Destructable {
 	public float shotPerSecond;
 	public int damage;
 	public float triggerValue;
+	public int PlayerNumber;
 	
 	IAbility AbilityOne;
 	IAbility AbilityTwo;
 	IAbility AbilityThree;
 	IAbility AbilityFour;
 	public ShipType Type;
+	public Player player;
 
 	// HUD elements
 	public GameObject healthBar;
@@ -29,10 +31,30 @@ public class ShipAction : Destructable {
 	public GameObject AbilityFourIcon;
 
 	void Start(){
+	}
+	
+	public void SetupPlayer(int playerNumber){
+	
+		this.PlayerNumber = playerNumber;
 		
+		GameValues.Players.TryGetValue(playerNumber, out this.player);
+		if (this.player == null){
+			Debug.LogWarning("Had to manually create a new Player! Something may be wrong. Ignore this if testing.");
+			this.player = new Player(playerNumber);
+		}
+		GetComponent<ShipMovement>().player = this.player;
+		
+		/*These 4 lines have been moved from Start() because a lot of 
+		this logic will depend on which player is controlling the ship.*/
 		SetUpBaseAttributes();
 		this.shotPerSecond = 1f/this.shotPerSecond;
 		AcquireHud();
+		AssignAbilities();
+	}
+	
+	void AssignAbilities(){
+	
+		this.AbilityOne = ShipAction.AbilityDict["BullRush"];
 	}
 
 	/// <summary>
@@ -40,6 +62,9 @@ public class ShipAction : Destructable {
 	/// </summary>
 	void AcquireHud() {
 		
+		// TODO: (Jesse) Put this on a "HUD" object in the scene, or even just on the 
+		// sceneHandler, and have it just display based on ships available instead of 
+		// being attached to the ship itself.
 		healthBar = GameObject.Find("HealthBar");
 		shieldBar = GameObject.Find("ShieldBar");
 	}
@@ -51,12 +76,12 @@ public class ShipAction : Destructable {
 
 	void HandleInput(){
 	
-		triggerValue = Input.GetAxis(InputCode.LeftRightTrigger);
+		triggerValue = Input.GetAxis(player.Controller.LeftRightTrigger);
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
 		}
-		if (Input.GetButtonDown(InputCode.PlayerOneAbilityOne)){
+		if (Input.GetButtonDown(player.Controller.Ability1)){
 			AbilityOne.Start(this);
 		}
 	}
@@ -94,6 +119,7 @@ public class ShipAction : Destructable {
 		UpdateShotTimer();
 		HandleInput();
 		base.Update();
+		//TODO: Could we change this to UpdateHUD or something similar? UpdateData() seems kind of ambiguous nested in Update(). 
 		UpdateData();
 	}
 	

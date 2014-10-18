@@ -3,8 +3,6 @@ using System.Collections;
 
 public class DroneAI : BaseShipAI {
 
-	ShipAction actions;
-
 	void Start () {
 		
 		actions = GetComponent<ShipAction>();

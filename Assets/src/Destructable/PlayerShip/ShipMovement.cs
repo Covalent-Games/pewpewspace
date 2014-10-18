@@ -10,11 +10,9 @@ public class ShipMovement : MonoBehaviour {
 	public float moveSpeed;
 	public float currentMovingSpeed;
 	public float rotationSpeed;
+	public Player player;
 
 
-	void Start () {
-	}
-	
 	void MoveShip(){
 	
 		Destructable ship = gameObject.GetComponent<Destructable>();
@@ -23,8 +21,8 @@ public class ShipMovement : MonoBehaviour {
 		float moveSpeedModifier = this.moveSpeed * ship.Speed * Time.deltaTime;
 		
 		//Get input from player
-		this.verticalMove = Input.GetAxis(InputCode.Vertical) * moveSpeedModifier;
-		this.horizontalMove = Input.GetAxis(InputCode.Horizontal) * moveSpeedModifier;
+		this.verticalMove = Input.GetAxis(player.Controller.Vertical) * moveSpeedModifier;
+		this.horizontalMove = Input.GetAxis(player.Controller.Horizontal) * moveSpeedModifier;
 		
 		// Calculate vectors and move the ship
 		Vector3 moveVector = new Vector3(this.horizontalMove, 0f, this.verticalMove);
@@ -40,10 +38,11 @@ public class ShipMovement : MonoBehaviour {
 	
 	void RotateTurret(){
 	
-		float axisX = Input.GetAxis(InputCode.AltHorizontal);
-		float axisY = Input.GetAxis(InputCode.AltVertical);
+		float axisX = Input.GetAxis(player.Controller.AltHorizontal);
+		float axisY = Input.GetAxis(player.Controller.AltVertical);
 		// Modify the thumbstick sensitivity
-		//TODO: I'm still not happy with how this controls. It works well, but *looks* jittery. 
+		//TODO: I'm still not happy with how this controls. It works well, but *looks* jittery.
+		// The sensitiy in Edit>Project Settings>Input might need to be adjusted.
 		float positiveThreshold = InputCode.AxisThresholdPositive - 0.1f;
 		float negativeThreshold = InputCode.AxisThresholdNegative + 0.1f;
 	

@@ -16,8 +16,7 @@ public class BullRush : GuardianAbility, IAbility{
 	
 	public void Start(ShipAction ship){
 		
-		this.Ship = ship;
-		this.Ship.Invulnerable = true;
+		Debug.Log("BULLRUSH!");
 		
 	}
 }

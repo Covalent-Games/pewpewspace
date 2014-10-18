@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public static class AllAbilities {
+public static class AbilityUtils {
 
 	public static void UpdateAbilityDictionaries(){
 	
