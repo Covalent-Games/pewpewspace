@@ -3,32 +3,47 @@ using System.Collections;
 
 public class InputCode {
 
-	public string Horizontal {get; private set;}
-	public string Vertical {get; private set;}
-	public string AltHorizontal {get; private set;}
-	public string AltVertical {get; private set;}
-	public string PrimaryAction {get; private set;}
-	public string Select {get; private set;}
-	public string Cancel {get; private set;}
-	public string LeftRightTrigger {get; private set;}
-	public string Ability1 {get; private set;}
+	
+	public string ButtonA {get; private set;}
+	public string ButtonB {get; private set;}
+	public string ButtonX {get; private set;}
+	public string ButtonY {get; private set;}
+	
+	public string ButtonBack {get; private set;}
+	public string ButtonStart {get; private set;}
+	
+	public string LeftStickX {get; private set;}
+	public string LeftStickY {get; private set;}
+	public string LeftStickPress {get; private set;}
+	
+	public string RightStickX {get; private set;}
+	public string RightSticky {get; private set;}
+	public string RightStickPress {get; private set;}
+	
+	public string LeftBumper {get; private set;}
+	public string RightBumber {get; private set;}
+	
+	public string LeftRightTrigger {get; private set;}	
+	
 
 	public InputCode (int playerNumber){
 		
-		switch (playerNumber){
-			case 1:
-				Horizontal = "Horizontal";
-				Vertical = "Vertical";
-				AltHorizontal = "RightJoyHorizontal";
-				AltVertical = "RightJoyVertical";
-				PrimaryAction = "Fire1";
-				Select = "return";
-				Cancel = "escape";
-				LeftRightTrigger = "LeftRightTrigger";
-				Ability1 = "Player1Ability1";
-				
-				break;
-		}
+		ButtonA = string.Format("Player{0}A", playerNumber);
+		ButtonB = string.Format("Player{0}B", playerNumber);
+		ButtonX = string.Format("Player{0}X", playerNumber);
+		ButtonY = string.Format("Player{0}Y", playerNumber);
+		ButtonBack = string.Format("Player{0}Back", playerNumber);
+		ButtonStart = string.Format("Player{0}Start", playerNumber);
+		LeftStickX = string.Format("Player{0}LeftStickX", playerNumber);
+		LeftStickY = string.Format("Player{0}LeftStickY", playerNumber);
+		LeftStickPress = string.Format("Player{0}LeftStickPress", playerNumber);
+		RightStickX = string.Format("Player{0}RightStickX", playerNumber);
+		RightSticky = string.Format("Player{0}RightStickY", playerNumber);
+		RightStickPress = string.Format("Player{0}RightStickPress", playerNumber);
+		LeftBumper = string.Format("Player{0}LeftBumber", playerNumber);
+		RightBumber = string.Format("Player{0}RightBumber", playerNumber);
+		LeftRightTrigger = string.Format("Player{0}LeftRightTrigger", playerNumber);
+		
 	}
 	
 	public const float AxisThresholdNegative = -0.2f;

@@ -81,7 +81,7 @@ public class ShipAction : Destructable {
 			this.shotTimer = 0f;
 			Fire();
 		}
-		if (Input.GetButtonDown(player.Controller.Ability1)){
+		if (Input.GetButtonDown(player.Controller.ButtonA)){
 			AbilityOne.Start(this);
 		}
 	}

@@ -21,8 +21,8 @@ public class ShipMovement : MonoBehaviour {
 		float moveSpeedModifier = this.moveSpeed * ship.Speed * Time.deltaTime;
 		
 		//Get input from player
-		this.verticalMove = Input.GetAxis(player.Controller.Vertical) * moveSpeedModifier;
-		this.horizontalMove = Input.GetAxis(player.Controller.Horizontal) * moveSpeedModifier;
+		this.verticalMove = Input.GetAxis(player.Controller.LeftStickX) * moveSpeedModifier;
+		this.horizontalMove = Input.GetAxis(player.Controller.LeftStickY) * moveSpeedModifier;
 		
 		// Calculate vectors and move the ship
 		Vector3 moveVector = new Vector3(this.horizontalMove, 0f, this.verticalMove);
@@ -38,8 +38,8 @@ public class ShipMovement : MonoBehaviour {
 	
 	void RotateTurret(){
 	
-		float axisX = Input.GetAxis(player.Controller.AltHorizontal);
-		float axisY = Input.GetAxis(player.Controller.AltVertical);
+		float axisX = Input.GetAxis(player.Controller.RightStickX);
+		float axisY = Input.GetAxis(player.Controller.RightSticky);
 		// Modify the thumbstick sensitivity
 		//TODO: I'm still not happy with how this controls. It works well, but *looks* jittery.
 		// The sensitiy in Edit>Project Settings>Input might need to be adjusted.
