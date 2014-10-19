@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ShipAction : Destructable {
 
-	public static Dictionary<string, IAbility> AbilityDict = new Dictionary<string, IAbility>();
+	public static Dictionary<string, System.Type> AbilityDict = new Dictionary<string, System.Type>();
 
 	public GameObject projectilePrefab;
 	float shotTimer;
@@ -57,7 +57,7 @@ public class ShipAction : Destructable {
 	
 	void AssignAbilities(){
 	
-		this.AbilityOne = ShipAction.AbilityDict["BullRush"];
+		this.AbilityOne = (IAbility)System.Activator.CreateInstance(ShipAction.AbilityDict["BullRush"]);
 	}
 
 	/// <summary>

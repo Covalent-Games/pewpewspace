@@ -26,6 +26,7 @@ public class SelectionHandler : MonoBehaviour {
 	//	Which ship is the player currently viewing?
 	GameObject[][] availableShips = new GameObject[4][];
 	//	Index of currently viewed ship
+	[SerializeField]
 	int[] currentSelection = new int[] {0, 0, 0, 0};
 	//	What screen is the player on?
 	int[] playerStatus = new int[4];
