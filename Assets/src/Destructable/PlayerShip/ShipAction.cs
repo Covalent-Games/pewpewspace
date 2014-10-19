@@ -50,6 +50,9 @@ public class ShipAction : Destructable {
 		this.shotPerSecond = 1f/this.shotPerSecond;
 		AcquireHud();
 		AssignAbilities();
+		
+		this.enabled = true;
+		GetComponent<ShipMovement>().enabled = true;
 	}
 	
 	void AssignAbilities(){

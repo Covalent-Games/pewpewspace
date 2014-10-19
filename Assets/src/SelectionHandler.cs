@@ -167,7 +167,7 @@ public class SelectionHandler : MonoBehaviour {
 	void StartGame() {
 		
 		for(int playerNumber = 0; playerNumber < GameValues.numberOfPlayers; playerNumber++) {
-			GameValues.Players[playerNumber+1].SelectedPrefab = availableShips[playerNumber][currentSelection[playerNumber]];
+			GameValues.Players[playerNumber+1].SelectedPrefab = this.prefabs[currentSelection[playerNumber]];   // availableShips[playerNumber][currentSelection[playerNumber]];
 			//selectedShip[playerNumber] = availableShips[playerNumber][currentSelection[playerNumber]];			
 		}
 		Application.LoadLevel("main");

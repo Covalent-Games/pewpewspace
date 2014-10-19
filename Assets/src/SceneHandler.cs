@@ -9,8 +9,7 @@ public class SceneHandler : MonoBehaviour {
 	public float spawnTimer;
 	public static List<ShipAction> playerShips = new List<ShipAction>();
 	public static List<BaseShipAI> enemies = new List<BaseShipAI>();
-	[SerializeField]
-	GameObject TmpGuardianPrefab;
+
 	[SerializeField]
 	GameObject dronePrefab;
 
@@ -27,16 +26,19 @@ public class SceneHandler : MonoBehaviour {
 		
 		float xPos = 0f;
 		float yPos = 0.15f;
-		int tmpNumberOfPlayers = 2;
-		for (int i = 0; i < tmpNumberOfPlayers; i++){
+		for (int playerNum = 0; playerNum < GameValues.numberOfPlayers; playerNum++){
 			//FIXME: Here I'm assuming 1 player is playing, but this will need to come from numberOfPlayers.
-			xPos += 1f / (tmpNumberOfPlayers + 1);
+			xPos += 1f / (GameValues.numberOfPlayers + 1);
 			Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(new Vector3(xPos, yPos, 40f));
 			print(spawnPosition);
 			//TODO: Here we prepare to spawn the player, so the ship the player has chosen needs to be accessible here.
-			GameObject newShipGO = (GameObject)Instantiate(this.TmpGuardianPrefab, spawnPosition, Quaternion.identity);
+			GameObject prefabToLoad = GameValues.Players[playerNum + 1].SelectedPrefab;
+			if (prefabToLoad == null){
+				Debug.LogError("Prefab is null. Wa wa waaaaa");
+			}
+			GameObject newShipGO = (GameObject)Instantiate(prefabToLoad, spawnPosition, Quaternion.identity);
 			ShipAction newShip = newShipGO.GetComponent<ShipAction>();
-			newShip.SetupPlayer(i + 1);
+			newShip.SetupPlayer(playerNum + 1);
 			
 			playerShips.Add(newShip);
 		}

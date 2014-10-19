@@ -21,8 +21,8 @@ public class ShipMovement : MonoBehaviour {
 		float moveSpeedModifier = this.moveSpeed * ship.Speed * Time.deltaTime;
 		
 		//Get input from player
-		this.verticalMove = Input.GetAxis(player.Controller.LeftStickX) * moveSpeedModifier;
-		this.horizontalMove = Input.GetAxis(player.Controller.LeftStickY) * moveSpeedModifier;
+		this.horizontalMove = Input.GetAxis(player.Controller.LeftStickX) * moveSpeedModifier;
+		this.verticalMove = Input.GetAxis(player.Controller.LeftStickY) * moveSpeedModifier;
 		
 		// Calculate vectors and move the ship
 		Vector3 moveVector = new Vector3(this.horizontalMove, 0f, this.verticalMove);

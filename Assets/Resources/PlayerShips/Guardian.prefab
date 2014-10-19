@@ -315,7 +315,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
@@ -333,14 +333,21 @@ MonoBehaviour:
   shotPerSecond: 4
   damage: 8
   triggerValue: 0
+  PlayerNumber: 0
   Type: 0
+  healthBar: {fileID: 0}
+  shieldBar: {fileID: 0}
+  AbilityOneIcon: {fileID: 0}
+  AbilityTwoIcon: {fileID: 0}
+  AbilityThreeIcon: {fileID: 0}
+  AbilityFourIcon: {fileID: 0}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bf78dbab3234fa45afc99ed49895289, type: 3}
   m_Name: 
