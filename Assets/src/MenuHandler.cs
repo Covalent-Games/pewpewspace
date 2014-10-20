@@ -5,15 +5,6 @@ public class MenuHandler : MonoBehaviour {
 
 	bool isPaused = false;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
 	public void OpenEscapeMenu() {
 		
@@ -33,15 +24,21 @@ public class MenuHandler : MonoBehaviour {
 	void StopEverything() {
 		
 		// TODO: Figure out a better way to do this. Timescale = 0?
-		GameObject player = GameObject.Find("Player");
-		player.GetComponent<ShipMovement>().enabled = false;
-		player.GetComponent<ShipAction>().enabled = false;
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach(GameObject player in players) {
+			player.GetComponent<ShipMovement>().enabled = false;
+			player.GetComponent<ShipAction>().enabled = false;
+		}
 	}
 
 	void ResumeEverything() {
 
-		GameObject player = GameObject.Find("Player");
-		player.GetComponent<ShipMovement>().enabled = true;
-		player.GetComponent<ShipAction>().enabled = true;
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach(GameObject player in players) {
+			player.GetComponent<ShipMovement>().enabled = true;
+			player.GetComponent<ShipAction>().enabled = true;
+		}
 	}
+
+
 }
