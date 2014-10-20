@@ -2,6 +2,8 @@
 using System.Collections;
 
 public interface IAbility {
-
-	void Start(ShipAction ship);
+	
+	void Begin(ShipAction ship);
+	void Setup();
+	void TearDown();
 }

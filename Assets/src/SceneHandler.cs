@@ -30,7 +30,6 @@ public class SceneHandler : MonoBehaviour {
 			//FIXME: Here I'm assuming 1 player is playing, but this will need to come from numberOfPlayers.
 			xPos += 1f / (GameValues.numberOfPlayers + 1);
 			Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(new Vector3(xPos, yPos, 40f));
-			print(spawnPosition);
 			//TODO: Here we prepare to spawn the player, so the ship the player has chosen needs to be accessible here.
 			GameObject prefabToLoad = GameValues.Players[playerNum + 1].SelectedPrefab;
 			if (prefabToLoad == null){

@@ -5,9 +5,9 @@ using System.Reflection;
 using UnityEngine.UI;
 
 public class ShipAction : Destructable {
-
+	
 	public static Dictionary<string, System.Type> AbilityDict = new Dictionary<string, System.Type>();
-
+	
 	public GameObject projectilePrefab;
 	float shotTimer;
 	public float shotPerSecond;
@@ -21,7 +21,7 @@ public class ShipAction : Destructable {
 	IAbility AbilityFour;
 	public ShipType Type;
 	public Player player;
-
+	
 	// HUD elements
 	public GameObject healthBar;
 	public GameObject shieldBar;
@@ -29,12 +29,12 @@ public class ShipAction : Destructable {
 	public GameObject AbilityTwoIcon;
 	public GameObject AbilityThreeIcon;
 	public GameObject AbilityFourIcon;
-
+	
 	void Start(){
 	}
 	
 	public void SetupPlayer(int playerNumber){
-	
+		
 		this.PlayerNumber = playerNumber;
 		
 		GameValues.Players.TryGetValue(playerNumber, out this.player);
@@ -56,10 +56,11 @@ public class ShipAction : Destructable {
 	}
 	
 	void AssignAbilities(){
-	
-		this.AbilityOne = (IAbility)System.Activator.CreateInstance(ShipAction.AbilityDict["BullRush"]);
+		
+		
+		this.AbilityOne = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["BullRush"]);
 	}
-
+	
 	/// <summary>
 	/// Assigns the player HUD UI elements
 	/// </summary>
@@ -71,26 +72,26 @@ public class ShipAction : Destructable {
 		healthBar = GameObject.Find("HealthBar");
 		shieldBar = GameObject.Find("ShieldBar");
 	}
-
-	void UpdateShotTimer(){
 	
+	void UpdateShotTimer(){
+		
 		this.shotTimer += Time.deltaTime;
 	}
-
-	void HandleInput(){
 	
+	void HandleInput(){
+		
 		triggerValue = Input.GetAxis(player.Controller.LeftRightTrigger);
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
-			AbilityOne.Start(this);
+			AbilityOne.Begin(GetComponent<ShipAction>());
 		}
 	}
 	
 	void Fire(){
-	
+		
 		// TODO: Projectile is rotated incorrectly... just rotating the projectileOrigin or the projectile prefab doesn't fix it.
 		// NOTE: The "* 2" at the end moves the bullet ahead of the ship enough not to collide with the ship
 		Vector3 projectileOrigin = transform.position;
@@ -103,22 +104,22 @@ public class ShipAction : Destructable {
 		projectile.direction = Vector3.up;
 		projectile.damage = damage;
 	}
-
+	
 	/// <summary>
 	/// Updates the player's health and shield bars
 	/// </summary>
 	void UpdateData() {
-	
+		
 		float healthRatio = (float)this.Health/(float)this.maxHealth;
 		float shieldRatio = (float)this.Shields/(float)this.maxShields;
-
+		
 		this.healthBar.GetComponent<Slider>().value = healthRatio;
 		this.shieldBar.GetComponent<Slider>().value = shieldRatio;
 		
 	}
-
+	
 	void Update () {
-
+		
 		UpdateShotTimer();
 		HandleInput();
 		base.Update();
@@ -127,7 +128,7 @@ public class ShipAction : Destructable {
 	}
 	
 	public void AIUpdate(){
-	
+		
 		UpdateShotTimer();
 		// FIXME: this.shotPerSecond is actually seconds per shot, but shots per second for the players. *shrug*.
 		if (this.shotTimer >= this.shotPerSecond){
