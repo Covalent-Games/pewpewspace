@@ -76,22 +76,21 @@ public class Destructable : MonoBehaviour {
 	
 	public int DamageArmor(int damage){
 
-		if (!this.InvulnerableArmor){
+		if (!this.Invulnerable & !this.InvulnerableArmor){
+			Debug.Log(this.InvulnerableArmor.ToString() + this.Invulnerable.ToString());
 			this.Health -= damage;
 			return this.Health;
-		}
 
-		return 0;
+		return this.Health;
 	}
 	
 	public int DamageShields(int damage){
 	
-		if (!this.InvulnerableShield){
+		if (!this.Invulnerable & !this.InvulnerableShield){
 			this.Shields -= damage;
 			return this.Shields;
-		}
 
-		return 0;
+		return this.Health;
 	}
 	
 	public int RestoreArmor(int restoreAmount){
