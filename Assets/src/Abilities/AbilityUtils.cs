@@ -2,6 +2,34 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+public class BaseAbility: MonoBehaviour{
+	
+	public ShipType ShipClass;
+	protected ShipAction Ship;
+	protected ShipMovement ShipMove;
+	public Condition Condition;
+	public Boon Boon;
+	public bool Executing = false;
+	public int Cost {get; set;}
+	public int Level = 1;
+	public int PrimaryEffect = 0;
+	public int SecondaryEffect = 0;
+	public int Damage = 0;
+	public int ArmorRepair = 0;
+	public int ShieldRepair = 0;
+	public float Duration = 0f;
+	public float DurationTimer = 0f;
+	
+	public float AbilityRadius;
+
+	public virtual void TriggerEnter(Collider collider){}
+	
+	public virtual void TriggerStay(Collider collider){}
+	
+	public virtual void TriggerExit(Collider collider){}
+}
+
 public static class AbilityUtils {
 
 	public static void UpdateAbilityDictionaries(){
@@ -54,4 +82,19 @@ public enum ShipType {
 	Raider,
 	Valkyrie,
 	Outrunner,
+	Drone,
 }
+
+// Order should match that of Boon
+public enum Condition {
+
+	Damage,	
+}
+
+// Order should match that of Condition
+public enum Boon {
+	
+	Damage,
+	
+}
+

@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c5e20556861004a814f6746eea8f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actions: {fileID: 0}
   target: {fileID: 0}
   players: []
   Destination: {x: 0, y: 0, z: 0}
@@ -140,9 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 40
   maxShields: 0
-  baseSpeed: 1
+  baseSpeed: 1.10000002
   health: 0
   shields: 0
   Speed: 0
@@ -150,10 +151,19 @@ MonoBehaviour:
   InvulnerableArmor: 0
   InvulnerableShield: 0
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
-  shotPerSecond: 2
-  damage: 5
+  shotPerSecond: 1.5
+  Damage: 7
+  DamageMod: 0
   triggerValue: 0
-  Type: 0
+  PlayerNumber: 0
+  ShipClass: 4
+  ActiveConditions: 
+  healthBar: {fileID: 0}
+  shieldBar: {fileID: 0}
+  AbilityOneIcon: {fileID: 0}
+  AbilityTwoIcon: {fileID: 0}
+  AbilityThreeIcon: {fileID: 0}
+  AbilityFourIcon: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -331,10 +331,12 @@ MonoBehaviour:
   InvulnerableShield: 0
   projectilePrefab: {fileID: 100000, guid: 60f857354dd4d054698fb5a8d6a03544, type: 2}
   shotPerSecond: 5
-  damage: 10
+  Damage: 10
+  DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
-  Type: 1
+  ShipClass: 0
+  ActiveConditions: 
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
   AbilityOneIcon: {fileID: 0}
@@ -354,6 +356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotation: 0
   moveSpeed: 20
+  moveEnabled: 1
   currentMovingSpeed: 0
   rotationSpeed: 20
 --- !u!198 &19800000

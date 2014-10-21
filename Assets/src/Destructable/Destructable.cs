@@ -54,7 +54,7 @@ public class Destructable : MonoBehaviour {
 	
 	#endregion
 	
-	public int DamageShip(int damage){
+	public int DamageShip(int Damage){
 	
 		if (this.Invulnerable){ 
 			if (this.Shields != 0){
@@ -64,31 +64,32 @@ public class Destructable : MonoBehaviour {
 			}
 		}
 		if (this.Shields > 0 && !this.InvulnerableShield){
-			this.Shields -= damage;
+			this.Shields -= Damage;
 			return this.Shields;
 		} else if (!this.InvulnerableArmor){
-			this.Health -= damage;
+			this.Health -= Damage;
 			return this.Health;
 		}
 		
 		return 0;
 	}
 	
-	public int DamageArmor(int damage){
+	public int DamageArmor(int Damage){
 
 		if (!this.Invulnerable & !this.InvulnerableArmor){
-			Debug.Log(this.InvulnerableArmor.ToString() + this.Invulnerable.ToString());
-			this.Health -= damage;
+			this.Health -= Damage;
 			return this.Health;
+		}
 
 		return this.Health;
 	}
 	
-	public int DamageShields(int damage){
+	public int DamageShields(int Damage){
 	
 		if (!this.Invulnerable & !this.InvulnerableShield){
-			this.Shields -= damage;
+			this.Shields -= Damage;
 			return this.Shields;
+		}
 
 		return this.Health;
 	}

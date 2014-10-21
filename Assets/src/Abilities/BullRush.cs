@@ -3,20 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class GuardianAbility: MonoBehaviour{
-	
-	public ShipType Type = ShipType.Guardian;
-	public bool Executing = false;
-	public int Cost = 0;
-	protected ShipAction Ship;
-	protected ShipMovement ShipMove;
-}
-
-public class BullRush : GuardianAbility, IAbility{
-	
-	public int Cost = 50;
-	public float Duration = 0.3f;
-	public float DurationTimer = 0f;
+public class BullRush : BaseAbility, IAbility{
 	
 	private Vector3 moveTowards;
 	
@@ -24,10 +11,13 @@ public class BullRush : GuardianAbility, IAbility{
 		
 		this.Ship = ship;
 		this.ShipMove = ship.GetComponent<ShipMovement>();
+		this.ShipClass = ship.ShipClass;
+		Cost = 50;
+		Duration = 0.3f;
 		StartCoroutine("Execute");
 	}
 	
-	IEnumerator Execute(){
+	public IEnumerator Execute(){
 		
 		Setup();
 		while (DurationTimer < Duration){

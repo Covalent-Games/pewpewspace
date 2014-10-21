@@ -11,16 +11,24 @@ public class ShipAction : Destructable {
 	public GameObject projectilePrefab;
 	float shotTimer;
 	public float shotPerSecond;
-	public int damage;
+	/// <summary>
+	/// Unmodified damage. DO NOT call this directly. Use GetDamage() instead.
+	/// </summary>
+	public int Damage;
+	/// <summary>
+	/// The damage modifier. Change this to modify damage. Do not access Damage directly.
+	/// </summary>
+	public int DamageMod = 0;
 	public float triggerValue;
 	public int PlayerNumber;
 	
-	IAbility AbilityOne;
-	IAbility AbilityTwo;
-	IAbility AbilityThree;
-	IAbility AbilityFour;
-	public ShipType Type;
+	IAbility Ability1;
+	IAbility Ability2;
+	IAbility Ability3;
+	IAbility Ability4;
+	public ShipType ShipClass;
 	public Player player;
+	public List<Condition> ActiveConditions = new List<Condition>();
 	
 	// HUD elements
 	public GameObject healthBar;
@@ -30,7 +38,9 @@ public class ShipAction : Destructable {
 	public GameObject AbilityThreeIcon;
 	public GameObject AbilityFourIcon;
 	
-	void Start(){
+	public void Start(){
+		
+		gameObject.AddComponent("ConditionHandler");
 	}
 	
 	public void SetupPlayer(int playerNumber){
@@ -57,8 +67,18 @@ public class ShipAction : Destructable {
 	
 	void AssignAbilities(){
 		
-		
-		this.AbilityOne = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["BullRush"]);
+		switch (ShipClass){
+			case ShipType.Guardian:
+				this.Ability1 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SonicDisruption"]);
+				this.Ability3 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["BullRush"]);
+			break;
+			case ShipType.Outrunner:
+				break;
+			case ShipType.Raider:
+				break;
+			case ShipType.Valkyrie:
+				break;
+		}	
 	}
 	
 	/// <summary>
@@ -86,7 +106,24 @@ public class ShipAction : Destructable {
 			Fire();
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
-			AbilityOne.Begin(GetComponent<ShipAction>());
+			if (Shields > Ability1.Cost){
+				Ability1.Begin(GetComponent<ShipAction>());
+			}
+		}
+		if (Input.GetButtonDown(player.Controller.ButtonB)){
+			if (Shields > Ability2.Cost){
+				Ability2.Begin(GetComponent<ShipAction>());
+			}
+		}
+		if (Input.GetButtonDown(player.Controller.ButtonX)){
+			if (Shields > Ability3.Cost){
+				Ability3.Begin(GetComponent<ShipAction>());
+			}
+		}
+		if (Input.GetButtonDown(player.Controller.ButtonY)){
+			if (Shields > Ability4.Cost){
+				Ability4.Begin(GetComponent<ShipAction>());
+			}
 		}
 	}
 	
@@ -102,7 +139,12 @@ public class ShipAction : Destructable {
 		// TODO: It would be nice to not have to do this. 
 		projectile.transform.Rotate(new Vector3(90, 0, 0));
 		projectile.direction = Vector3.up;
-		projectile.damage = damage;
+		projectile.Damage = GetDamage();
+	}
+	
+	public int GetDamage(){
+	
+		return this.Damage + this.DamageMod;
 	}
 	
 	/// <summary>
@@ -143,7 +185,7 @@ public class ShipAction : Destructable {
 		
 		if (destructable == null) { return; }
 		
-		// On collision with another destructable object, deal 10% of max health as damage
+		// On collision with another destructable object, deal 10% of max health as Damage
 		destructable.DamageArmor(Mathf.RoundToInt(this.maxHealth/10f));
 	}
 }

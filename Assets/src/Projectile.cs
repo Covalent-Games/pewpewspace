@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour {
 
 	public float velocity;
 	public Vector3 direction;
-	public int damage;
+	public int Damage;
 
 	void Update () {
 	
@@ -26,7 +26,9 @@ public class Projectile : MonoBehaviour {
 		Destructable destructable = collider.GetComponent<Destructable>();
 		
 		if (destructable != null){
-			destructable.DamageShip(this.damage);
+			Debug.Log(this.Damage);
+			destructable.DamageShip(this.Damage);
+			Debug.Log("Your health: " + destructable.Shields);
 			//TODO: Trigger destructable.projectileJustHitMe particle effect
 			Destroy(gameObject);
 		}

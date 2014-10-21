@@ -3094,8 +3094,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f04ab1faafc8f2d46b9ee86cf348cfa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesToSpawn: 2
-  spawnDelay: 5
+  enemiesToSpawn: 4
+  spawnDelay: 6
   spawnTimer: 0
   dronePrefab: {fileID: 100000, guid: c24d70140caeee2488b1bc92fd0d681f, type: 2}
 --- !u!4 &1764314283
