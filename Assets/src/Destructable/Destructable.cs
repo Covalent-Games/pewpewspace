@@ -80,6 +80,7 @@ public class Destructable : MonoBehaviour {
 			Debug.Log(this.InvulnerableArmor.ToString() + this.Invulnerable.ToString());
 			this.Health -= damage;
 			return this.Health;
+		}
 
 		return this.Health;
 	}
@@ -89,6 +90,7 @@ public class Destructable : MonoBehaviour {
 		if (!this.Invulnerable & !this.InvulnerableShield){
 			this.Shields -= damage;
 			return this.Shields;
+		}
 
 		return this.Health;
 	}
