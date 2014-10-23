@@ -73,12 +73,18 @@ public class ShipAction : Destructable {
 				this.Ability3 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["BullRush"]);
 			break;
 			case ShipType.Outrunner:
+				Ability3 = AddAbility("BatteryDrone");
 				break;
 			case ShipType.Raider:
 				break;
 			case ShipType.Valkyrie:
 				break;
 		}	
+	}
+	
+	IAbility AddAbility(string name){
+		
+		return (IAbility)gameObject.AddComponent(ShipAction.AbilityDict[name]);
 	}
 	
 	/// <summary>
