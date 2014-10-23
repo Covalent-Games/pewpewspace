@@ -26,9 +26,7 @@ public class Projectile : MonoBehaviour {
 		Destructable destructable = collider.GetComponent<Destructable>();
 		
 		if (destructable != null){
-			Debug.Log(this.Damage);
 			destructable.DamageShip(this.Damage);
-			Debug.Log("Your health: " + destructable.Shields);
 			//TODO: Trigger destructable.projectileJustHitMe particle effect
 			Destroy(gameObject);
 		}

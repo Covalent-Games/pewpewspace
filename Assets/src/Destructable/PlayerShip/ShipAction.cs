@@ -69,8 +69,9 @@ public class ShipAction : Destructable {
 		
 		switch (ShipClass){
 			case ShipType.Guardian:
-				this.Ability1 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SonicDisruption"]);
-				this.Ability3 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["BullRush"]);
+				Ability1 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SonicDisruption"]);
+				Ability3 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["BullRush"]);
+				Ability4 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SustainDrone"]);
 			break;
 			case ShipType.Outrunner:
 				break;
@@ -106,22 +107,22 @@ public class ShipAction : Destructable {
 			Fire();
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
-			if (Shields > Ability1.Cost){
+			if (Shields > Ability1.Cost & !Ability1.Executing){
 				Ability1.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonB)){
-			if (Shields > Ability2.Cost){
+			if (Shields > Ability2.Cost & !Ability2.Executing){
 				Ability2.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonX)){
-			if (Shields > Ability3.Cost){
+			if (Shields > Ability3.Cost & !Ability3.Executing){
 				Ability3.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonY)){
-			if (Shields > Ability4.Cost){
+			if (Shields > Ability4.Cost & !Ability4.Executing){
 				Ability4.Begin(GetComponent<ShipAction>());
 			}
 		}
