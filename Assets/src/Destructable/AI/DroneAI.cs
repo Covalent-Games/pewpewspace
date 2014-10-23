@@ -9,6 +9,7 @@ public class DroneAI : BaseShipAI {
 		actions.SetUpBaseAttributes();
 		AcquireTarget();
 		AcquireDestination();
+		actions.Start();
 	}
 	
 	void Move(){
