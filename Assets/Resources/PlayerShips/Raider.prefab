@@ -335,7 +335,7 @@ MonoBehaviour:
   DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
-  ShipClass: 0
+  ShipClass: 1
   ActiveConditions: 
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}

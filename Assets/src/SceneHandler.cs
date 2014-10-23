@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class SceneHandler : MonoBehaviour {
 
-	public int enemiesToSpawn;
-	public float spawnDelay;
-	public float spawnTimer;
-	public static List<ShipAction> playerShips = new List<ShipAction>();
-	public static List<BaseShipAI> enemies = new List<BaseShipAI>();
+	public int EnemiesToSpawn;
+	public float SpawnDelay;
+	public float SpawnTimer;
+	public static List<ShipAction> PlayerShips = new List<ShipAction>();
+	public static List<BaseShipAI> Enemies = new List<BaseShipAI>();
 
 	[SerializeField]
 	GameObject dronePrefab;
@@ -19,7 +19,7 @@ public class SceneHandler : MonoBehaviour {
 		SpawnPlayer();
 
 		Screen.lockCursor = true;
-		this.spawnTimer = this.spawnDelay/2f;
+		this.SpawnTimer = this.SpawnDelay/2f;
 	}
 	
 	void SpawnPlayer(){
@@ -39,28 +39,28 @@ public class SceneHandler : MonoBehaviour {
 			ShipAction newShip = newShipGO.GetComponent<ShipAction>();
 			newShip.SetupPlayer(playerNum + 1);
 			
-			playerShips.Add(newShip);
+			PlayerShips.Add(newShip);
 		}
 	}
 	
 	void SpawnEnemies(){
 	
-		if (playerShips.Count == 0) { return; }
+		if (PlayerShips.Count == 0) { return; }
 		
-		if (spawnTimer >= spawnDelay){
-			spawnTimer = 0f;
-			for (int i = 0; i < this.enemiesToSpawn; i++){
+		if (SpawnTimer >= SpawnDelay){
+			SpawnTimer = 0f;
+			for (int i = 0; i < this.EnemiesToSpawn; i++){
 				float xpos = Random.Range(0f, 1f);
 				float ypos = Random.Range(1.05f, 1.2f);
 				Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(new Vector3(xpos, ypos, 40f));
 				GameObject newEnemyGO = (GameObject)Instantiate(dronePrefab, spawnPosition, Quaternion.LookRotation(Vector3.back));
 				BaseShipAI newEnemy = newEnemyGO.GetComponent<BaseShipAI>();
 				//TODO: AI can access this directly and don't need players as a member.
-				newEnemy.players = SceneHandler.playerShips;
-				SceneHandler.enemies.Add(newEnemy);
+				newEnemy.players = SceneHandler.PlayerShips;
+				SceneHandler.Enemies.Add(newEnemy);
 			}
 		} else {
-			spawnTimer += Time.deltaTime;
+			SpawnTimer += Time.deltaTime;
 		}
 	}
 	
