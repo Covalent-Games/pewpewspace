@@ -212,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 50
   direction: {x: 0, y: 0, z: 0}
-  damage: 0
+  Damage: 0
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
