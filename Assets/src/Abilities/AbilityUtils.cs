@@ -10,7 +10,7 @@ public class BaseAbility: MonoBehaviour{
 	protected ShipMovement ShipMove;
 	public Condition Condition;
 	public Boon Boon;
-	public bool Executing = false;
+	public bool Executing {get; set;}
 	public int Cost {get; set;}
 	public int Level = 1;
 	public int PrimaryEffect = 0;
