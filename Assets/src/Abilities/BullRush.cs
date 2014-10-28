@@ -14,7 +14,7 @@ public class BullRush : BaseAbility, IAbility{
 		this.ShipClass = ship.ShipClass;
 		Cost = 50;
 		Duration = 0.3f;
-		StartCoroutine("Execute");
+		StartCoroutine(Execute());
 	}
 	
 	public IEnumerator Execute(){

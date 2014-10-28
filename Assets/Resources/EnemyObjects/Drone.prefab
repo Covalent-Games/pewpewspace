@@ -128,7 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions: {fileID: 0}
   target: {fileID: 0}
-  players: []
   Destination: {x: 0, y: 0, z: 0}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -156,14 +155,18 @@ MonoBehaviour:
   DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
-  ShipClass: 4
+  ShipClass: 21
+  Target: {fileID: 0}
   ActiveConditions: 
+  ActiveBoons: 
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
-  AbilityOneIcon: {fileID: 0}
-  AbilityTwoIcon: {fileID: 0}
-  AbilityThreeIcon: {fileID: 0}
-  AbilityFourIcon: {fileID: 0}
+  Ability1Icon: {fileID: 0}
+  Ability2Icon: {fileID: 0}
+  Ability3Icon: {fileID: 0}
+  Ability4Icon: {fileID: 0}
+  EnemyCursor: {fileID: 0}
+  PlayerCursor: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

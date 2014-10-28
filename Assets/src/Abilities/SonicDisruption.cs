@@ -7,7 +7,6 @@ public class SonicDisruption : BaseAbility, IAbility{
 
 	[SerializeField]
 	AreaOfEffectSphere Sphere;
-	Object Resource;
 	
 	void Start(){
 	
@@ -24,7 +23,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 		this.Ship = ship;
 		this.ShipMove = ship.GetComponent<ShipMovement>();
 		this.ShipClass = ship.ShipClass;
-		StartCoroutine("Execute");
+		StartCoroutine(Execute());
 	}
 	
 	public IEnumerator Execute(){

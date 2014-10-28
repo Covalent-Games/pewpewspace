@@ -217,7 +217,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
   Invulnerable: 0
   InvulnerableArmor: 0
   InvulnerableShield: 0
-  projectilePrefab: {fileID: 100000, guid: 60f857354dd4d054698fb5a8d6a03544, type: 2}
+  projectilePrefab: {fileID: 100008, guid: b0df5a3ea8d6f08428a3da8af2e1ced9, type: 2}
   shotPerSecond: 5
   Damage: 8
   DamageMod: 0
@@ -277,6 +277,7 @@ MonoBehaviour:
   PlayerNumber: 0
   ShipClass: 3
   ActiveConditions: 
+  ActiveBoons: 
   healthBar: {fileID: 0}
   shieldBar: {fileID: 0}
   AbilityOneIcon: {fileID: 0}

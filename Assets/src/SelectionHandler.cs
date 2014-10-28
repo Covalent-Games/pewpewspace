@@ -105,6 +105,10 @@ public class SelectionHandler : MonoBehaviour {
 
 	void Update() {
 		
+		if (Input.GetKeyDown(KeyCode.Return)) {
+			StartGame();
+		}
+		
 		UpdateSelectionTimers();
 		//TODO: Include ability menu in here
 		foreach (var player in GameValues.Players){

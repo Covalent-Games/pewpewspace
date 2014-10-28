@@ -121,7 +121,12 @@ public class Destructable : MonoBehaviour {
 
 	void End(){
 		
-		Destroy(gameObject);
+		//FIXME The comment below is a lie, and I don't currently know the fix. It's a rare bug. 'gameObject'
+		// itself is a member of the physical GameObject and so referencing gameObject raises an error.
+		// The object sometimes tries to be destroyed twice in one frame. This check prevents that.
+		if (gameObject != null){
+			Destroy(gameObject);
+		}
 	}
 	
 	public void SetUpBaseAttributes(){

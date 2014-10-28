@@ -8,19 +8,23 @@ public class BaseAbility: MonoBehaviour{
 	public ShipType ShipClass;
 	protected ShipAction Ship;
 	protected ShipMovement ShipMove;
-	public Condition Condition;
-	public Boon Boon;
 	public bool Executing {get; set;}
 	public int Cost {get; set;}
 	public int Level = 1;
+	public Object Resource;
+	
+	// These exist to outline what the current abilities can handle and to keep naming uniform.
+	public Condition Condition;
+	public Boon Boon;
+	public bool Toggle;
 	public int PrimaryEffect = 0;
 	public int SecondaryEffect = 0;
+	public float Percentage = 0f;
 	public int Damage = 0;
 	public int ArmorRepair = 0;
 	public int ShieldRepair = 0;
 	public float Duration = 0f;
 	public float DurationTimer = 0f;
-	
 	public float AbilityRadius;
 
 	public virtual void TriggerEnter(Collider collider){}
@@ -32,13 +36,22 @@ public class BaseAbility: MonoBehaviour{
 
 public static class AbilityUtils {
 
+	public static bool IsPlayer(ShipAction shipAction){
+	
+		int value = (int)shipAction.ShipClass;
+
+		if (value >= 0 & value <= 20){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public static void UpdateAbilityDictionaries(){
 	
 		var classes = AbilityUtils.AllTypesDerivedFrom(typeof(IAbility));
 		
 		foreach(var abilityType in classes){
-			//IAbility inst = (IAbility)System.Activator.CreateInstance(T);
-			Debug.Log("Adding " + abilityType.Name + " the the dictionary");
 			string name = abilityType.Name;
 			ShipAction.AbilityDict.Add(name, abilityType);
 		}
@@ -74,27 +87,5 @@ public class CustomAbilityName : System.Attribute {
 		
 		customName = aCustomName;
 	}
-}
-
-public enum ShipType {
-	
-	Guardian,
-	Raider,
-	Valkyrie,
-	Outrunner,
-	Drone,
-}
-
-// Order should match that of Boon
-public enum Condition {
-
-	Damage,	
-}
-
-// Order should match that of Condition
-public enum Boon {
-	
-	Damage,
-	
 }
 
