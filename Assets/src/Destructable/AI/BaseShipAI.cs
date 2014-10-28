@@ -9,11 +9,10 @@ public class BaseShipAI : MonoBehaviour {
 
 	[SerializeField]
     public ShipAction target;
-    public List<ShipAction> players = new List<ShipAction>();
     public Vector3 Destination;
 	
 	public void AcquireTarget(){
 	
-		target = players[Random.Range(0, players.Count -1)];
+		target = SceneHandler.PlayerShips[Random.Range(0, SceneHandler.PlayerShips.Count)];
 	}
 }

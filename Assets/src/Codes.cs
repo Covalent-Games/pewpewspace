@@ -40,8 +40,8 @@ public class InputCode {
 		RightStickX = string.Format("Player{0}RightStickX", playerNumber);
 		RightSticky = string.Format("Player{0}RightStickY", playerNumber);
 		RightStickPress = string.Format("Player{0}RightStickPress", playerNumber);
-		LeftBumper = string.Format("Player{0}LeftBumber", playerNumber);
-		RightBumber = string.Format("Player{0}RightBumber", playerNumber);
+		LeftBumper = string.Format("Player{0}LeftBumper", playerNumber);
+		RightBumber = string.Format("Player{0}RightBumper", playerNumber);
 		LeftRightTrigger = string.Format("Player{0}LeftRightTrigger", playerNumber);
 
 	}

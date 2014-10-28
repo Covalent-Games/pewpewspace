@@ -23,7 +23,7 @@ public class BatteryDrone : BaseAbility, IAbility{
 		
 		Setup();
 		foreach(ShipAction ship in SceneHandler.PlayerShips){
-			ship.RestoreShields(PrimaryEffect);
+			ship.RestoreShields((int)PrimaryEffect);
 		}
 		yield return new WaitForEndOfFrame();
 		TearDown();

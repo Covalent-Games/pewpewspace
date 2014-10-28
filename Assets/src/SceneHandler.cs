@@ -9,6 +9,7 @@ public class SceneHandler : MonoBehaviour {
 	public float SpawnTimer;
 	public static List<ShipAction> PlayerShips = new List<ShipAction>();
 	public static List<BaseShipAI> Enemies = new List<BaseShipAI>();
+	public LayerMask TargetingLayerMask;
 
 	[SerializeField]
 	GameObject dronePrefab;
@@ -56,7 +57,6 @@ public class SceneHandler : MonoBehaviour {
 				GameObject newEnemyGO = (GameObject)Instantiate(dronePrefab, spawnPosition, Quaternion.LookRotation(Vector3.back));
 				BaseShipAI newEnemy = newEnemyGO.GetComponent<BaseShipAI>();
 				//TODO: AI can access this directly and don't need players as a member.
-				newEnemy.players = SceneHandler.PlayerShips;
 				SceneHandler.Enemies.Add(newEnemy);
 			}
 		} else {

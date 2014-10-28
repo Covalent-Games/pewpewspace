@@ -28,19 +28,27 @@ public class ShipAction : Destructable {
 	IAbility Ability4;
 	public ShipType ShipClass;
 	public Player player;
+	public Transform Target;
+	Transform Turret;
 	public List<Condition> ActiveConditions = new List<Condition>();
+	public List<Boon> ActiveBoons = new List<Boon>();
 	
 	// HUD elements
 	public GameObject healthBar;
 	public GameObject shieldBar;
-	public GameObject AbilityOneIcon;
-	public GameObject AbilityTwoIcon;
-	public GameObject AbilityThreeIcon;
-	public GameObject AbilityFourIcon;
+	public GameObject Ability1Icon;
+	public GameObject Ability2Icon;
+	public GameObject Ability3Icon;
+	public GameObject Ability4Icon;
+	public TargetCursor EnemyCursor;
+	public TargetCursor PlayerCursor;
 	
 	public void Start(){
 		
 		gameObject.AddComponent("ConditionHandler");
+		gameObject.AddComponent("BoonHandler");
+	
+		Turret = transform.FindChild("Turret");
 	}
 	
 	public void SetupPlayer(int playerNumber){
@@ -63,6 +71,21 @@ public class ShipAction : Destructable {
 		
 		this.enabled = true;
 		GetComponent<ShipMovement>().enabled = true;
+		
+		// Initialize targeting cursors. TODO: This might need to be somewhere else. More graphics may eventually be needed.
+		if (AbilityUtils.IsPlayer(this)){
+			GameObject enemyCursor = (GameObject)Instantiate(
+				Resources.Load("GUIPrefabs/TargetEnemyCursorObject"),
+				Vector3.zero,
+				Quaternion.Euler(new Vector3(90, 0, 0)));
+			GameObject playerCursor = (GameObject)Instantiate(
+				Resources.Load("GUIPrefabs/TargetPlayerCursorObject"),
+				Vector3.zero,
+				Quaternion.Euler(new Vector3(90, 0, 0)));
+			
+			EnemyCursor = enemyCursor.GetComponent<TargetCursor>();
+			PlayerCursor = playerCursor.GetComponent<TargetCursor>();
+		}
 	}
 	
 	void AssignAbilities(){
@@ -74,6 +97,8 @@ public class ShipAction : Destructable {
 				Ability4 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SustainDrone"]);
 			break;
 			case ShipType.Outrunner:
+				Ability1 = AddAbility("SalvageConversionRounds");
+				Ability2 = AddAbility("EmpowerOther");
 				Ability3 = AddAbility("BatteryDrone");
 				break;
 			case ShipType.Raider:
@@ -82,7 +107,7 @@ public class ShipAction : Destructable {
 				break;
 		}	
 	}
-	
+
 	IAbility AddAbility(string name){
 		
 		return (IAbility)gameObject.AddComponent(ShipAction.AbilityDict[name]);
@@ -111,6 +136,8 @@ public class ShipAction : Destructable {
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
+		} else if (triggerValue > InputCode.AxisThresholdPositive){
+			FindNewTarget();
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
 			if (Shields > Ability1.Cost & !Ability1.Executing){
@@ -132,6 +159,9 @@ public class ShipAction : Destructable {
 				Ability4.Begin(GetComponent<ShipAction>());
 			}
 		}
+		if (Input.GetButtonDown(player.Controller.LeftBumper)){
+			UnTarget();
+		}
 	}
 	
 	void Fire(){
@@ -139,14 +169,58 @@ public class ShipAction : Destructable {
 		// TODO: Projectile is rotated incorrectly... just rotating the projectileOrigin or the projectile prefab doesn't fix it.
 		// NOTE: The "* 2" at the end moves the bullet ahead of the ship enough not to collide with the ship
 		Vector3 projectileOrigin = transform.position;
-		Transform turret = transform.FindChild("Turret");
-		GameObject projectileGO = (GameObject)Instantiate(this.projectilePrefab, projectileOrigin, turret.rotation);
+		GameObject projectileGO = (GameObject)Instantiate(
+				this.projectilePrefab,
+				projectileOrigin,
+				Turret.rotation);
 		
-		Projectile projectile = projectileGO.GetComponent<Projectile>();
+		IProjectile projectile = projectileGO.GetComponent(typeof(IProjectile)) as IProjectile;
 		// TODO: It would be nice to not have to do this. 
-		projectile.transform.Rotate(new Vector3(90, 0, 0));
-		projectile.direction = Vector3.up;
+		projectileGO.transform.Rotate(new Vector3(90, 0, 0));
+		projectile.Direction = Vector3.up;
 		projectile.Damage = GetDamage();
+	}
+	
+	void FindNewTarget(){
+	
+		RaycastHit hitInfo;
+
+		bool rayHit = Physics.Raycast(
+				transform.position,
+				Turret.forward, 
+				out hitInfo, 
+				Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
+
+		if (rayHit){
+			
+			/*Vector3 screenPos = Camera.main.WorldToScreenPoint(hitInfo.transform.position);
+			if (screenPos.x > 1f | screenPos.x < 0f | screenPos.y > 1f | screenPos.y < 0f){
+				return;
+			}*/
+
+			string tag = hitInfo.transform.gameObject.tag;
+			TargetCursor cursor;
+			if (tag == "Enemy" & Target != hitInfo.transform){
+				cursor = EnemyCursor;
+				PlayerCursor.Tracking = null;
+			} else if (tag == "Player" & Target != hitInfo.transform){
+				cursor = PlayerCursor;
+				EnemyCursor.Tracking = null;
+			} else {
+				return;
+			}
+			
+			Target = hitInfo.transform;
+			cursor.Tracking = hitInfo.transform;
+			cursor.ThisRenderer.enabled = true;
+		}
+	}
+	
+	void UnTarget(){
+	
+		Target = null;
+		EnemyCursor.GetComponent<TargetCursor>().Tracking = null;
+		PlayerCursor.GetComponent<TargetCursor>().Tracking = null;
 	}
 	
 	public int GetDamage(){

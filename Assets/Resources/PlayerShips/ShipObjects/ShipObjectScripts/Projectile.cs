@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Projectile : MonoBehaviour {
+public class Projectile : MonoBehaviour, IProjectile {
 
 	public float velocity;
-	public Vector3 direction;
-	public int Damage;
+	public Vector3 Direction {get; set;}
+	public int Damage {get; set;}
 
 	void Update () {
 	
 		// TODO: Needs to work with all angles.
-		transform.position += transform.TransformDirection(this.velocity * Time.deltaTime * direction);
+		transform.position += transform.TransformDirection(this.velocity * Time.deltaTime * Direction);
 		
 		Vector3 positionToCamera = Camera.main.WorldToViewportPoint(transform.position);
 		
