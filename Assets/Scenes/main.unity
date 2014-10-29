@@ -4574,7 +4574,7 @@ MonoBehaviour:
   SpawnTimer: 0
   TargetingLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1280
   dronePrefab: {fileID: 100000, guid: c24d70140caeee2488b1bc92fd0d681f, type: 2}
 --- !u!4 &1764314283
 Transform:
