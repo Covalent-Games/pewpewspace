@@ -4321,7 +4321,7 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Priority: -1
+  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:
@@ -4572,6 +4572,9 @@ MonoBehaviour:
   EnemiesToSpawn: 3
   SpawnDelay: 5
   SpawnTimer: 0
+  TargetingLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   dronePrefab: {fileID: 100000, guid: c24d70140caeee2488b1bc92fd0d681f, type: 2}
 --- !u!4 &1764314283
 Transform:
