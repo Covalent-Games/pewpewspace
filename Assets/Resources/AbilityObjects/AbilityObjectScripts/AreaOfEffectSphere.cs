@@ -6,11 +6,12 @@ public class AreaOfEffectSphere : MonoBehaviour {
 	public BaseAbility Ability;
 
 	void OnTriggerEnter(Collider collider){
-	
 		if (Ability == null){
 			Debug.LogWarning("AreaOfEffectShere.Ability: " + Ability.ToString());
 			return;
 		}
+        Debug.Log("Did I hit yeh?");
+
 		Ability.TriggerEnter(collider);
 	}
 	

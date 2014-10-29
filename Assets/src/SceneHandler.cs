@@ -28,6 +28,9 @@ public class SceneHandler : MonoBehaviour {
 		float xPos = 0f;
 		float yPos = 0.15f;
 		for (int playerNum = 0; playerNum < GameValues.numberOfPlayers; playerNum++){
+
+            GameObject hudGO = GameObject.Find(string.Format("Player{0}HUD", playerNum + 1));
+            hudGO.GetComponent<Canvas>().enabled = true;
 			//FIXME: Here I'm assuming 1 player is playing, but this will need to come from numberOfPlayers.
 			xPos += 1f / (GameValues.numberOfPlayers + 1);
 			Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(new Vector3(xPos, yPos, 40f));
@@ -41,6 +44,7 @@ public class SceneHandler : MonoBehaviour {
 			newShip.SetupPlayer(playerNum + 1);
 			
 			PlayerShips.Add(newShip);
+            
 		}
 	}
 	

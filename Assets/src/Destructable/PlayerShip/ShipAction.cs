@@ -102,6 +102,8 @@ public class ShipAction : Destructable {
 				Ability3 = AddAbility("BatteryDrone");
 				break;
 			case ShipType.Raider:
+                Ability1 = AddAbility("DeconstructionLaser");
+                Ability2 = AddAbility("ReaperMan");
 				break;
 			case ShipType.Valkyrie:
 				break;
