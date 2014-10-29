@@ -121,8 +121,8 @@ public class ShipAction : Destructable {
 		// TODO: (Jesse) Put this on a "HUD" object in the scene, or even just on the 
 		// sceneHandler, and have it just display based on ships available instead of 
 		// being attached to the ship itself.
-		healthBar = GameObject.Find("HealthBar");
-		shieldBar = GameObject.Find("ShieldBar");
+		healthBar = GameObject.Find(string.Format("Player{0}ArmorBar", PlayerNumber));
+		shieldBar = GameObject.Find(string.Format("Player{0}ShieldBar", PlayerNumber));
 	}
 	
 	void UpdateShotTimer(){
@@ -236,8 +236,8 @@ public class ShipAction : Destructable {
 		float healthRatio = (float)this.Health/(float)this.maxHealth;
 		float shieldRatio = (float)this.Shields/(float)this.maxShields;
 		
-		this.healthBar.GetComponent<Slider>().value = healthRatio;
-		this.shieldBar.GetComponent<Slider>().value = shieldRatio;
+		this.healthBar.GetComponent<Scrollbar>().size = healthRatio;
+		this.shieldBar.GetComponent<Scrollbar>().size = shieldRatio;
 		
 	}
 	
