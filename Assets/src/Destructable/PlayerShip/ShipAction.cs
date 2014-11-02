@@ -104,6 +104,7 @@ public class ShipAction : Destructable {
 			case ShipType.Raider:
                 Ability1 = AddAbility("DeconstructionLaser");
                 Ability2 = AddAbility("ReaperMan");
+                Ability3 = AddAbility("EnergyMissilePods");
 				break;
 			case ShipType.Valkyrie:
 				break;
@@ -167,7 +168,7 @@ public class ShipAction : Destructable {
 	}
 	
 	void Fire(){
-		
+
 		// TODO: Projectile is rotated incorrectly... just rotating the projectileOrigin or the projectile prefab doesn't fix it.
 		// NOTE: The "* 2" at the end moves the bullet ahead of the ship enough not to collide with the ship
 		Vector3 projectileOrigin = transform.position;
