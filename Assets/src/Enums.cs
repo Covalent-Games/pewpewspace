@@ -15,6 +15,7 @@ public enum ShipType {
 public enum Condition {
 	
 	Damage,	
+    Speed,
 }
 
 // Order should match that of Condition
