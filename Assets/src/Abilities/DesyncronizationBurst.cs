@@ -31,10 +31,8 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 		
 		Setup();
 
-		while (DurationTimer < Duration){
-			DurationTimer += Time.deltaTime;
-			yield return new WaitForFixedUpdate();
-		}
+        //NOTE: Quick burst or lingering field?
+		yield return new WaitForFixedUpdate();
 
 		TearDown();
 	}
