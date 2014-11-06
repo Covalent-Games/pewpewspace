@@ -29,7 +29,7 @@ public class ShipAction : Destructable {
 	public ShipType ShipClass;
 	public Player player;
 	public Transform Target;
-	Transform Turret;
+	public Transform Turret;
 	public List<Condition> ActiveConditions = new List<Condition>();
 	public List<Boon> ActiveBoons = new List<Boon>();
 	
@@ -107,6 +107,7 @@ public class ShipAction : Destructable {
                 Ability3 = AddAbility("EnergyMissilePods");
 				break;
 			case ShipType.Valkyrie:
+				Ability2 = AddAbility("ExplosiveShot");
 				break;
 		}	
 	}
