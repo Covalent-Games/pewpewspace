@@ -31,11 +31,11 @@ public class SustainDrone : BaseAbility, IAbility{
 			DurationTimer += Time.time - lastFrameTime;
 			lastFrameTime = Time.time;
 
-			if (Ship.Shields < Ship.maxShields/2f){
-				Ship.RestoreShields(PrimaryEffect);
-			} else {
+			//if (Ship.Shields < Ship.maxShields/2f){
+			//	Ship.RestoreShields(PrimaryEffect);
+			//} else {
 				Ship.RestoreArmor(SecondaryEffect);
-			}
+			//}
 			yield return new WaitForSeconds(.25f);
 		}
 

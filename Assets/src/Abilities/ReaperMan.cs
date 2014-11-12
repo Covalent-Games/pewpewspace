@@ -35,7 +35,7 @@ public class ReaperMan : BaseAbility, IAbility{
 	public void Setup(){
 		
 		Executing = true;
-        Ship.Shields -= Cost;
+        Ship.Dissipation += Cost;
 
         GameObject projectileGO = (GameObject)Instantiate(
                 Resource, 

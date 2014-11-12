@@ -37,12 +37,12 @@ public class EnergyMissilePods : BaseAbility, IAbility {
         while (Toggle) {
             // TODO: This might not be responsive enough at 1 second.
             yield return new WaitForSeconds(1f);
-            if (Ship.Shields < Cost) {
+            if (Ship.maxDissipation - Ship.Dissipation < Cost) {
                 Toggle = false;
                 TearDown();
                 yield break;
             }
-            Ship.Shields -= Cost;
+            Ship.Dissipation += Cost;
         }
 
         TearDown();

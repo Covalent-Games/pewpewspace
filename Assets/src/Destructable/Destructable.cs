@@ -7,13 +7,15 @@ public class Destructable : MonoBehaviour {
 	#region Members
 
 	public int maxHealth;
-	public int maxShields;
+	public int maxDissipation;
+	//public int maxShields;
 	public float baseSpeed;
 	
 	[SerializeField]
 	int health;
 	[SerializeField]
-	int shields;
+	int dissipation;
+	//int shields;
 	public float Speed;
 	
 	float regenTimer;
@@ -23,7 +25,8 @@ public class Destructable : MonoBehaviour {
 	[SerializeField]
 	public bool InvulnerableArmor = false;
 	[SerializeField]
-	public bool InvulnerableShield = false;
+	public bool InvulnerableDissipation = false;
+	//public bool InvulnerableShield = false;
 	
 	#endregion
 	
@@ -40,6 +43,20 @@ public class Destructable : MonoBehaviour {
 			}
 		}
 	}
+	public int Dissipation {
+		get {
+			return this.dissipation;
+		}
+		set {
+			this.dissipation = value;
+			if (this.dissipation > this.maxDissipation) {
+				this.dissipation = this.maxDissipation;
+			} else if (this.dissipation < 0){
+				this.dissipation = 0;
+			}
+		}
+	}
+	/*
 	public int Shields {
 		get {
 			return this.shields;
@@ -51,22 +68,16 @@ public class Destructable : MonoBehaviour {
 			}
 		}
 	}
-	
+	*/
 	#endregion
 	
+	// Dissipation change: no longer damages shields.
 	public int DamageShip(int Damage){
 	
 		if (this.Invulnerable){ 
-			if (this.Shields != 0){
-				return this.Shields; 
-			} else {
 				return this.Health;
-			}
 		}
-		if (this.Shields > 0 && !this.InvulnerableShield){
-			this.Shields -= Damage;
-			return this.Shields;
-		} else if (!this.InvulnerableArmor){
+		if (!this.InvulnerableArmor){
 			this.Health -= Damage;
 			return this.Health;
 		}
@@ -83,7 +94,7 @@ public class Destructable : MonoBehaviour {
 
 		return this.Health;
 	}
-	
+	/*
 	public int DamageShields(int Damage){
 	
 		if (!this.Invulnerable & !this.InvulnerableShield){
@@ -93,13 +104,26 @@ public class Destructable : MonoBehaviour {
 
 		return this.Health;
 	}
-	
+	*/
 	public int RestoreArmor(int restoreAmount){
 	
 		this.Health += restoreAmount;
 		return this.Health;
 	}
+
+	public int RestoreDissipation(int cooldown) {
+
+		this.Dissipation -= cooldown;
+		return this.Dissipation;
+	}
+
+	protected int DissipationCooldown() {
+
+		int cooldown = (int)Mathf.Round(this.maxDissipation / 100f);
+		return RestoreDissipation(cooldown);
+	}
 	
+	/*
 	public int RestoreShields(int restoreAmount){
 	
 		this.Shields += restoreAmount;
@@ -113,6 +137,7 @@ public class Destructable : MonoBehaviour {
 
 		return RestoreShields(regen);
 	}
+	*/
 
 	void Start () {
 		
@@ -132,7 +157,8 @@ public class Destructable : MonoBehaviour {
 	public void SetUpBaseAttributes(){
 	
 		this.Health = this.maxHealth;
-		this.Shields = this.maxShields;
+		this.Dissipation = 0;
+		//this.Shields = this.maxShields;
 		this.Speed = this.baseSpeed;
 	}
 
@@ -140,7 +166,8 @@ public class Destructable : MonoBehaviour {
 	
 		this.regenTimer += Time.deltaTime;
 		if (this.regenTimer > 1) {
-			ShieldRegen();
+			DissipationCooldown();
+			//ShieldRegen();
 			this.regenTimer = 0f;
 		}
 	}

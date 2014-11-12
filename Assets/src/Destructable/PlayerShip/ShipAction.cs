@@ -35,7 +35,7 @@ public class ShipAction : Destructable {
 	
 	// HUD elements
 	public GameObject healthBar;
-	public GameObject shieldBar;
+	public GameObject dissipationBar;
 	public GameObject Ability1Icon;
 	public GameObject Ability2Icon;
 	public GameObject Ability3Icon;
@@ -126,7 +126,7 @@ public class ShipAction : Destructable {
 		// sceneHandler, and have it just display based on ships available instead of 
 		// being attached to the ship itself.
 		healthBar = GameObject.Find(string.Format("Player{0}ArmorBar", PlayerNumber));
-		shieldBar = GameObject.Find(string.Format("Player{0}ShieldBar", PlayerNumber));
+		dissipationBar = GameObject.Find(string.Format("Player{0}DissipationBar", PlayerNumber));
 	}
 	
 	void UpdateShotTimer(){
@@ -144,22 +144,22 @@ public class ShipAction : Destructable {
 			FindNewTarget();
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
-			if (Shields > Ability1.Cost & !Ability1.Executing){
+			if (maxDissipation - Dissipation > Ability1.Cost & !Ability1.Executing){
 				Ability1.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonB)){
-			if (Shields > Ability2.Cost & !Ability2.Executing){
+			if (maxDissipation - Dissipation > Ability2.Cost & !Ability2.Executing) {
 				Ability2.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonX)){
-			if (Shields > Ability3.Cost & !Ability3.Executing){
+			if (maxDissipation - Dissipation > Ability3.Cost & !Ability3.Executing) {
 				Ability3.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonY)){
-			if (Shields > Ability4.Cost & !Ability4.Executing){
+			if (maxDissipation - Dissipation > Ability4.Cost & !Ability4.Executing) {
 				Ability4.Begin(GetComponent<ShipAction>());
 			}
 		}
@@ -183,6 +183,9 @@ public class ShipAction : Destructable {
 		projectileGO.transform.Rotate(new Vector3(90, 0, 0));
 		projectile.Direction = Vector3.up;
 		projectile.Damage = GetDamage();
+
+		// TODO: match standard fire heat generation with cooldown
+		Dissipation += 1;
 	}
 	
 	void FindNewTarget(){
@@ -233,15 +236,15 @@ public class ShipAction : Destructable {
 	}
 	
 	/// <summary>
-	/// Updates the player's health and shield bars
+	/// Updates the player's health and dissipation bars
 	/// </summary>
 	void UpdateData() {
 		
 		float healthRatio = (float)this.Health/(float)this.maxHealth;
-		float shieldRatio = (float)this.Shields/(float)this.maxShields;
+		float dissipationRatio = (float)this.Dissipation/(float)this.maxDissipation;
 		
 		this.healthBar.GetComponent<Scrollbar>().size = healthRatio;
-		this.shieldBar.GetComponent<Scrollbar>().size = shieldRatio;
+		this.dissipationBar.GetComponent<Scrollbar>().size = dissipationRatio;
 		
 	}
 	

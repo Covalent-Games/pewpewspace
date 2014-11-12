@@ -440,7 +440,7 @@ GameObject:
   - 222: {fileID: 290398025}
   - 114: {fileID: 290398024}
   m_Layer: 5
-  m_Name: Player3ShieldBar
+  m_Name: Player3DisipationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2102622707}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -550,7 +550,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -24.2800007, y: 0}
+  m_AnchoredPosition: {x: -13.6400003, y: 0}
   m_SizeDelta: {x: 9, y: 157}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &327067266
@@ -655,7 +655,7 @@ GameObject:
   - 222: {fileID: 489865054}
   - 114: {fileID: 489865053}
   m_Layer: 5
-  m_Name: Player1ShieldBar
+  m_Name: Player1DisipationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2028368850}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -744,7 +744,7 @@ GameObject:
   - 114: {fileID: 537128982}
   - 114: {fileID: 537128981}
   m_Layer: 5
-  m_Name: Player2ShieldMask
+  m_Name: Player2DisipationMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3666,7 +3666,7 @@ GameObject:
   - 222: {fileID: 1186295217}
   - 114: {fileID: 1186295216}
   m_Layer: 5
-  m_Name: Player2ShieldBar
+  m_Name: Player2DisipationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3688,7 +3688,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -13.6400146, y: 2.86129999}
+  m_AnchoredPosition: {x: -24.2800007, y: 2.86129999}
   m_SizeDelta: {x: 9, y: 157}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1186295216
@@ -3730,7 +3730,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 537128980}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3940,7 +3940,7 @@ GameObject:
   - 114: {fileID: 1374516769}
   - 114: {fileID: 1374516768}
   m_Layer: 5
-  m_Name: Player4ShieldMask
+  m_Name: Player4DisipationMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4075,7 +4075,7 @@ GameObject:
   - 222: {fileID: 1462184442}
   - 114: {fileID: 1462184441}
   m_Layer: 5
-  m_Name: Player4ShieldBar
+  m_Name: Player4DisipationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4097,7 +4097,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -13.6400099, y: 0}
+  m_AnchoredPosition: {x: -24.2800007, y: 0}
   m_SizeDelta: {x: 9, y: 157}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1462184441
@@ -4139,7 +4139,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1374516767}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4333,7 +4333,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1570039941}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -4401,7 +4401,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1595895841}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -4682,7 +4682,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -24.2799988, y: 2.86129999}
+  m_AnchoredPosition: {x: -13.6400003, y: 2.86129999}
   m_SizeDelta: {x: 9, y: 157}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1885342417
@@ -4796,7 +4796,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1986057780}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -4878,7 +4878,7 @@ GameObject:
   - 114: {fileID: 2028368852}
   - 114: {fileID: 2028368851}
   m_Layer: 5
-  m_Name: Player1ShieldMask
+  m_Name: Player1DisipationMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5061,7 +5061,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2031099192}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -5082,7 +5082,7 @@ GameObject:
   - 114: {fileID: 2102622709}
   - 114: {fileID: 2102622708}
   m_Layer: 5
-  m_Name: Player3ShieldMask
+  m_Name: Player3DisipationMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
