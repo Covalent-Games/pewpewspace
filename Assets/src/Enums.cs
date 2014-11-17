@@ -24,3 +24,8 @@ public enum Boon {
 	Damage,
 	
 }
+
+public enum MissionName {
+
+	Mission1,
+}
