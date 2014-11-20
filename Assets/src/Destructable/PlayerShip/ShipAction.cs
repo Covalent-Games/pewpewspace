@@ -92,9 +92,9 @@ public class ShipAction : Destructable {
 		
 		switch (ShipClass){
 			case ShipType.Guardian:
-				Ability1 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SonicDisruption"]);
-				Ability3 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["BullRush"]);
-				Ability4 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SustainDrone"]);
+				Ability1 = AddAbility("SonicDisruption");
+				Ability3 = AddAbility("BullRush");
+				Ability4 = AddAbility("SustainDrone");
 			break;
 			case ShipType.Outrunner:
 				Ability1 = AddAbility("SalvageConversionRounds");
@@ -140,9 +140,9 @@ public class ShipAction : Destructable {
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
-		} else if (triggerValue > InputCode.AxisThresholdPositive){
+		} /*else if (triggerValue > InputCode.AxisThresholdPositive){
 			FindNewTarget();
-		}
+		}*/
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
 			if (Shields > Ability1.Cost & !Ability1.Executing){
 				Ability1.Begin(GetComponent<ShipAction>());
@@ -170,8 +170,6 @@ public class ShipAction : Destructable {
 	
 	void Fire(){
 
-		// TODO: Projectile is rotated incorrectly... just rotating the projectileOrigin or the projectile prefab doesn't fix it.
-		// NOTE: The "* 2" at the end moves the bullet ahead of the ship enough not to collide with the ship
 		Vector3 projectileOrigin = transform.position;
 		GameObject projectileGO = (GameObject)Instantiate(
 				this.projectilePrefab,
@@ -181,7 +179,13 @@ public class ShipAction : Destructable {
 		IProjectile projectile = projectileGO.GetComponent(typeof(IProjectile)) as IProjectile;
 		// TODO: It would be nice to not have to do this. 
 		projectileGO.transform.Rotate(new Vector3(90, 0, 0));
-		projectile.Direction = Vector3.up;
+
+		// If the player has no target
+		if (Target == null) {
+			projectile.Direction = Vector3.up;
+		} else {
+			projectile.Target = Target.GetComponent<ShipAction>();
+		}
 		projectile.Damage = GetDamage();
 	}
 	
@@ -196,12 +200,6 @@ public class ShipAction : Destructable {
 				Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
 
 		if (rayHit){
-			
-			/*Vector3 screenPos = Camera.main.WorldToScreenPoint(hitInfo.transform.position);
-			if (screenPos.x > 1f | screenPos.x < 0f | screenPos.y > 1f | screenPos.y < 0f){
-				return;
-			}*/
-
 			string tag = hitInfo.transform.gameObject.tag;
 			TargetCursor cursor;
 			if (tag == "Enemy" & Target != hitInfo.transform){
@@ -248,6 +246,7 @@ public class ShipAction : Destructable {
 	void Update () {
 		
 		UpdateShotTimer();
+		FindNewTarget();
 		HandleInput();
 		base.Update();
 		//TODO: Could we change this to UpdateHUD or something similar? UpdateData() seems kind of ambiguous nested in Update(). 

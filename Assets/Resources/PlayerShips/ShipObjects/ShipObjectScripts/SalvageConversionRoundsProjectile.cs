@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class SalvageConversionRoundsProjectile : MonoBehaviour, IProjectile {
-	
+
+	public ShipAction Target { get; set; }
 	public float velocity;
 	public Vector3 Direction {get; set;}
 	public int Damage {get; set;}
