@@ -10,8 +10,8 @@ public class SalvageConversionRounds : BaseAbility, IAbility{
 	
 	public void Start() {
 		
-		Cost = 10; // DEFINE
-		Duration = 1f/60f; //DEFINE (Currently set to run for one frame)
+		Cost = 10f;
+		Duration = 1f/60f;
 		string path = "PlayerShips/ShipObjects/SalvageConversionProjectile";
 		CustomProjectile = (GameObject)Resources.Load(path, typeof(GameObject));
 	}
@@ -33,6 +33,8 @@ public class SalvageConversionRounds : BaseAbility, IAbility{
 			Setup();
 		}
 
+		float originalCost = Ship.fireCost;
+		Ship.fireCost = this.Cost;
 		while (Toggle){
 			// TODO: This might not be responsive enough at 1 second.
 			yield return new WaitForSeconds(1f);
@@ -41,9 +43,9 @@ public class SalvageConversionRounds : BaseAbility, IAbility{
 				TearDown();
 				yield break;
 			}
-			Ship.Dissipation += Cost;
+			//Ship.Dissipation += Cost;
 		}
-
+		Ship.fireCost = originalCost;
 		TearDown();
 	}
 	

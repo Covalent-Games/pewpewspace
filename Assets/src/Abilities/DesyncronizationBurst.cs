@@ -10,7 +10,7 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 
 	public void Start() {
 		
-		this.Cost = 35;
+		this.Cost = 35f;
 		this.Duration = 4f;
 
         // Effect = reduction by 35%

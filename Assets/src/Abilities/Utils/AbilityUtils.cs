@@ -9,7 +9,7 @@ public class BaseAbility: MonoBehaviour{
 	protected ShipAction Ship;
 	protected ShipMovement ShipMove;
 	public bool Executing {get; set;}
-	public int Cost {get; set;}
+	public float Cost {get; set;}
 	public int Level = 1;
 	public Object Resource;
 	

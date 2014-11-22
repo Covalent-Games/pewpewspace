@@ -277,14 +277,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 250
-  maxShields: 350
+  maxDissipation: 200
   baseSpeed: 1.20000005
   health: 0
-  shields: 0
+  dissipation: 0
   Speed: 0
   Invulnerable: 0
   InvulnerableArmor: 0
-  InvulnerableShield: 0
+  InvulnerableDissipation: 0
   projectilePrefab: {fileID: 100000, guid: 9b9a6eb5dc9202840863e408cf6a14c4, type: 2}
   shotPerSecond: 6
   Damage: 8
@@ -296,7 +296,7 @@ MonoBehaviour:
   ActiveConditions: 
   ActiveBoons: 
   healthBar: {fileID: 0}
-  shieldBar: {fileID: 0}
+  dissipationBar: {fileID: 0}
   Ability1Icon: {fileID: 0}
   Ability2Icon: {fileID: 0}
   Ability3Icon: {fileID: 0}

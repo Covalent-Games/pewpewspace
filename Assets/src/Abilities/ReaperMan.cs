@@ -8,7 +8,7 @@ public class ReaperMan : BaseAbility, IAbility{
 	public void Start() {
         
         Resource = Resources.Load("AbilityObjects/ReaperManProjectile");
-		Cost = 30;
+		Cost = 30f;
 		Duration = 1f/60f;
         Damage = 100;
 	}

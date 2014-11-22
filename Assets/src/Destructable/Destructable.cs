@@ -7,14 +7,14 @@ public class Destructable : MonoBehaviour {
 	#region Members
 
 	public int maxHealth;
-	public int maxDissipation;
+	public float maxDissipation;
 	//public int maxShields;
 	public float baseSpeed;
 	
 	[SerializeField]
 	int health;
 	[SerializeField]
-	int dissipation;
+	float dissipation;
 	//int shields;
 	public float Speed;
 	
@@ -43,19 +43,18 @@ public class Destructable : MonoBehaviour {
 			}
 		}
 	}
-	public int Dissipation {
+	public float Dissipation {
 		get {
 			return this.dissipation;
 		}
 		set {
 			this.dissipation = value;
-			if (this.dissipation > this.maxDissipation) {
-				this.dissipation = this.maxDissipation;
-			} else if (this.dissipation < 0){
-				this.dissipation = 0;
+			if (this.dissipation < 0){
+				this.dissipation = 0f;
 			}
 		}
 	}
+
 	/*
 	public int Shields {
 		get {
@@ -111,17 +110,19 @@ public class Destructable : MonoBehaviour {
 		return this.Health;
 	}
 
-	public int RestoreDissipation(int cooldown) {
+	public float RestoreDissipation(float cooldown) {
 
 		this.Dissipation -= cooldown;
 		return this.Dissipation;
 	}
 
-	protected int DissipationCooldown() {
+	protected float DissipationCooldown() {
 
-		int cooldown = (int)Mathf.Round(this.maxDissipation / 100f);
+		float cooldown = this.maxDissipation / 10f * Time.deltaTime;
 		return RestoreDissipation(cooldown);
 	}
+
+
 	
 	/*
 	public int RestoreShields(int restoreAmount){
@@ -157,18 +158,19 @@ public class Destructable : MonoBehaviour {
 	public void SetUpBaseAttributes(){
 	
 		this.Health = this.maxHealth;
-		this.Dissipation = 0;
+		this.Dissipation = 0f;
 		//this.Shields = this.maxShields;
 		this.Speed = this.baseSpeed;
 	}
 
 	public void Update () {
-	
-		this.regenTimer += Time.deltaTime;
-		if (this.regenTimer > 1) {
-			DissipationCooldown();
-			//ShieldRegen();
-			this.regenTimer = 0f;
-		}
+
+		DissipationCooldown();
+		//this.regenTimer += Time.deltaTime;
+		//if (this.regenTimer > 1) {
+		//	DissipationCooldown();
+		//	//ShieldRegen();
+		//	this.regenTimer = 0f;
+		//}
 	}
 }

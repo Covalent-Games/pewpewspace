@@ -12,7 +12,7 @@ public class BullRush : BaseAbility, IAbility{
 		this.Ship = ship;
 		this.ShipMove = ship.GetComponent<ShipMovement>();
 		this.ShipClass = ship.ShipClass;
-		Cost = 50;
+		Cost = 50f;
 		Duration = 0.3f;
 		StartCoroutine(Execute());
 	}

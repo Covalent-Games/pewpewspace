@@ -7,7 +7,7 @@ public class SustainDrone : BaseAbility, IAbility{
 	
 	public void Start() {
 		
-		Cost = 50;
+		Cost = 50f;
 		Duration = 7f;
 		PrimaryEffect = 10;
 		SecondaryEffect = 6;

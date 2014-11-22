@@ -7,7 +7,7 @@ public class EmpowerOther : BaseAbility, IAbility{
 	
 	public void Start() {
 		
-		Cost = 50;
+		Cost = 50f;
 		Duration = 1f/60f;
 		string path = "AbilityObjects/EmpowerOtherProjectile";
 		Resource = Resources.Load(path, typeof(GameObject));

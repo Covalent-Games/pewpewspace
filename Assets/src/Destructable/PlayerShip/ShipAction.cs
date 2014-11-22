@@ -32,6 +32,8 @@ public class ShipAction : Destructable {
 	Transform Turret;
 	public List<Condition> ActiveConditions = new List<Condition>();
 	public List<Boon> ActiveBoons = new List<Boon>();
+	public float fireCost;
+	public bool overheated;
 	
 	// HUD elements
 	public GameObject healthBar;
@@ -42,6 +44,13 @@ public class ShipAction : Destructable {
 	public GameObject Ability4Icon;
 	public TargetCursor EnemyCursor;
 	public TargetCursor PlayerCursor;
+
+	// Overheat variables
+	float coolAmount;
+	float overheatTime;
+	float overheatTimer;
+	float originalSpeed;
+
 	
 	public void Start(){
 		
@@ -66,6 +75,9 @@ public class ShipAction : Destructable {
 		this logic will depend on which player is controlling the ship.*/
 		SetUpBaseAttributes();
 		this.shotPerSecond = 1f/this.shotPerSecond;
+		this.fireCost = this.maxDissipation / 10f * this.shotPerSecond;
+		Debug.Log("Fire cost = " + fireCost);
+		this.overheated = false;
 		AcquireHud();
 		AssignAbilities();
 		
@@ -144,22 +156,22 @@ public class ShipAction : Destructable {
 			FindNewTarget();
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
-			if (maxDissipation - Dissipation > Ability1.Cost & !Ability1.Executing){
+			if (Dissipation < this.maxDissipation && !Ability1.Executing){
 				Ability1.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonB)){
-			if (maxDissipation - Dissipation > Ability2.Cost & !Ability2.Executing) {
+			if (Dissipation < this.maxDissipation && !Ability2.Executing) {
 				Ability2.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonX)){
-			if (maxDissipation - Dissipation > Ability3.Cost & !Ability3.Executing) {
+			if (Dissipation < this.maxDissipation && !Ability3.Executing) {
 				Ability3.Begin(GetComponent<ShipAction>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonY)){
-			if (maxDissipation - Dissipation > Ability4.Cost & !Ability4.Executing) {
+			if (Dissipation < this.maxDissipation && !Ability4.Executing) {
 				Ability4.Begin(GetComponent<ShipAction>());
 			}
 		}
@@ -185,7 +197,7 @@ public class ShipAction : Destructable {
 		projectile.Damage = GetDamage();
 
 		// TODO: match standard fire heat generation with cooldown
-		Dissipation += 1;
+		Dissipation += this.fireCost;
 	}
 	
 	void FindNewTarget(){
@@ -238,23 +250,70 @@ public class ShipAction : Destructable {
 	/// <summary>
 	/// Updates the player's health and dissipation bars
 	/// </summary>
-	void UpdateData() {
+	void UpdateHUD() {
 		
 		float healthRatio = (float)this.Health/(float)this.maxHealth;
-		float dissipationRatio = (float)this.Dissipation/(float)this.maxDissipation;
+		float dissipationRatio = this.Dissipation/this.maxDissipation;
 		
 		this.healthBar.GetComponent<Scrollbar>().size = healthRatio;
-		this.dissipationBar.GetComponent<Scrollbar>().size = dissipationRatio;
+		this.dissipationBar.GetComponent<Scrollbar>().size = dissipationRatio > 1f ? 1f : dissipationRatio;
 		
 	}
 	
 	void Update () {
-		
-		UpdateShotTimer();
-		HandleInput();
-		base.Update();
+
+		if (this.Dissipation < this.maxDissipation && !overheated) {
+			UpdateShotTimer();
+			HandleInput();
+			base.Update();
+		} else {
+			Overheat();
+		}
+
 		//TODO: Could we change this to UpdateHUD or something similar? UpdateData() seems kind of ambiguous nested in Update(). 
-		UpdateData();
+		UpdateHUD();
+	}
+
+	public void Overheat() {
+
+		if (!this.overheated) {
+			this.overheated = true;
+			this.dissipationBar.GetComponentInChildren<Animator>().enabled = true;
+			//Animation animation = this.dissipationBar.GetComponentInChildren<Animation>();
+			//Debug.Log("animation = " + animation);
+			//bool animationWorked = animation.Play();
+			//if (!animationWorked) {
+			//	Debug.Log("Animation did not play");
+			//}
+			// 1. Slow player by 25%
+			originalSpeed = this.Speed;
+			this.Speed *= 0.75f;
+			float overheatedBy = this.Dissipation - this.maxDissipation;
+			this.Dissipation = this.maxDissipation;
+			// 2. Calculate how long the player will overheat for
+			overheatTime = Mathf.Sqrt(overheatedBy);
+			Debug.Log("Overheat time = " + overheatTime);
+			if (overheatTime < 3f)
+				overheatTime = 3f;
+			coolAmount = this.maxDissipation * 0.25f;
+			overheatTimer = 0f;
+		} 
+		if (this.overheated) {
+			// 3. Overheat loop
+			Debug.Log("cooling..." + overheatTimer);
+			float cooldown = coolAmount / overheatTime * Time.deltaTime;
+			this.Dissipation -= cooldown;
+			overheatTimer += Time.deltaTime;
+
+			if (overheatTimer > overheatTime) {
+				// 4. Return player to normal
+				this.dissipationBar.GetComponentInChildren<Animator>().enabled = false;
+				this.dissipationBar.GetComponentInChildren<Animator>().gameObject.GetComponent<Image>().color = Color.white;
+				//this.dissipationBar.GetComponentInChildren<Animation>().Stop();
+				this.Speed = originalSpeed;
+				this.overheated = false;
+			}
+		}
 	}
 	
 	public void AIUpdate(){

@@ -7,7 +7,7 @@ public class BatteryDrone : BaseAbility, IAbility{
 	
 	public void Start() {
 		
-		Cost = 75;
+		Cost = 75f;
 		PrimaryEffect = 100;
 	}
 	
