@@ -29,7 +29,7 @@ public class ShipAction : Destructable {
 	public ShipType ShipClass;
 	public Player player;
 	public Transform Target;
-	Transform Turret;
+	public Transform Turret;
 	public List<Condition> ActiveConditions = new List<Condition>();
 	public List<Boon> ActiveBoons = new List<Boon>();
 	
@@ -47,8 +47,10 @@ public class ShipAction : Destructable {
 		
 		gameObject.AddComponent("ConditionHandler");
 		gameObject.AddComponent("BoonHandler");
-	
-		Turret = transform.FindChild("Turret");
+
+        if (!AbilityUtils.IsPlayer(this)) {
+            Turret = transform.FindChild("Turret");
+        }
 	}
 	
 	public void SetupPlayer(int playerNumber){
@@ -82,9 +84,15 @@ public class ShipAction : Destructable {
 				Resources.Load("GUIPrefabs/TargetPlayerCursorObject"),
 				Vector3.zero,
 				Quaternion.Euler(new Vector3(90, 0, 0)));
+            GameObject turret = (GameObject)Instantiate(
+                Resources.Load("PlayerShips/ShipObjects/Turret"),
+                transform.position,
+                transform.rotation);
+            turret.transform.parent = this.transform;
 			
 			EnemyCursor = enemyCursor.GetComponent<TargetCursor>();
 			PlayerCursor = playerCursor.GetComponent<TargetCursor>();
+            Turret = turret.transform;
 		}
 	}
 	
