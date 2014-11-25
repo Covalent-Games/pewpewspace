@@ -198,32 +198,34 @@ public class ShipAction : Destructable {
 	}
 	
 	void FindNewTarget(){
-	
-		RaycastHit hitInfo;
 
-		bool rayHit = Physics.Raycast(
-				transform.position,
-				Turret.forward, 
-				out hitInfo, 
-				Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
+        if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
+            RaycastHit hitInfo;
 
-		if (rayHit){
-			string tag = hitInfo.transform.gameObject.tag;
-			TargetCursor cursor;
-			if (tag == "Enemy" & Target != hitInfo.transform){
-				cursor = EnemyCursor;
-				PlayerCursor.Tracking = null;
-			} else if (tag == "Player" & Target != hitInfo.transform){
-				cursor = PlayerCursor;
-				EnemyCursor.Tracking = null;
-			} else {
-				return;
-			}
-			
-			Target = hitInfo.transform;
-			cursor.Tracking = hitInfo.transform;
-			cursor.ThisRenderer.enabled = true;
-		}
+            bool rayHit = Physics.Raycast(
+                    transform.position,
+                    Turret.forward,
+                    out hitInfo,
+                    Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
+
+            if (rayHit) {
+                string tag = hitInfo.transform.gameObject.tag;
+                TargetCursor cursor;
+                if (tag == "Enemy" & Target != hitInfo.transform) {
+                    cursor = EnemyCursor;
+                    PlayerCursor.Tracking = null;
+                } else if (tag == "Player" & Target != hitInfo.transform) {
+                    cursor = PlayerCursor;
+                    EnemyCursor.Tracking = null;
+                } else {
+                    return;
+                }
+
+                Target = hitInfo.transform;
+                cursor.Tracking = hitInfo.transform;
+                cursor.ThisRenderer.enabled = true;
+            } 
+        }
 	}
 	
 	void UnTarget(){
