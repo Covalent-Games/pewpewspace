@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExplosiveShotProjectile : MonoBehaviour, IProjectile {
+public class ExplosiveShotProjectile : Projectile, IProjectile {
 
 	public int Damage { get; set; }
 	public Vector3 Direction { get; set; }
