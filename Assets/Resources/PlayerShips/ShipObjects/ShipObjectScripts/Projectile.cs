@@ -4,13 +4,19 @@ using System.Collections;
 public class Projectile : MonoBehaviour, IProjectile {
 
 	public float velocity;
-	public Vector3 Direction {get; set;}
-	public int Damage {get; set;}
+	public Vector3 Direction { get; set; }
+	public ShipAction Target { get; set; }
+	public int Damage { get; set; }
 
 	void Update () {
-	
-		// TODO: Needs to work with all angles.
-		transform.position += transform.TransformDirection(this.velocity * Time.deltaTime * Direction);
+
+		if (Target != null) {
+			Direction = Vector3.Normalize(Target.transform.position - transform.position);
+			transform.position += this.velocity * Direction * Time.deltaTime;
+		} else {
+			// TODO: Needs to work with all angles.
+			transform.position += transform.TransformDirection(this.velocity * Time.deltaTime * Direction);
+		}
 		
 		Vector3 positionToCamera = Camera.main.WorldToViewportPoint(transform.position);
 		

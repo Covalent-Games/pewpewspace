@@ -3,10 +3,12 @@ using System.Collections;
 
 public class ShipMovement : MonoBehaviour {
 	
-	float verticalMove;
-	float horizontalMove;
+	float VerticalMove;
+	float HorizontalMove;
 	[SerializeField]
-	float rotation;
+	float Rotation;
+    Vector2 PreviousRotation;
+    public bool AimingTurret;
 	public float moveSpeed;
 	public bool moveEnabled = true;
 	public float currentMovingSpeed;
@@ -24,11 +26,11 @@ public class ShipMovement : MonoBehaviour {
 		float moveSpeedModifier = this.moveSpeed * ship.Speed * Time.deltaTime;
 		
 		//Get input from player
-		this.horizontalMove = Input.GetAxis(player.Controller.LeftStickX) * moveSpeedModifier;
-		this.verticalMove = Input.GetAxis(player.Controller.LeftStickY) * moveSpeedModifier;
+		this.HorizontalMove = Input.GetAxis(player.Controller.LeftStickX) * moveSpeedModifier;
+		this.VerticalMove = Input.GetAxis(player.Controller.LeftStickY) * moveSpeedModifier;
 		
 		// Calculate vectors and move the ship
-		Vector3 moveVector = new Vector3(this.horizontalMove, 0f, this.verticalMove);
+		Vector3 moveVector = new Vector3(this.HorizontalMove, 0f, this.VerticalMove);
 		Vector3 clampedMoveVector = Vector3.ClampMagnitude(moveVector, moveSpeedModifier);
 		currentMovingSpeed = new Vector3(clampedMoveVector.x, 0, clampedMoveVector.z).magnitude;
 		
@@ -49,25 +51,47 @@ public class ShipMovement : MonoBehaviour {
 	}
 	
 	void RotateTurret(){
-		
-		float axisX = Input.GetAxis(player.Controller.RightStickX);
-		float axisY = Input.GetAxis(player.Controller.RightSticky);
-		// Modify the thumbstick sensitivity
-		//TODO: I'm still not happy with how this controls. It works well, but *looks* jittery.
-		// The sensitiy in Edit>Project Settings>Input might need to be adjusted.
-		float positiveThreshold = InputCode.AxisThresholdPositive - 0.1f;
-		float negativeThreshold = InputCode.AxisThresholdNegative + 0.1f;
-		
-		// If the player isn't touching the joystick.
-		if (axisX > negativeThreshold && axisX < positiveThreshold &&
-		    axisY > negativeThreshold && axisY < positiveThreshold) {
-			axisX = 0f;
-			axisY = 1f;
-		}
-		
-		Transform turret = transform.FindChild("Turret");
-		turret.LookAt(transform.position + new Vector3(axisX, 0, axisY));
+
+        Vector2 thisRotation = new Vector2(Input.GetAxis(player.Controller.RightStickX), Input.GetAxis(player.Controller.RightSticky));
+        ShipAction ship = GetComponent<ShipAction>();
+        Transform turret = ship.Turret;
+
+        thisRotation = Vector2.Lerp(PreviousRotation, thisRotation, Time.deltaTime * 7);
+
+        if (ship.Target != null) {
+            if (AbilityUtils.IsPlayer(ship.Target.GetComponent<ShipAction>())) {
+		        UpdateTargetingLine(turret, Vector3.Distance(transform.position, ship.Target.position), Color.green);
+            } else {
+                UpdateTargetingLine(turret, Vector3.Distance(transform.position, ship.Target.position), Color.red);
+            }
+        } else {
+            // In this case the player has no target and is aiming to empty space, so give them a moderate line to aim with.
+            UpdateTargetingLine(turret, 25f, Color.white);
+        }
+
+        if (turret != null) {
+            if (thisRotation.magnitude < 0.25f) {
+                AimingTurret = false;
+                if (ship.Target != null) {
+                    turret.LookAt(ship.Target.position);
+                }
+            } else {
+                AimingTurret = true;
+                turret.LookAt(transform.position + new Vector3(thisRotation.x, 0, thisRotation.y));
+            }
+        }
+
+        PreviousRotation = thisRotation;
 	}
+
+    private void UpdateTargetingLine(Transform turret, float length, Color color) {
+
+        LineRenderer line = turret.GetComponent<LineRenderer>();
+
+        line.SetPosition(0, new Vector3(0f, 0f, length));
+        line.SetColors(Color.white, color);
+    }
+
 	
 	void ClampToScreen(Vector3 oldPosition){
 		

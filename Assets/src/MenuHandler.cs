@@ -26,6 +26,9 @@ public class MenuHandler : MonoBehaviour {
 		// TODO: Figure out a better way to do this. Timescale = 0?
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players) {
+            if (player == null) {
+                continue;
+            }
 			player.GetComponent<ShipMovement>().enabled = false;
 			player.GetComponent<ShipAction>().enabled = false;
 		}
@@ -35,6 +38,9 @@ public class MenuHandler : MonoBehaviour {
 
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players) {
+            if (player == null) {
+                continue;
+            }
 			player.GetComponent<ShipMovement>().enabled = true;
 			player.GetComponent<ShipAction>().enabled = true;
 		}
