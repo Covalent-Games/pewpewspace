@@ -7,8 +7,8 @@ public class GoingDark : BaseAbility, IAbility{
 	
 	public void Start() {
 		
-		Cost = 0; // DEFINE
-		Duration = 1f/60f; //DEFINE (Currently set to run for one frame)
+		Cost = 0f;
+		Duration = 1f/60f;
 	}
 	
 	public void Begin(ShipAction ship){
@@ -35,7 +35,7 @@ public class GoingDark : BaseAbility, IAbility{
 	public void Setup(){
 		
 		Executing = true;
-		Ship.Shields -= Cost;
+		Ship.Dissipation += Cost;
 	}
 	
 	public void TearDown(){

@@ -11,7 +11,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 	void Start(){
 	
 		Resource = Resources.Load("AbilityObjects/AreaOfEffectSphere", typeof(GameObject));
-		this.Cost = 25;
+		this.Cost = 25f;
 		this.Duration = 4f;
 		this.PrimaryEffect = 15;
 		this.SecondaryEffect = 2;
@@ -43,7 +43,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 	
 	public void Setup(){
 		
-		this.Ship.Shields -= this.Cost;
+		this.Ship.Dissipation += this.Cost;
 		Executing = true;
 
 		var sphere = (GameObject)Instantiate(Resource, Ship.transform.position, Quaternion.identity);

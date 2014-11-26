@@ -7,7 +7,7 @@ public class BatteryDrone : BaseAbility, IAbility{
 	
 	public void Start() {
 		
-		Cost = 75;
+		Cost = 75f;
 		PrimaryEffect = 100;
 	}
 	
@@ -23,7 +23,7 @@ public class BatteryDrone : BaseAbility, IAbility{
 		
 		Setup();
 		foreach(ShipAction ship in SceneHandler.PlayerShips){
-			ship.RestoreShields((int)PrimaryEffect);
+		//	ship.RestoreShields((int)PrimaryEffect);
 		}
 		yield return new WaitForEndOfFrame();
 		TearDown();

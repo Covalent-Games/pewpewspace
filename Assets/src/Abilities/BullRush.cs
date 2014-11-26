@@ -12,7 +12,7 @@ public class BullRush : BaseAbility, IAbility{
 		this.Ship = ship;
 		this.ShipMove = ship.GetComponent<ShipMovement>();
 		this.ShipClass = ship.ShipClass;
-		Cost = 50;
+		Cost = 50f;
 		Duration = 0.3f;
 		StartCoroutine(Execute());
 	}
@@ -34,7 +34,7 @@ public class BullRush : BaseAbility, IAbility{
 		moveTowards = new Vector3(0, 0, 20f) + Ship.transform.position;
 		ShipMove.moveEnabled = false;
 		Ship.Invulnerable = true;
-		Ship.Shields -= Cost;
+		Ship.Dissipation += Cost;
 	}
 	
 	public void TearDown(){

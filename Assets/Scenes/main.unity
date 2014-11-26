@@ -440,7 +440,7 @@ GameObject:
   - 222: {fileID: 290398025}
   - 114: {fileID: 290398024}
   m_Layer: 5
-  m_Name: Player3ShieldBar
+  m_Name: Player3DissipationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,7 +504,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2102622707}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -550,7 +550,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -24.2800007, y: 0}
+  m_AnchoredPosition: {x: -13.6400003, y: 0}
   m_SizeDelta: {x: 9, y: 157}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &327067266
@@ -655,7 +655,7 @@ GameObject:
   - 222: {fileID: 489865054}
   - 114: {fileID: 489865053}
   m_Layer: 5
-  m_Name: Player1ShieldBar
+  m_Name: Player1DissipationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 2028368850}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -744,7 +744,7 @@ GameObject:
   - 114: {fileID: 537128982}
   - 114: {fileID: 537128981}
   m_Layer: 5
-  m_Name: Player2ShieldMask
+  m_Name: Player2DissipationMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3666,7 +3666,7 @@ GameObject:
   - 222: {fileID: 1186295217}
   - 114: {fileID: 1186295216}
   m_Layer: 5
-  m_Name: Player2ShieldBar
+  m_Name: Player2DissipationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3688,7 +3688,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -13.6400146, y: 2.86129999}
+  m_AnchoredPosition: {x: -24.2800007, y: 2.86129999}
   m_SizeDelta: {x: 9, y: 157}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1186295216
@@ -3730,7 +3730,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 537128980}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3814,8 +3814,9 @@ GameObject:
   - 224: {fileID: 1289558939}
   - 222: {fileID: 1289558941}
   - 114: {fileID: 1289558940}
+  - 95: {fileID: 1289558942}
   m_Layer: 5
-  m_Name: Image
+  m_Name: DissipationBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3865,6 +3866,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1289558938}
+--- !u!95 &1289558942
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1289558938}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a80c71248d02bbf45ac10dc303510607, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1366361369
 GameObject:
   m_ObjectHideFlags: 0
@@ -3940,7 +3956,7 @@ GameObject:
   - 114: {fileID: 1374516769}
   - 114: {fileID: 1374516768}
   m_Layer: 5
-  m_Name: Player4ShieldMask
+  m_Name: Player4DissipationMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4075,7 +4091,7 @@ GameObject:
   - 222: {fileID: 1462184442}
   - 114: {fileID: 1462184441}
   m_Layer: 5
-  m_Name: Player4ShieldBar
+  m_Name: Player4DissipationBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4097,7 +4113,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -13.6400099, y: 0}
+  m_AnchoredPosition: {x: -24.2800007, y: 0}
   m_SizeDelta: {x: 9, y: 157}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1462184441
@@ -4139,7 +4155,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1374516767}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4491,8 +4507,9 @@ GameObject:
   - 224: {fileID: 1676957552}
   - 222: {fileID: 1676957554}
   - 114: {fileID: 1676957553}
+  - 95: {fileID: 1676957555}
   m_Layer: 5
-  m_Name: Image
+  m_Name: DissipationBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4542,6 +4559,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1676957551}
+--- !u!95 &1676957555
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1676957551}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a80c71248d02bbf45ac10dc303510607, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1764314281
 GameObject:
   m_ObjectHideFlags: 0
@@ -4598,8 +4630,9 @@ GameObject:
   - 224: {fileID: 1855646370}
   - 222: {fileID: 1855646372}
   - 114: {fileID: 1855646371}
+  - 95: {fileID: 1855646373}
   m_Layer: 5
-  m_Name: Image
+  m_Name: DissipationBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4649,6 +4682,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1855646369}
+--- !u!95 &1855646373
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1855646369}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a80c71248d02bbf45ac10dc303510607, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1885342415
 GameObject:
   m_ObjectHideFlags: 0
@@ -4682,7 +4730,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -24.2799988, y: 2.86129999}
+  m_AnchoredPosition: {x: -13.6400003, y: 2.86129999}
   m_SizeDelta: {x: 9, y: 157}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1885342417
@@ -4878,7 +4926,7 @@ GameObject:
   - 114: {fileID: 2028368852}
   - 114: {fileID: 2028368851}
   m_Layer: 5
-  m_Name: Player1ShieldMask
+  m_Name: Player1DissipationMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4951,8 +4999,9 @@ GameObject:
   - 224: {fileID: 2030673412}
   - 222: {fileID: 2030673414}
   - 114: {fileID: 2030673413}
+  - 95: {fileID: 2030673415}
   m_Layer: 5
-  m_Name: Image
+  m_Name: DissipationBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5002,6 +5051,21 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2030673411}
+--- !u!95 &2030673415
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2030673411}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a80c71248d02bbf45ac10dc303510607, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &2031099192
 GameObject:
   m_ObjectHideFlags: 0
@@ -5082,7 +5146,7 @@ GameObject:
   - 114: {fileID: 2102622709}
   - 114: {fileID: 2102622708}
   m_Layer: 5
-  m_Name: Player3ShieldMask
+  m_Name: Player3DissipationMask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

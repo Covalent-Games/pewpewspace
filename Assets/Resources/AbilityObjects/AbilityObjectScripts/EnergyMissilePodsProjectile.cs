@@ -77,14 +77,20 @@ public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
     }
 
     void OnTriggerEnter(Collider collider) {
+		Debug.Log("Colliding");
+		GameObject target = collider.gameObject;
+		if (target == null)
+			Debug.LogError("Collider does not have a gameobject");
 
-        ShipAction shipAction = collider.GetComponent<ShipAction>();
+        ShipAction shipAction = target.GetComponent<ShipAction>();
 
         if (shipAction == null) {
+			Debug.Log("Shipaction is null");
             return;
         }
 
         if (AbilityUtils.IsPlayer(shipAction)) {
+			Debug.Log("IsPlayer");
             return;
         }
 
@@ -92,6 +98,6 @@ public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
         Debug.Log("Dealing " + Damage + " damage");
 
         tracking = false;
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 }

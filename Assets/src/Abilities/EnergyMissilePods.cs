@@ -10,8 +10,8 @@ public class EnergyMissilePods : BaseAbility, IAbility {
 
     public void Start() {
 
-        Cost = 10; // DEFINE
-        Duration = 1f / 60f; //DEFINE (Currently set to run for one frame)
+        Cost = 20f;
+        Duration = 1f / 60f;
         string path = "PlayerShips/ShipObjects/EnergyMissilePodsProjectile";
         CustomProjectile = (GameObject)Resources.Load(path, typeof(GameObject));
     }
@@ -34,16 +34,20 @@ public class EnergyMissilePods : BaseAbility, IAbility {
             Setup();
         }
 
+		float originalCost = Ship.fireCost;
+		Ship.fireCost = this.Cost;
+
         while (Toggle) {
             // TODO: This might not be responsive enough at 1 second.
             yield return new WaitForSeconds(1f);
-            if (Ship.Shields < Cost) {
+            if (Ship.maxDissipation - Ship.Dissipation < Cost) {
                 Toggle = false;
                 TearDown();
                 yield break;
             }
-            Ship.Shields -= Cost;
         }
+
+		Ship.fireCost = originalCost;
 
         TearDown();
     }

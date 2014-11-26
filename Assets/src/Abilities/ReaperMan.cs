@@ -8,7 +8,7 @@ public class ReaperMan : BaseAbility, IAbility{
 	public void Start() {
         
         Resource = Resources.Load("AbilityObjects/ReaperManProjectile");
-		Cost = 30;
+		Cost = 30f;
 		Duration = 1f/60f;
         Damage = 100;
 	}
@@ -35,7 +35,7 @@ public class ReaperMan : BaseAbility, IAbility{
 	public void Setup(){
 		
 		Executing = true;
-        Ship.Shields -= Cost;
+        Ship.Dissipation += Cost;
 
         GameObject projectileGO = (GameObject)Instantiate(
                 Resource, 
