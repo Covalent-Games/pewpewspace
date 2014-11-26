@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Mission>
+  <NumberOfWaves>
+	10
+  </NumberOfWaves>
+  <EnemiesPerWave>
+	3
+  </EnemiesPerWave>
+  <TimeBetweenWaves>
+	2.0
+  </TimeBetweenWaves>
+</Mission>

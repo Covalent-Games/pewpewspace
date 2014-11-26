@@ -29,7 +29,7 @@ public class ShipAction : Destructable {
 	public ShipType ShipClass;
 	public Player player;
 	public Transform Target;
-	Transform Turret;
+	public Transform Turret;
 	public List<Condition> ActiveConditions = new List<Condition>();
 	public List<Boon> ActiveBoons = new List<Boon>();
 	public float fireCost;
@@ -44,7 +44,7 @@ public class ShipAction : Destructable {
 	public GameObject Ability4Icon;
 	public TargetCursor EnemyCursor;
 	public TargetCursor PlayerCursor;
-
+	
 	// Overheat variables
 	float coolAmount;
 	float overheatTime;
@@ -57,7 +57,9 @@ public class ShipAction : Destructable {
 		gameObject.AddComponent("ConditionHandler");
 		gameObject.AddComponent("BoonHandler");
 	
+        if (!AbilityUtils.IsPlayer(this)) {
 		Turret = transform.FindChild("Turret");
+	}
 	}
 	
 	public void SetupPlayer(int playerNumber){
@@ -94,9 +96,15 @@ public class ShipAction : Destructable {
 				Resources.Load("GUIPrefabs/TargetPlayerCursorObject"),
 				Vector3.zero,
 				Quaternion.Euler(new Vector3(90, 0, 0)));
+            GameObject turret = (GameObject)Instantiate(
+                Resources.Load("PlayerShips/ShipObjects/Turret"),
+                transform.position,
+                transform.rotation);
+            turret.transform.parent = this.transform;
 			
 			EnemyCursor = enemyCursor.GetComponent<TargetCursor>();
 			PlayerCursor = playerCursor.GetComponent<TargetCursor>();
+            Turret = turret.transform;
 		}
 	}
 	
@@ -104,9 +112,9 @@ public class ShipAction : Destructable {
 		
 		switch (ShipClass){
 			case ShipType.Guardian:
-				Ability1 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SonicDisruption"]);
-				Ability3 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["BullRush"]);
-				Ability4 = (IAbility)gameObject.AddComponent(ShipAction.AbilityDict["SustainDrone"]);
+				Ability1 = AddAbility("SonicDisruption");
+				Ability3 = AddAbility("BullRush");
+				Ability4 = AddAbility("SustainDrone");
 			break;
 			case ShipType.Outrunner:
 				Ability1 = AddAbility("SalvageConversionRounds");
@@ -120,6 +128,7 @@ public class ShipAction : Destructable {
 				break;
 			case ShipType.Valkyrie:
                 Ability1 = AddAbility("DesyncronizationBurst");
+				Ability2 = AddAbility("ExplosiveShot");
 				break;
 		}	
 	}
@@ -152,9 +161,9 @@ public class ShipAction : Destructable {
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
-		} else if (triggerValue > InputCode.AxisThresholdPositive){
+		} /*else if (triggerValue > InputCode.AxisThresholdPositive){
 			FindNewTarget();
-		}
+		}*/
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
 			if (Dissipation < this.maxDissipation && !Ability1.Executing){
 				Ability1.Begin(GetComponent<ShipAction>());
@@ -182,8 +191,6 @@ public class ShipAction : Destructable {
 	
 	void Fire(){
 
-		// TODO: Projectile is rotated incorrectly... just rotating the projectileOrigin or the projectile prefab doesn't fix it.
-		// NOTE: The "* 2" at the end moves the bullet ahead of the ship enough not to collide with the ship
 		Vector3 projectileOrigin = transform.position;
 		GameObject projectileGO = (GameObject)Instantiate(
 				this.projectilePrefab,
@@ -193,7 +200,13 @@ public class ShipAction : Destructable {
 		IProjectile projectile = projectileGO.GetComponent(typeof(IProjectile)) as IProjectile;
 		// TODO: It would be nice to not have to do this. 
 		projectileGO.transform.Rotate(new Vector3(90, 0, 0));
+
+		// If the player has no target
+		if (Target == null) {
 		projectile.Direction = Vector3.up;
+		} else {
+			projectile.Target = Target.GetComponent<ShipAction>();
+		}
 		projectile.Damage = GetDamage();
 
 		// TODO: match standard fire heat generation with cooldown
@@ -202,6 +215,7 @@ public class ShipAction : Destructable {
 	
 	void FindNewTarget(){
 	
+        if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
 		RaycastHit hitInfo;
 
 		bool rayHit = Physics.Raycast(
@@ -210,19 +224,13 @@ public class ShipAction : Destructable {
 				out hitInfo, 
 				Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
 
-		if (rayHit){
-			
-			/*Vector3 screenPos = Camera.main.WorldToScreenPoint(hitInfo.transform.position);
-			if (screenPos.x > 1f | screenPos.x < 0f | screenPos.y > 1f | screenPos.y < 0f){
-				return;
-			}*/
-
+            if (rayHit) {
 			string tag = hitInfo.transform.gameObject.tag;
 			TargetCursor cursor;
-			if (tag == "Enemy" & Target != hitInfo.transform){
+                if (tag == "Enemy" & Target != hitInfo.transform) {
 				cursor = EnemyCursor;
 				PlayerCursor.Tracking = null;
-			} else if (tag == "Player" & Target != hitInfo.transform){
+                } else if (tag == "Player" & Target != hitInfo.transform) {
 				cursor = PlayerCursor;
 				EnemyCursor.Tracking = null;
 			} else {
@@ -233,6 +241,7 @@ public class ShipAction : Destructable {
 			cursor.Tracking = hitInfo.transform;
 			cursor.ThisRenderer.enabled = true;
 		}
+	}
 	}
 	
 	void UnTarget(){
@@ -261,11 +270,12 @@ public class ShipAction : Destructable {
 	}
 	
 	void Update () {
-
+		
 		if (this.Dissipation < this.maxDissipation && !overheated) {
-			UpdateShotTimer();
-			HandleInput();
-			base.Update();
+		UpdateShotTimer();
+		FindNewTarget();
+		HandleInput();
+		base.Update();
 		} else {
 			Overheat();
 		}

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
 
-    public ShipAction Target;
+	public ShipAction Target { get; set; }
     bool tracking;
     public int Damage { get; set; }
     public ShipAction Owner;
