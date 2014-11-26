@@ -20,12 +20,15 @@ public class ExplosiveShotProjectile : MonoBehaviour, IProjectile {
 		tracking = true;
 		float speed = 15f;
 
+
 		while (tracking) {
 
 			speed += 0.4f;
-			if (speed > 100) {
-				Destroy(gameObject);
-			}
+
+			Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
+			// If outside of screen, destroy
+			if (viewPos.x > 1 | viewPos.x < 0) { Destroy(gameObject);}
+			if (viewPos.y > 1 | viewPos.y < 0) { Destroy(gameObject);}
 
 			transform.position = transform.position + (transform.forward * Time.deltaTime * speed);
 			yield return new WaitForFixedUpdate();
@@ -45,10 +48,8 @@ public class ExplosiveShotProjectile : MonoBehaviour, IProjectile {
             return;
         }
 
-		GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-		// Only damage enemies within
-		foreach (var enemy in enemies) {
+		// Only damage enemies within blast radius
+		foreach (var enemy in SceneHandler.Enemies) {
 			if (Vector3.Distance(enemy.transform.position, transform.position) <= damageRadius) {
 				enemy.GetComponent<ShipAction>().DamageShip(this.Damage);
 				Debug.Log("Explosive shot hit " + enemy.ToString());
