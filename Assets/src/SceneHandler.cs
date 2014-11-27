@@ -82,6 +82,7 @@ public class SceneHandler : MonoBehaviour {
 
 			newShip.SetupPlayer(playerNum + 1);
 			PlayerShips.Add(newShip);
+			newShip.Container = PlayerShips;
             
 		}
 	}

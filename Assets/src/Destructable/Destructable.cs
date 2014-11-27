@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class Destructable : MonoBehaviour {
 
 	#region Members
+
+	public List<ShipAction> Container = new List<ShipAction>();
 
 	public int maxHealth;
 	public float maxDissipation;
