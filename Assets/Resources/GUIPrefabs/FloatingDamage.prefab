@@ -28,6 +28,7 @@ GameObject:
   - 223: {fileID: 22300000}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
+  - 225: {fileID: 22500000}
   m_Layer: 5
   m_Name: FloatingDamage
   m_TagString: Untagged
@@ -89,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dec2758938197f4d9f732a067e8941a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FadeSpeed: 1
 --- !u!222 &22200000
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -145,6 +147,15 @@ RectTransform:
   m_AnchoredPosition: {x: 610, y: 290.5}
   m_SizeDelta: {x: 75, y: 40}
   m_Pivot: {x: .5, y: .5}
+--- !u!225 &22500000
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100002}
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

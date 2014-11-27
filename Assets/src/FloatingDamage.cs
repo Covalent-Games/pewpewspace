@@ -17,7 +17,6 @@ public class FloatingDamage : MonoBehaviour {
     private IEnumerator Tick() {
 
         float ticker = 0f;
-
         CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
 
         while (ticker < FadeSpeed) {
