@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -74,39 +75,35 @@ public class Destructable : MonoBehaviour {
 	#endregion
 	
 	// Dissipation change: no longer damages shields.
-	public int DamageShip(int Damage){
+	public int DamageShip(int damage){
 	
 		if (this.Invulnerable){ 
 				return this.Health;
 		}
 		if (!this.InvulnerableArmor){
-			this.Health -= Damage;
+			this.Health -= damage;
+
+            DisplayFloatingDamage(damage);
+
 			return this.Health;
 		}
 		
 		return 0;
 	}
 	
-	public int DamageArmor(int Damage){
+	public int DamageArmor(int damage){
 
 		if (!this.Invulnerable & !this.InvulnerableArmor){
-			this.Health -= Damage;
+			this.Health -= damage;
+
+            DisplayFloatingDamage(damage);
+
 			return this.Health;
 		}
 
 		return this.Health;
 	}
-	/*
-	public int DamageShields(int Damage){
-	
-		if (!this.Invulnerable & !this.InvulnerableShield){
-			this.Shields -= Damage;
-			return this.Shields;
-		}
 
-		return this.Health;
-	}
-	*/
 	public int RestoreArmor(int restoreAmount){
 	
 		this.Health += restoreAmount;
@@ -126,22 +123,12 @@ public class Destructable : MonoBehaviour {
 	}
 
 
-	
-	/*
-	public int RestoreShields(int restoreAmount){
-	
-		this.Shields += restoreAmount;
-		return this.Shields;
-	}
-	
-	protected int ShieldRegen(){
-		
-		//TODO: Add a simple way of including a modifier, ie +5% shield regen
-		int regen = (int)Mathf.Round(this.maxShields/100f);
+    private void DisplayFloatingDamage(int damage) {
 
-		return RestoreShields(regen);
-	}
-	*/
+        GameObject guiElement = (GameObject)Instantiate(Resources.Load("GUIPrefabs/FloatingDamage"), transform.position, Quaternion.identity);
+        Transform textTransform = guiElement.transform.FindChild("Text");
+        textTransform.GetComponent<Text>().text = damage.ToString();
+    }
 
 	void Start () {
 		
