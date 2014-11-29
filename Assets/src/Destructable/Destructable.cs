@@ -141,6 +141,7 @@ public class Destructable : MonoBehaviour {
 		// itself is a member of the physical GameObject and so referencing gameObject raises an error.
 		// The object sometimes tries to be destroyed twice in one frame. This check prevents that.
 		if (gameObject != null){
+			Container.Remove(GetComponent<ShipAction>());
 			Destroy(gameObject);
 		}
 	}

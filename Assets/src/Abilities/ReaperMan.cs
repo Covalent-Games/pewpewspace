@@ -52,8 +52,8 @@ public class ReaperMan : BaseAbility, IAbility{
         // Player has no target
         if (Ship.Target == null) {
             int index = Random.Range(0, SceneHandler.Enemies.Count);
-            BaseShipAI hostileTarget = SceneHandler.Enemies[index];
-            projectile.Target = hostileTarget.actions;
+            ShipAction hostileTarget = SceneHandler.Enemies[index];
+            projectile.Target = hostileTarget;
         } else {
 
             ShipAction target = Ship.Target.GetComponent<ShipAction>();
@@ -62,8 +62,8 @@ public class ReaperMan : BaseAbility, IAbility{
             if (AbilityUtils.IsPlayer(target))
             {
                 int index = Random.Range(0, SceneHandler.Enemies.Count);
-                BaseShipAI hostileTarget = SceneHandler.Enemies[index];
-                projectile.Target = hostileTarget.actions;
+                ShipAction hostileTarget = SceneHandler.Enemies[index];
+                projectile.Target = hostileTarget;
             }
             else
             {

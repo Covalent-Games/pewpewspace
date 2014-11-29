@@ -8,20 +8,21 @@ public class SceneHandler : MonoBehaviour {
 
 	public Mission CurrentMission;
 	public static List<ShipAction> PlayerShips = new List<ShipAction>();
-	public static List<BaseShipAI> Enemies = new List<BaseShipAI>();
+	public static List<ShipAction> Enemies = new List<ShipAction>();
 	public LayerMask TargetingLayerMask;
 
 	[SerializeField]
 	GameObject dronePrefab;
 	public int ThisWave;
+	public delegate bool WinCheck();
 
 	// Use this for initialization
 	void Start () {
 
+		SpawnPlayer();
+
 		// TODO: This will need to take some kind of mission indentifier parameter.
 		StartCoroutine(ExecuteMission());
-
-		SpawnPlayer();
 
 		Screen.lockCursor = true;
 	}
@@ -30,8 +31,7 @@ public class SceneHandler : MonoBehaviour {
 
 		XmlSerializer deserializer = new XmlSerializer(typeof(Mission));
 		TextReader reader = new StreamReader(Application.dataPath + "/MissionTemplates/TestMission.xml");
-		object data = deserializer.Deserialize(reader);
-		CurrentMission = (Mission)data;
+        CurrentMission = (Mission)deserializer.Deserialize(reader);
 	}
 
 	IEnumerator ExecuteMission() {
@@ -49,12 +49,47 @@ public class SceneHandler : MonoBehaviour {
 			yield return new WaitForSeconds(CurrentMission.TimeBetweenWaves);
 		}
 
-		ConcludeMission();
+		Debug.Log("Queueing end of mission logic");
+		StartCoroutine(WaitForMissionEnd());
 	}
 
-	private void ConcludeMission() {
+	private IEnumerator WaitForMissionEnd() {
 
-		Debug.Log("Mission Ended!");
+		// This is just a temporary default to satisfy the compiler.
+		WinCheck winCheck = CheckForAllEnemiesKilled;
+
+		Debug.Log("Mission is waiting for win condition to be met...");
+		switch (CurrentMission.WinCondition) {
+			case WinCondition.AllEnemiesKilled:
+				winCheck = CheckForAllEnemiesKilled;
+				break;
+		}
+
+		while (winCheck() == false) {
+			yield return new WaitForSeconds(1f);
+		}
+
+		Debug.Log("Win condition met, ending mission");
+
+		ConcludeMission();
+
+	}
+
+	void ConcludeMission() {
+
+		Application.LoadLevel("ShipSelection");
+	}
+
+	public bool CheckForAllEnemiesKilled() {
+
+		bool result = false;
+
+		Debug.Log(SceneHandler.Enemies.Count + " left to kill");
+		if (SceneHandler.Enemies.Count <= 0) {
+			result = true;
+		}
+
+		return result;
 	}
 	
 	void SpawnPlayer(){
@@ -88,7 +123,7 @@ public class SceneHandler : MonoBehaviour {
 	}
 	
 	void SpawnEnemies(){
-	
+
 		if (PlayerShips.Count == 0) { return; }
 		
 		for (int i = 0; i < CurrentMission.EnemiesPerWave; i++){
@@ -101,8 +136,9 @@ public class SceneHandler : MonoBehaviour {
 					spawnPosition, 
 					Quaternion.LookRotation(Vector3.back));
 
-			BaseShipAI newEnemy = newEnemyGO.GetComponent<BaseShipAI>();
+			ShipAction newEnemy = newEnemyGO.GetComponent<ShipAction>();
 			SceneHandler.Enemies.Add(newEnemy);
+			newEnemy.Container = SceneHandler.Enemies;
 		}
 	}
 	

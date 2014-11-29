@@ -70,7 +70,7 @@ public class ShipMovement : MonoBehaviour {
         }
 
         if (turret != null) {
-            if (thisRotation.magnitude < 0.25f) {
+            if (thisRotation.magnitude < 0.55f) {
                 AimingTurret = false;
                 if (ship.Target != null) {
                     turret.LookAt(ship.Target.position);

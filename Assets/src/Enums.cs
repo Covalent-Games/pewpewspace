@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Xml.Serialization;
 
 
 public enum ShipType {
@@ -28,4 +29,9 @@ public enum Boon {
 public enum MissionName {
 
 	Mission1,
+}
+
+public enum WinCondition {
+
+	AllEnemiesKilled = 0,
 }

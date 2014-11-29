@@ -3,8 +3,6 @@ using System.Collections;
 
 public class ExplosiveShotProjectile : Projectile, IProjectile {
 
-	public int Damage { get; set; }
-	public Vector3 Direction { get; set; }
 	bool tracking;
 	public float damageRadius;
 

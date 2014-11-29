@@ -21,8 +21,8 @@ public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
         // Player has no target
         if (Owner.Target == null && SceneHandler.Enemies.Count > 0) {
             int index = Random.Range(0, SceneHandler.Enemies.Count);
-            BaseShipAI hostileTarget = SceneHandler.Enemies[index];
-            this.Target = hostileTarget.actions;
+            ShipAction hostileTarget = SceneHandler.Enemies[index];
+            this.Target = hostileTarget;
         } else {
 
             ShipAction target = Owner.Target.GetComponent<ShipAction>();
@@ -31,8 +31,8 @@ public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
             if (AbilityUtils.IsPlayer(target)) {
                 if (SceneHandler.Enemies.Count > 0) {
                     int index = Random.Range(0, SceneHandler.Enemies.Count);
-                    BaseShipAI hostileTarget = SceneHandler.Enemies[index];
-                    this.Target = hostileTarget.actions;
+                    ShipAction hostileTarget = SceneHandler.Enemies[index];
+                    this.Target = hostileTarget;
                 }
             } else {
                 this.Target = target;

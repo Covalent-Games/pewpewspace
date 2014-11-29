@@ -78,7 +78,7 @@ public class ShipAction : Destructable {
 		SetUpBaseAttributes();
 		this.shotPerSecond = 1f/this.shotPerSecond;
 		this.fireCost = this.maxDissipation / 10f * this.shotPerSecond;
-		Debug.Log("Fire cost = " + fireCost);
+		//Debug.Log("Fire cost = " + fireCost);
 		this.overheated = false;
 		AcquireHud();
 		AssignAbilities();
@@ -310,7 +310,7 @@ public class ShipAction : Destructable {
 		} 
 		if (this.overheated) {
 			// 3. Overheat loop
-			Debug.Log("cooling..." + overheatTimer);
+			//Debug.Log("cooling..." + overheatTimer);
 			float cooldown = coolAmount / overheatTime * Time.deltaTime;
 			this.Dissipation -= cooldown;
 			overheatTimer += Time.deltaTime;
