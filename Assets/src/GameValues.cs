@@ -6,5 +6,5 @@ public class GameValues {
 
 	public static int numberOfPlayers;
 	public static Dictionary<int, Player> Players = new Dictionary<int, Player>();
-	
+
 }

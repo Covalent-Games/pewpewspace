@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class MainMenuHandler : MonoBehaviour {
 
 	public GameObject playerNumberSlider;
-	int playerNumber;
+	int playerNumber = 1;
 	float selectionDelay = 0.2f;
 	float selectionTimer = 0f;
 
@@ -18,7 +18,7 @@ public class MainMenuHandler : MonoBehaviour {
 
 	//NOTE: Currently not used, but could be kept for keyboard input
 	public void ButtonPress(string buttonName) {
-
+		Debug.Log("Is this running?");
 		switch(buttonName) {
 			case "Enlist":
 				ShipSelection();
@@ -52,7 +52,7 @@ public class MainMenuHandler : MonoBehaviour {
 
 		if(selectionTimer >= selectionDelay) {
 			// Player goes left with joystick
-			if(Input.GetAxis(GameValues.Players[1].Controller.LeftStickX) <= -0.5 && this.playerNumber > 0) {
+			if(Input.GetAxis(GameValues.Players[1].Controller.LeftStickX) <= -0.5 && this.playerNumber > 1) {
 				playerNumberSlider.GetComponent<Slider>().value -= 1;
 				selectionTimer = 0f;
 			}
@@ -73,5 +73,10 @@ public class MainMenuHandler : MonoBehaviour {
 			GameValues.Players.Add(player, new Player(player));
 		}
 		Application.LoadLevel("ShipSelection");
+	}
+
+	public void LoadGalaxyMenu() {
+
+		Application.LoadLevel("GalaxyMenu");
 	}
 }

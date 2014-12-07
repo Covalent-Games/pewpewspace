@@ -46,5 +46,11 @@ public class MenuHandler : MonoBehaviour {
 		}
 	}
 
+	void Update() {
+
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			OpenEscapeMenu();
+		}
+	}
 
 }

@@ -6,19 +6,13 @@ public class SelectionHandler : MonoBehaviour {
  
 	// Array of ship prefabs
 	public GameObject[] prefabs;
-
+	SelectionStatUpdater StatUpdater;
 	int maxSelection;
 
 	enum selectionStatus {
 		ship,
 		ability,
 		join
-	}
-	enum shipClasses {
-		Guardian,
-		Outrunner,
-		Valkyrie,
-		Raider
 	}
 
 	//HACK: make selection indexes better
@@ -34,13 +28,11 @@ public class SelectionHandler : MonoBehaviour {
 	GameObject[] selectedShip = new GameObject[4];
 	// 	Did the player select "ready"?
 	bool[] isReady = new bool[] {true, true, true, true};
-	// 	Enforces a selection scroll delay
-	float[] selectionTimer = new float[] {0, 0, 0, 0};
-	float selectionDelay = 0.20f;
 	
 
 	void Start () {
 
+		StatUpdater = GetComponent<SelectionStatUpdater>();
 		this.maxSelection = prefabs.Length;
 
 		PopulateSelectableShips();
@@ -57,7 +49,6 @@ public class SelectionHandler : MonoBehaviour {
 			this.isReady[i-1] = false;
 			this.playerStatus[i-1] = (int)selectionStatus.ship;
 		}
-
 	}
 
 	/// <summary>
@@ -67,8 +58,8 @@ public class SelectionHandler : MonoBehaviour {
 	/// </summary>
 	void PopulateSelectableShips() {
 
-
 		for(int playerNumber = 0; playerNumber < GameValues.numberOfPlayers; playerNumber++) {
+			// TODO: Convert this to a List (will make adding ship types in the future easier.
 			availableShips[playerNumber] = new GameObject[4];
 			
 			GameObject prefabPlaceholder = GameObject.Find(string.Format("P{0}Placeholder", playerNumber+1));
@@ -78,28 +69,31 @@ public class SelectionHandler : MonoBehaviour {
 			Vector3 shipDisplayCoords = prefabPlaceholder.transform.position;
 			Quaternion shipDisplayRotation = prefabPlaceholder.transform.rotation;
 			
-			int count = 0;	
+			int count = 0;
+			GameObject ship;
+
 			foreach(var prefab in prefabs) {
 				if(prefab == null) {
-					Debug.LogError("Resource was not loaded worth crap");
+					Debug.LogError("Missing resource. Check that all objects are assigned in the inspector.");
 				}
-				availableShips[playerNumber][count] = (GameObject)Instantiate(prefab, 
-				                                                              shipDisplayCoords, 
-				                                                              shipDisplayRotation);
-				availableShips[playerNumber][count].GetComponent<MeshRenderer>().enabled = false;
-				availableShips[playerNumber][count].GetComponent<ShipMovement>().enabled = false;
-				availableShips[playerNumber][count].GetComponent<ShipAction>().enabled = false;
+
+				// Disable ship functionality to make it a "floor model"
+				ship = (GameObject)Instantiate(prefab, shipDisplayCoords, shipDisplayRotation);
+				ship.GetComponent<MeshRenderer>().enabled = false;
+				ship.GetComponent<ShipMovement>().enabled = false;
+				ship.GetComponent<ShipAction>().enabled = false;
+				ship.name = prefab.name;
+
+				availableShips[playerNumber][count] = ship;
+
 				count++;
 			}
-			availableShips[playerNumber][0].GetComponent<MeshRenderer>().enabled = true;
 
-		}
-	}
+			// Make the first ship in the list visible and display that ship's stats on the screen.
+			ship = availableShips[playerNumber][0];
+			ship.GetComponent<MeshRenderer>().enabled = true;
+			StatUpdater.UpdateStats(playerNumber, ship.GetComponent<ShipAction>());
 
-	void UpdateSelectionTimers() {
-		
-		foreach(var player in GameValues.Players) {
-			selectionTimer[player.Key-1] += Time.deltaTime;
 		}
 	}
 
@@ -109,7 +103,6 @@ public class SelectionHandler : MonoBehaviour {
 			StartGame();
 		}
 		
-		UpdateSelectionTimers();
 		//TODO: Include ability menu in here
 		foreach (var player in GameValues.Players){
 			// Since player.Key ranges from 1 to 4, need index from 0 to 3;
@@ -126,25 +119,28 @@ public class SelectionHandler : MonoBehaviour {
 			}		
 
 			// Force delay for selection change
-			if(selectionTimer[playerIndex] >= selectionDelay) {
-				// Player goes left with joystick
-				if(Input.GetAxis(player.Value.Controller.LeftStickX) <= -0.5 && currentSelection[playerIndex] > 0) {
-					currentSelection[playerIndex] -= 1;
-					RotateSelectionLeft(playerIndex);
-					selectionTimer[playerIndex] = 0f;
-				}
-				// Player goes right with joystick
-				if(Input.GetAxis(player.Value.Controller.LeftStickX) >= 0.5 && currentSelection[playerIndex] < availableShips[playerIndex].Length - 1) {
-					currentSelection[playerIndex] += 1;
-					RotateSelectionRight(playerIndex);
-					selectionTimer[playerIndex] = 0f;
+			if(GetComponent<InputDelay>().SignalAllowed(playerIndex)) {
+
+				float input = Input.GetAxis(player.Value.Controller.LeftStickX);
+				// -1 if left, 1 if right.
+				int direction = Mathf.RoundToInt(input);
+
+				// true if stick is angled more than 95%
+				// NOTE The control feels more responsive if the action happens the same time the stick "clicks".
+				if (Mathf.Abs(input) > 0.50f) {
+					RotateSelection(playerIndex, currentSelection[playerIndex], direction);
+					currentSelection[playerIndex] += direction;
 				}
 			}
 		}
 	}
 
-	bool AllReady() {
 
+	/// <summary>
+	/// Returns true if all players are in a ready state (all have pressed the 'ready button').
+	/// </summary>
+	bool AllReady() {
+		
 		for(int i = 0; i < GameValues.numberOfPlayers; i++) {
 			if(!this.isReady[i]) {
 				return false;
@@ -153,27 +149,26 @@ public class SelectionHandler : MonoBehaviour {
 		return true;
 	}
 
-	void RotateSelectionRight(int playerNumber) {
+	void RotateSelection(int playerNumber, int previousIndex, int currentIndex) {
 
-		GameObject previousSelection = availableShips[playerNumber][currentSelection[playerNumber] - 1];
-		previousSelection.GetComponent<MeshRenderer>().enabled = false;
-		GameObject newSelection = availableShips[playerNumber][currentSelection[playerNumber]];
+		int selectionIndex = Mathf.Abs(previousIndex + currentIndex) % availableShips.Length;
+		int previousSlection = Mathf.Abs(previousIndex) % availableShips.Length;
+
+		GameObject previousGO = availableShips[playerNumber][previousSlection];
+		previousGO.GetComponent<MeshRenderer>().enabled = false;
+		GameObject newSelection = availableShips[playerNumber][selectionIndex];
 		newSelection.GetComponent<MeshRenderer>().enabled = true;
-	}
-
-	void RotateSelectionLeft(int playerNumber) {
-
-		GameObject previousSelection = availableShips[playerNumber][currentSelection[playerNumber] + 1];
-		previousSelection.GetComponent<MeshRenderer>().enabled = false;
-		GameObject newSelection = availableShips[playerNumber][currentSelection[playerNumber]];
-		newSelection.GetComponent<MeshRenderer>().enabled = true;
+		StatUpdater.UpdateStats(playerNumber, newSelection.GetComponent<ShipAction>());
 	}
 
 	void StartGame() {
 		
+		// Loop through participating players
 		for(int playerNumber = 0; playerNumber < GameValues.numberOfPlayers; playerNumber++) {
-			GameValues.Players[playerNumber+1].SelectedPrefab = this.prefabs[currentSelection[playerNumber]];   // availableShips[playerNumber][currentSelection[playerNumber]];
-			//selectedShip[playerNumber] = availableShips[playerNumber][currentSelection[playerNumber]];			
+			// Get a positive integar from 0 to the number of available ships that represents the player's selection.
+			int index = Mathf.Abs(currentSelection[playerNumber] % availableShips.Length);
+			// Set the player's selected ship.
+			GameValues.Players[playerNumber+1].SelectedPrefab = this.prefabs[index];
 		}
 		Application.LoadLevel("main");
 	}

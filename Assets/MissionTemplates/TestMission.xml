@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <Mission>
-  <NumberOfWaves>10</NumberOfWaves>
-  <EnemiesPerWave>5</EnemiesPerWave>
-  <TimeBetweenWaves>10.0</TimeBetweenWaves>
+  <NumberOfWaves>3</NumberOfWaves>
+  <EnemiesPerWave>2</EnemiesPerWave>
+  <TimeBetweenWaves>3</TimeBetweenWaves>
   <WinCondition>AllEnemiesKilled</WinCondition>
 </Mission>

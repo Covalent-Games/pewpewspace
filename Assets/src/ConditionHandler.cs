@@ -36,10 +36,6 @@ public class ConditionHandler : MonoBehaviour {
     /// <summary>
     /// Slows down enemies within the blast radius by "mod" as a percentage.
     /// </summary>
-    /// <param name="condition"></param>
-    /// <param name="mod"></param>
-    /// <param name="duration"></param>
-    /// <returns></returns>
     IEnumerator ReduceSpeed(Condition condition, int mod, float duration) {
 
         ShipAction ship = GetComponent<ShipAction>();

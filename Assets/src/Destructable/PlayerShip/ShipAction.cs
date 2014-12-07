@@ -113,8 +113,8 @@ public class ShipAction : Destructable {
 		switch (ShipClass){
 			case ShipType.Guardian:
 				Ability1 = AddAbility("SonicDisruption");
-				Ability3 = AddAbility("BullRush");
-				Ability4 = AddAbility("SustainDrone");
+				Ability2 = AddAbility("BullRush");
+				Ability3 = AddAbility("SustainDrone");
 			break;
 			case ShipType.Outrunner:
 				Ability1 = AddAbility("SalvageConversionRounds");
@@ -161,9 +161,7 @@ public class ShipAction : Destructable {
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
 			Fire();
-		} /*else if (triggerValue > InputCode.AxisThresholdPositive){
-			FindNewTarget();
-		}*/
+		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
 			if (Dissipation < this.maxDissipation && !Ability1.Executing){
 				Ability1.Begin(GetComponent<ShipAction>());
@@ -264,18 +262,18 @@ public class ShipAction : Destructable {
 		float healthRatio = (float)this.Health/(float)this.maxHealth;
 		float dissipationRatio = this.Dissipation/this.maxDissipation;
 		
-		this.healthBar.GetComponent<Scrollbar>().size = healthRatio;
-		this.dissipationBar.GetComponent<Scrollbar>().size = dissipationRatio > 1f ? 1f : dissipationRatio;
+		this.healthBar.GetComponent<Image>().fillAmount = healthRatio;
+		this.dissipationBar.GetComponent<Image>().fillAmount = dissipationRatio > 1f ? 1f : dissipationRatio;
 		
 	}
 	
 	void Update () {
 		
 		if (this.Dissipation < this.maxDissipation && !overheated) {
-		UpdateShotTimer();
-		FindNewTarget();
-		HandleInput();
-		base.Update();
+			UpdateShotTimer();
+			FindNewTarget();
+			HandleInput();
+			base.Update();
 		} else {
 			Overheat();
 		}
@@ -288,7 +286,7 @@ public class ShipAction : Destructable {
 
 		if (!this.overheated) {
 			this.overheated = true;
-			this.dissipationBar.GetComponentInChildren<Animator>().enabled = true;
+			//this.dissipationBar.GetComponentInChildren<Animator>().enabled = true;
 			//Animation animation = this.dissipationBar.GetComponentInChildren<Animation>();
 			//Debug.Log("animation = " + animation);
 			//bool animationWorked = animation.Play();
@@ -317,8 +315,8 @@ public class ShipAction : Destructable {
 
 			if (overheatTimer > overheatTime) {
 				// 4. Return player to normal
-				this.dissipationBar.GetComponentInChildren<Animator>().enabled = false;
-				this.dissipationBar.GetComponentInChildren<Animator>().gameObject.GetComponent<Image>().color = Color.white;
+				//this.dissipationBar.GetComponentInChildren<Animator>().enabled = false;
+				//this.dissipationBar.GetComponentInChildren<Animator>().gameObject.GetComponent<Image>().color = Color.white;
 				//this.dissipationBar.GetComponentInChildren<Animation>().Stop();
 				this.Speed = originalSpeed;
 				this.overheated = false;

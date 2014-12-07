@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -15,6 +16,7 @@ public class SceneHandler : MonoBehaviour {
 	GameObject dronePrefab;
 	public int ThisWave;
 	public delegate bool WinCheck();
+	bool MissionOver = false;
 
 	// Use this for initialization
 	void Start () {
@@ -70,14 +72,16 @@ public class SceneHandler : MonoBehaviour {
 		}
 
 		Debug.Log("Win condition met, ending mission");
-
+		GameObject.FindObjectOfType<FadeCanvas>().FadeToBlack();
+		// TODO Instantiate this from a prefab.
+		GameObject.Find("PostMissionScore").GetComponent<Canvas>().enabled = true;
 		ConcludeMission();
 
 	}
 
 	void ConcludeMission() {
 
-		Application.LoadLevel("ShipSelection");
+		MissionOver = true;
 	}
 
 	public bool CheckForAllEnemiesKilled() {
@@ -141,15 +145,15 @@ public class SceneHandler : MonoBehaviour {
 			newEnemy.Container = SceneHandler.Enemies;
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-		//TODO (Jesse): GameObject.Find is pretty expensive, and I think you could make MnuHandler.OpenEscapeMenu static in this case.
-		// This should probably not be here. A menu object exists in the scene so it will have an Update() to use for this.
-		if(Input.GetKeyDown(KeyCode.Escape)) {
-			MenuHandler menuHandler = GameObject.Find("MenuObject").GetComponent<MenuHandler>();
-			menuHandler.OpenEscapeMenu();
+
+	void Update() {
+
+		if (MissionOver) {
+			foreach (ShipAction ship in PlayerShips) {
+				if (Input.GetButtonDown(ship.player.Controller.ButtonA)) {
+					Application.LoadLevel("ShipSelection");
+				}
+			}
 		}
 	}
 }
