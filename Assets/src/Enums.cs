@@ -23,6 +23,7 @@ public enum Condition {
 public enum Boon {
 	
 	Damage,
+	FireRate,
 	
 }
 

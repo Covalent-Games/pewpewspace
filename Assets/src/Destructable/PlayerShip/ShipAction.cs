@@ -129,6 +129,7 @@ public class ShipAction : Destructable {
 			case ShipType.Valkyrie:
                 Ability1 = AddAbility("DesyncronizationBurst");
 				Ability2 = AddAbility("ExplosiveShot");
+				Ability3 = AddAbility("RapidFire");
 				break;
 		}	
 	}

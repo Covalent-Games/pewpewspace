@@ -12,6 +12,15 @@ public class BoonHandler : MonoBehaviour {
 			break;
 		}
 	}
+
+	public void ApplyBoon(Boon boon, float modifier, float duration) {
+
+		switch (boon) {
+			case Boon.FireRate:
+				StartCoroutine(IncreaseFireRate(boon, modifier, duration));
+				break;
+		}
+	}
 	
 	IEnumerator IncreaseDamage(Boon boon, int mod, float duration){
 		
@@ -37,5 +46,26 @@ public class BoonHandler : MonoBehaviour {
 		}
 		ship.DamageMod -= mod;
 		print (ship.gameObject.name + "'s Damage = " + ship.GetDamage());
+	}
+
+	IEnumerator IncreaseFireRate(Boon boon, float mod, float duration) {
+
+		ShipAction ship = GetComponent<ShipAction>();
+
+		if (ship == null)
+			yield break;
+
+		float fireRateDelta = ship.shotPerSecond *= mod;
+		ship.shotPerSecond -= fireRateDelta;
+		print(ship.gameObject.name + "'s rate of fire increased by " + fireRateDelta);
+		
+		float timer = 0f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			yield return new WaitForFixedUpdate();
+		}
+
+		ship.shotPerSecond += fireRateDelta;
+		print(ship.gameObject.name + "'s rate of fire went back to normal");
 	}
 }

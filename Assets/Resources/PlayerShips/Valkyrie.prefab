@@ -276,8 +276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Container: []
   maxHealth: 250
-  maxDissipation: 200
+  maxDissipation: 100
   baseSpeed: 1.20000005
   health: 0
   dissipation: 0
@@ -293,8 +294,11 @@ MonoBehaviour:
   PlayerNumber: 0
   ShipClass: 2
   Target: {fileID: 0}
+  Turret: {fileID: 0}
   ActiveConditions: 
   ActiveBoons: 
+  fireCost: 0
+  overheated: 0
   healthBar: {fileID: 0}
   dissipationBar: {fileID: 0}
   Ability1Icon: {fileID: 0}
@@ -314,7 +318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf78dbab3234fa45afc99ed49895289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotation: 0
+  Rotation: 0
+  AimingTurret: 0
   moveSpeed: 20
   moveEnabled: 1
   currentMovingSpeed: 0
