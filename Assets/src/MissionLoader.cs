@@ -8,4 +8,9 @@ public class MissionLoader : MonoBehaviour {
 
 		Application.LoadLevel("ShipSelection");
 	}
+
+	internal void LoadMission() {
+		
+		Application.LoadLevel("ShipSelection");
+	}
 }

@@ -47,7 +47,7 @@ public class MainMenuHandler : MonoBehaviour {
 		UpdateSelectionDelay();
 		
 		if (Input.GetButtonDown(GameValues.Players[1].Controller.ButtonA)) {
-			ShipSelection();
+			LoadGalaxyMenu();
 		}
 
 		if(selectionTimer >= selectionDelay) {
@@ -77,6 +77,11 @@ public class MainMenuHandler : MonoBehaviour {
 
 	public void LoadGalaxyMenu() {
 
+		GameValues.numberOfPlayers = playerNumber;
+		//TODO: This will likely be where the user login/data loading starts
+		for (int player = 2; player <= this.playerNumber; player++) {
+			GameValues.Players.Add(player, new Player(player));
+		}
 		Application.LoadLevel("GalaxyMenu");
 	}
 }
