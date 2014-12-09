@@ -18,7 +18,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 		this.Condition = Condition.Damage;
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		this.Ship = ship;
 		this.ShipMove = ship.GetComponent<ShipMovement>();
@@ -35,7 +35,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 	
 	public override void TriggerEnter(Collider collider){
 		
-		ShipAction target = collider.GetComponent<ShipAction>();
+		ShipObject target = collider.GetComponent<ShipObject>();
 		if (target == null) { return; }
 		target.DamageShip(this.PrimaryEffect);
 		target.GetComponent<ConditionHandler>().ApplyCondition(this.Condition, this.SecondaryEffect, this.Duration);

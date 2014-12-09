@@ -19,7 +19,7 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
         this.Resource = Resources.Load("AbilityObjects/AreaOfEffectSphere", typeof(GameObject));
     }
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
@@ -59,7 +59,7 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 	
 	public override void TriggerEnter(Collider collider){
 
-        ShipAction target = collider.GetComponent<ShipAction>();
+        ShipObject target = collider.GetComponent<ShipObject>();
         if (target == null) { return; }
         target.GetComponent<ConditionHandler>().ApplyCondition(this.Condition, this.PrimaryEffect, this.Duration);
     }

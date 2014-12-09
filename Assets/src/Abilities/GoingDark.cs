@@ -11,7 +11,7 @@ public class GoingDark : BaseAbility, IAbility{
 		Duration = 1f/60f;
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();

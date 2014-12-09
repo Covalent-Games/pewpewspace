@@ -8,15 +8,17 @@ using System.IO;
 public class SceneHandler : MonoBehaviour {
 
 	public Mission CurrentMission;
-	public static List<ShipAction> PlayerShips = new List<ShipAction>();
-	public static List<ShipAction> Enemies = new List<ShipAction>();
+	public static List<ShipObject> PlayerShips = new List<ShipObject>();
+	public static List<ShipObject> Enemies = new List<ShipObject>();
 	public LayerMask TargetingLayerMask;
 
 	[SerializeField]
 	GameObject dronePrefab;
 	public int ThisWave;
 	public delegate bool WinCheck();
-	bool MissionOver = false;
+	public bool MissionOver = false;
+	public List<GameObject> Explosions;
+	public List<GameObject> RewardUI;
 
 	// Use this for initialization
 	void Start () {
@@ -57,13 +59,16 @@ public class SceneHandler : MonoBehaviour {
 
 	private IEnumerator WaitForMissionEnd() {
 
-		// This is just a temporary default to satisfy the compiler.
-		WinCheck winCheck = CheckForAllEnemiesKilled;
+		// A delegate for the win condition method
+		WinCheck winCheck;
 
 		Debug.Log("Mission is waiting for win condition to be met...");
 		switch (CurrentMission.WinCondition) {
+			default:
+				winCheck = CurrentMission.CheckForAllEnemiesKilled;
+				break;
 			case WinCondition.AllEnemiesKilled:
-				winCheck = CheckForAllEnemiesKilled;
+				winCheck = CurrentMission.CheckForAllEnemiesKilled;
 				break;
 		}
 
@@ -75,26 +80,11 @@ public class SceneHandler : MonoBehaviour {
 		GameObject.FindObjectOfType<FadeCanvas>().FadeToBlack();
 		// TODO Instantiate this from a prefab.
 		GameObject.Find("PostMissionScore").GetComponent<Canvas>().enabled = true;
-		ConcludeMission();
+		CurrentMission.ConcludeMission(this);
 
 	}
 
-	void ConcludeMission() {
 
-		MissionOver = true;
-	}
-
-	public bool CheckForAllEnemiesKilled() {
-
-		bool result = false;
-
-		Debug.Log(SceneHandler.Enemies.Count + " left to kill");
-		if (SceneHandler.Enemies.Count <= 0) {
-			result = true;
-		}
-
-		return result;
-	}
 	
 	void SpawnPlayer(){
 		
@@ -117,7 +107,7 @@ public class SceneHandler : MonoBehaviour {
 			}
 			GameObject newShipGO = (GameObject)Instantiate(prefabToLoad, spawnPosition, Quaternion.identity);
 
-			ShipAction newShip = newShipGO.GetComponent<ShipAction>();
+			ShipObject newShip = newShipGO.GetComponent<ShipObject>();
 
 			newShip.SetupPlayer(playerNum + 1);
 			PlayerShips.Add(newShip);
@@ -140,7 +130,7 @@ public class SceneHandler : MonoBehaviour {
 					spawnPosition, 
 					Quaternion.LookRotation(Vector3.back));
 
-			ShipAction newEnemy = newEnemyGO.GetComponent<ShipAction>();
+			ShipObject newEnemy = newEnemyGO.GetComponent<ShipObject>();
 			SceneHandler.Enemies.Add(newEnemy);
 			newEnemy.Container = SceneHandler.Enemies;
 		}
@@ -149,7 +139,7 @@ public class SceneHandler : MonoBehaviour {
 	void Update() {
 
 		if (MissionOver) {
-			foreach (ShipAction ship in PlayerShips) {
+			foreach (ShipObject ship in PlayerShips) {
 				if (Input.GetButtonDown(ship.player.Controller.ButtonA)) {
 					Application.LoadLevel("ShipSelection");
 				}

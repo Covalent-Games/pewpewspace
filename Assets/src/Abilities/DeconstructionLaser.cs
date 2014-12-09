@@ -14,7 +14,7 @@ public class DeconstructionLaser : BaseAbility, IAbility{
         Resource = Resources.Load("AbilityObjects/DeconstructionLaserObject");
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
@@ -55,7 +55,7 @@ public class DeconstructionLaser : BaseAbility, IAbility{
 	
 	public override void TriggerEnter(Collider collider){
 
-        ShipAction target = collider.GetComponent<ShipAction>();
+        ShipObject target = collider.GetComponent<ShipObject>();
         if (target == null) {  return; };
         target.DamageShip(this.Damage);
     }

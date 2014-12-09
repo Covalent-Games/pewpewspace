@@ -11,7 +11,7 @@ public class BatteryDrone : BaseAbility, IAbility{
 		PrimaryEffect = 100;
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
@@ -22,7 +22,7 @@ public class BatteryDrone : BaseAbility, IAbility{
 	public IEnumerator Execute(){
 		
 		Setup();
-		foreach(ShipAction ship in SceneHandler.PlayerShips){
+		foreach(ShipObject ship in SceneHandler.PlayerShips){
 		//	ship.RestoreShields((int)PrimaryEffect);
 		}
 		yield return new WaitForEndOfFrame();

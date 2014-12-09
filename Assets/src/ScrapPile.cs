@@ -9,7 +9,7 @@ public class ScrapPile {
 	int low;
 	int medium;
 	int high;
-	int PreviousScrapGained;
+	public int PreviousScrapGained;
 	#endregion
 
 	public int QualityLow {
@@ -18,11 +18,11 @@ public class ScrapPile {
 		}
 		set {
 			//TODO: Move this repeat logic into a single method. (if possible?)
-			if (low + value < 0) {
+			if (value < 0) {
 				Debug.LogError(string.Format(
 					"Attempting to remove more scrap ({0}) than is available ({1})!", value, low));
 			} else {
-				low += value;
+				low = value;
 			}
 		}
 	}
@@ -31,11 +31,11 @@ public class ScrapPile {
 			return medium;
 		}
 		set {
-			if (medium + value < 0) {
+			if (value < 0) {
 				Debug.LogError(string.Format(
 					"Attempting to remove more scrap ({0}) than is available ({1})!", value, medium));
 			} else {
-				medium += value;
+				medium = value;
 			}
 		}
 	}
@@ -44,11 +44,11 @@ public class ScrapPile {
 			return high;
 		}
 		set {
-			if (high + value < 0) {
+			if (value < 0) {
 				Debug.LogError(string.Format(
 					"Attempting to remove more scrap ({0}) than is available ({1})!", value, high));
 			} else {
-				high += value;
+				high = value;
 			}
 		}
 	}
@@ -64,12 +64,15 @@ public class ScrapPile {
 		switch (scrap.Quality) { 
 			case ScrapObject.QualityRating.Low:
 				QualityLow += scrap.Quantity;
+				Debug.Log("Added " + scrap.Quantity + " low quality scrap");
 				break;
 			case ScrapObject.QualityRating.Medium:
 				QualityMedium += scrap.Quantity;
+				Debug.Log("Added " + scrap.Quantity + " med quality scrap");
 				break;
 			case ScrapObject.QualityRating.High:
 				QualityHigh += scrap.Quantity;
+				Debug.Log("Added " + scrap.Quantity + " high quality scrap");
 				break;
 		}
 		PreviousScrapGained = scrap.Quantity;

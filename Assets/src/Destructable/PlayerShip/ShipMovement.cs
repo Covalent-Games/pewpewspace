@@ -53,13 +53,13 @@ public class ShipMovement : MonoBehaviour {
 	void RotateTurret(){
 
         Vector2 thisRotation = new Vector2(Input.GetAxis(player.Controller.RightStickX), Input.GetAxis(player.Controller.RightSticky));
-        ShipAction ship = GetComponent<ShipAction>();
+        ShipObject ship = GetComponent<ShipObject>();
         Transform turret = ship.Turret;
 
         thisRotation = Vector2.Lerp(PreviousRotation, thisRotation, Time.deltaTime * 7);
 
         if (ship.Target != null) {
-            if (AbilityUtils.IsPlayer(ship.Target.GetComponent<ShipAction>())) {
+            if (AbilityUtils.IsPlayer(ship.Target.GetComponent<ShipObject>())) {
 		        UpdateTargetingLine(turret, Vector3.Distance(transform.position, ship.Target.position), Color.green);
             } else {
                 UpdateTargetingLine(turret, Vector3.Distance(transform.position, ship.Target.position), Color.red);

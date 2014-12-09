@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EmpowerOtherProjectile : MonoBehaviour {
 
-	public ShipAction Target;
+	public ShipObject Target;
 	public float DamageModifier;
 	public float Duration;
 	bool tracking;
@@ -34,7 +34,7 @@ public class EmpowerOtherProjectile : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider collider){
 	
-		ShipAction shipAction = collider.GetComponent<ShipAction>();
+		ShipObject shipAction = collider.GetComponent<ShipObject>();
 		
 		if (shipAction == null){
 			return;

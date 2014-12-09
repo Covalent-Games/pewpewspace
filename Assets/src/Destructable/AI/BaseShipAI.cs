@@ -5,14 +5,19 @@ using System.Collections.Generic;
 
 public class BaseShipAI : MonoBehaviour {
 
-	public ShipAction actions;
+	public ShipObject actions;
 
 	[SerializeField]
-    public ShipAction target;
+    public ShipObject target;
     public Vector3 Destination;
 	
 	public void AcquireTarget(){
-	
-		target = SceneHandler.PlayerShips[Random.Range(0, SceneHandler.PlayerShips.Count)];
+
+		if (SceneHandler.PlayerShips.Count <= 0) {
+			return;
+		}
+		int index = Random.Range(0, SceneHandler.PlayerShips.Count);
+		Debug.Log(this.name + " is targeting " + index.ToString());
+		target = SceneHandler.PlayerShips[index];
 	}
 }

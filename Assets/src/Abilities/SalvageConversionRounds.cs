@@ -16,7 +16,7 @@ public class SalvageConversionRounds : BaseAbility, IAbility{
 		CustomProjectile = (GameObject)Resources.Load(path, typeof(GameObject));
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();

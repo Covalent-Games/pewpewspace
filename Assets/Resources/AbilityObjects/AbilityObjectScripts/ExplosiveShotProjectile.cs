@@ -36,7 +36,7 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
 	
     void OnTriggerEnter(Collider collider) {
 
-        ShipAction shipAction = collider.GetComponent<ShipAction>();
+        ShipObject shipAction = collider.GetComponent<ShipObject>();
 
         if (shipAction == null) {
             return;
@@ -47,9 +47,11 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
         }
 
 		// Only damage enemies within blast radius
-		foreach (var enemy in SceneHandler.Enemies) {
-			if (Vector3.Distance(enemy.transform.position, transform.position) <= damageRadius) {
-				enemy.GetComponent<ShipAction>().DamageShip(this.Damage);
+		foreach (var enemy in SceneHandler.Enemies.ToArray()) {
+			float distance = Vector3.Distance(enemy.transform.position, transform.position);
+
+			if (distance <= damageRadius) {
+				enemy.GetComponent<ShipObject>().DamageShip(this.Damage);
 				Debug.Log("Explosive shot hit " + enemy.ToString());
 			}
 		}

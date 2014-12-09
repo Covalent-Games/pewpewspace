@@ -5,7 +5,7 @@ public class DroneAI : BaseShipAI {
 
 	void Start () {
 		
-		actions = GetComponent<ShipAction>();
+		actions = GetComponent<ShipObject>();
 		actions.SetUpBaseAttributes();
 		AcquireTarget();
 		AcquireDestination();

@@ -16,7 +16,7 @@ public class EnergyMissilePods : BaseAbility, IAbility {
         CustomProjectile = (GameObject)Resources.Load(path, typeof(GameObject));
     }
 
-    public void Begin(ShipAction ship) {
+    public void Begin(ShipObject ship) {
         Debug.Log("Energy Missile engaged!");
         Ship = ship;
         CustomProjectile.GetComponent<EnergyMissilePodsProjectile>().Owner = ship;

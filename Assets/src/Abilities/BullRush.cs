@@ -7,7 +7,7 @@ public class BullRush : BaseAbility, IAbility{
 	
 	private Vector3 moveTowards;
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		this.Ship = ship;
 		this.ShipMove = ship.GetComponent<ShipMovement>();

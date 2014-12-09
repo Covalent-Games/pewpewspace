@@ -30,7 +30,7 @@ public class MenuHandler : MonoBehaviour {
                 continue;
             }
 			player.GetComponent<ShipMovement>().enabled = false;
-			player.GetComponent<ShipAction>().enabled = false;
+			player.GetComponent<ShipObject>().enabled = false;
 		}
 	}
 
@@ -42,7 +42,7 @@ public class MenuHandler : MonoBehaviour {
                 continue;
             }
 			player.GetComponent<ShipMovement>().enabled = true;
-			player.GetComponent<ShipAction>().enabled = true;
+			player.GetComponent<ShipObject>().enabled = true;
 		}
 	}
 
