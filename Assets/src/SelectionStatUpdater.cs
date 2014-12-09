@@ -10,7 +10,7 @@ public class SelectionStatUpdater : MonoBehaviour {
 	public List<Text> Player3Stats;
 	public List<Text> Player4Stats;
 
-	public void UpdateStats(int playerNumber, ShipAction ship) {
+	public void UpdateStats(int playerNumber, ShipObject ship) {
 
 		List<Text> list;
 
@@ -29,6 +29,7 @@ public class SelectionStatUpdater : MonoBehaviour {
 				break;
 		}
 
+		Player player;
 		foreach (Text label in list) {
 			switch (label.name) {
 				case "HealthText":
@@ -42,6 +43,14 @@ public class SelectionStatUpdater : MonoBehaviour {
 					break;
 				case "ShipName":
 					label.text = ship.gameObject.name;
+					break;
+				// Placeholder until we have icons for each scrap type.
+				case "ScrapStock":
+					player = GameValues.Players[playerNumber+1];
+					int low = player.Scrap.QualityLow;
+					int med = player.Scrap.QualityMedium;
+					int high = player.Scrap.QualityHigh;
+					label.text = string.Format("Scrap Storage: L: {0} -- M: {1} -- H: {2}", low, med, high);
 					break;
 			}
 		}

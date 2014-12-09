@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SalvageConversionRoundsProjectile : MonoBehaviour, IProjectile {
 
-	public ShipAction Target { get; set; }
+	public ShipObject Target { get; set; }
 	public float velocity;
 	public Vector3 Direction {get; set;}
 	public int Damage {get; set;}
@@ -32,7 +32,7 @@ public class SalvageConversionRoundsProjectile : MonoBehaviour, IProjectile {
 			int damageDealt = oldHealth - oldHealth;
 			int restoreAmount = Mathf.RoundToInt(damageDealt/(float)SceneHandler.PlayerShips.Count);
 			
-			foreach(ShipAction ship in SceneHandler.PlayerShips){
+			foreach(ShipObject ship in SceneHandler.PlayerShips){
 				ship.RestoreArmor(restoreAmount);
 			}
 			

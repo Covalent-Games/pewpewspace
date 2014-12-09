@@ -15,7 +15,7 @@ public class EmpowerOther : BaseAbility, IAbility{
 		Percentage = 0.35f;
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
@@ -50,7 +50,7 @@ public class EmpowerOther : BaseAbility, IAbility{
 		// The player has a target
 		if (Ship.Target != null){
 			// The target is a player
-			ShipAction target = Ship.Target.GetComponent<ShipAction>();
+			ShipObject target = Ship.Target.GetComponent<ShipObject>();
 			if (AbilityUtils.IsPlayer(target)){
 				projectile.Target = target;	
 			// The target is not a player, so we target the player that triggered the ability
@@ -61,7 +61,7 @@ public class EmpowerOther : BaseAbility, IAbility{
 		} else {
 			//TODO: Check if the targeted player has this boon already
 			int index = Random.Range(0, SceneHandler.PlayerShips.Count);
-			ShipAction friendlyTarget = SceneHandler.PlayerShips[index];
+			ShipObject friendlyTarget = SceneHandler.PlayerShips[index];
 			projectile.Target = friendlyTarget;
 		}
 		

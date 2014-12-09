@@ -6,7 +6,7 @@ public class TargetCursor : MonoBehaviour {
 	public Transform Tracking;
 	public SpriteRenderer ThisRenderer;
 
-	void Start () {
+	void Awake () {
 		
 		ThisRenderer = GetComponent<SpriteRenderer>();
 	}

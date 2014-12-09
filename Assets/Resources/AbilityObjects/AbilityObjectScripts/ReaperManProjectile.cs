@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ReaperManProjectile : MonoBehaviour {
 
-    public ShipAction Target;
+    public ShipObject Target;
     bool tracking;
     public int damage;
 
@@ -37,7 +37,7 @@ public class ReaperManProjectile : MonoBehaviour {
     void OnTriggerEnter(Collider collider)
     {
 
-        ShipAction shipAction = collider.GetComponent<ShipAction>();
+        ShipObject shipAction = collider.GetComponent<ShipObject>();
 
         if (shipAction == null)
         {

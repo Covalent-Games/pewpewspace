@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine.UI;
 
-public class ShipAction : Destructable {
+public class ShipObject : Destructable {
 	
 	public static Dictionary<string, System.Type> AbilityDict = new Dictionary<string, System.Type>();
 	
@@ -58,8 +58,8 @@ public class ShipAction : Destructable {
 		gameObject.AddComponent("BoonHandler");
 	
         if (!AbilityUtils.IsPlayer(this)) {
-		Turret = transform.FindChild("Turret");
-	}
+			Turret = transform.FindChild("Turret");
+		}
 	}
 	
 	public void SetupPlayer(int playerNumber){
@@ -136,7 +136,7 @@ public class ShipAction : Destructable {
 
 	IAbility AddAbility(string name){
 		
-		return (IAbility)gameObject.AddComponent(ShipAction.AbilityDict[name]);
+		return (IAbility)gameObject.AddComponent(ShipObject.AbilityDict[name]);
 	}
 	
 	/// <summary>
@@ -165,22 +165,22 @@ public class ShipAction : Destructable {
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
 			if (Dissipation < this.maxDissipation && !Ability1.Executing){
-				Ability1.Begin(GetComponent<ShipAction>());
+				Ability1.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonB)){
 			if (Dissipation < this.maxDissipation && !Ability2.Executing) {
-				Ability2.Begin(GetComponent<ShipAction>());
+				Ability2.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonX)){
 			if (Dissipation < this.maxDissipation && !Ability3.Executing) {
-				Ability3.Begin(GetComponent<ShipAction>());
+				Ability3.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonY)){
 			if (Dissipation < this.maxDissipation && !Ability4.Executing) {
-				Ability4.Begin(GetComponent<ShipAction>());
+				Ability4.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.LeftBumper)){
@@ -202,9 +202,11 @@ public class ShipAction : Destructable {
 
 		// If the player has no target
 		if (Target == null) {
-		projectile.Direction = Vector3.up;
+			projectile.Direction = Vector3.up;
+		} else if (Target != null && AbilityUtils.IsPlayer(Target.GetComponent<ShipObject>())){
+			projectile.Direction = Vector3.up;
 		} else {
-			projectile.Target = Target.GetComponent<ShipAction>();
+			projectile.Target = Target.GetComponent<ShipObject>();
 		}
 		projectile.Damage = GetDamage();
 
@@ -213,7 +215,10 @@ public class ShipAction : Destructable {
 	}
 	
 	void FindNewTarget(){
-	
+		
+		// 
+		if (player == null) { return; }
+
         if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
 		RaycastHit hitInfo;
 
@@ -238,6 +243,7 @@ public class ShipAction : Destructable {
 			
 			Target = hitInfo.transform;
 			cursor.Tracking = hitInfo.transform;
+
 			cursor.ThisRenderer.enabled = true;
 		}
 	}

@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour, IProjectile {
 
 	public float velocity;
 	public Vector3 Direction { get; set; }
-	public ShipAction Target { get; set; }
+	public ShipObject Target { get; set; }
 	public int Damage { get; set; }
 
 	void Update () {

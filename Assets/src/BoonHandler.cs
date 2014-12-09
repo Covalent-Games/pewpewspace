@@ -24,7 +24,7 @@ public class BoonHandler : MonoBehaviour {
 	
 	IEnumerator IncreaseDamage(Boon boon, int mod, float duration){
 		
-		ShipAction ship = GetComponent<ShipAction>();
+		ShipObject ship = GetComponent<ShipObject>();
 		
 		// If the ship is destroyed before this effect ends it will raise an exception.
 		if (ship == null) {

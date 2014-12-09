@@ -13,7 +13,7 @@ public class ReaperMan : BaseAbility, IAbility{
         Damage = 100;
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
@@ -52,17 +52,17 @@ public class ReaperMan : BaseAbility, IAbility{
         // Player has no target
         if (Ship.Target == null) {
             int index = Random.Range(0, SceneHandler.Enemies.Count);
-            ShipAction hostileTarget = SceneHandler.Enemies[index];
+            ShipObject hostileTarget = SceneHandler.Enemies[index];
             projectile.Target = hostileTarget;
         } else {
 
-            ShipAction target = Ship.Target.GetComponent<ShipAction>();
+            ShipObject target = Ship.Target.GetComponent<ShipObject>();
 
             // The target is a player
             if (AbilityUtils.IsPlayer(target))
             {
                 int index = Random.Range(0, SceneHandler.Enemies.Count);
-                ShipAction hostileTarget = SceneHandler.Enemies[index];
+                ShipObject hostileTarget = SceneHandler.Enemies[index];
                 projectile.Target = hostileTarget;
             }
             else

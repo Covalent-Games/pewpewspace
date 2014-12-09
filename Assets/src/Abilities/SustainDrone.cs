@@ -13,7 +13,7 @@ public class SustainDrone : BaseAbility, IAbility{
 		SecondaryEffect = 6;
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();

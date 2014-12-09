@@ -17,7 +17,7 @@ public class StartUp : MonoBehaviour {
 		AbilityUtils.UpdateAbilityDictionaries();
 		
 		if (Debugging){
-			foreach(var entry in ShipAction.AbilityDict){
+			foreach(var entry in ShipObject.AbilityDict){
 				Debug.Log(string.Format("Name: {0}, Ability: {1}", entry.Key, entry.Value));
 			}
 		}

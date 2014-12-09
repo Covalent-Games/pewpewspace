@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class BaseAbility: MonoBehaviour{
 	
 	public ShipType ShipClass;
-	protected ShipAction Ship;
+	protected ShipObject Ship;
 	protected ShipMovement ShipMove;
 	public bool Executing {get; set;}
 	public float Cost {get; set;}
@@ -36,7 +36,7 @@ public class BaseAbility: MonoBehaviour{
 
 public static class AbilityUtils {
 
-	public static bool IsPlayer(ShipAction shipAction){
+	public static bool IsPlayer(ShipObject shipAction){
 	
 		int value = (int)shipAction.ShipClass;
 
@@ -53,7 +53,7 @@ public static class AbilityUtils {
 		
 		foreach(var abilityType in classes){
 			string name = abilityType.Name;
-			ShipAction.AbilityDict.Add(name, abilityType);
+			ShipObject.AbilityDict.Add(name, abilityType);
 		}
 	}
 	

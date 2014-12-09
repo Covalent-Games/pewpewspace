@@ -81,7 +81,7 @@ public class SelectionHandler : MonoBehaviour {
 				ship = (GameObject)Instantiate(prefab, shipDisplayCoords, shipDisplayRotation);
 				ship.GetComponent<MeshRenderer>().enabled = false;
 				ship.GetComponent<ShipMovement>().enabled = false;
-				ship.GetComponent<ShipAction>().enabled = false;
+				ship.GetComponent<ShipObject>().enabled = false;
 				ship.name = prefab.name;
 
 				availableShips[playerNumber][count] = ship;
@@ -92,7 +92,7 @@ public class SelectionHandler : MonoBehaviour {
 			// Make the first ship in the list visible and display that ship's stats on the screen.
 			ship = availableShips[playerNumber][0];
 			ship.GetComponent<MeshRenderer>().enabled = true;
-			StatUpdater.UpdateStats(playerNumber, ship.GetComponent<ShipAction>());
+			StatUpdater.UpdateStats(playerNumber, ship.GetComponent<ShipObject>());
 
 		}
 	}
@@ -158,7 +158,7 @@ public class SelectionHandler : MonoBehaviour {
 		previousGO.GetComponent<MeshRenderer>().enabled = false;
 		GameObject newSelection = availableShips[playerNumber][selectionIndex];
 		newSelection.GetComponent<MeshRenderer>().enabled = true;
-		StatUpdater.UpdateStats(playerNumber, newSelection.GetComponent<ShipAction>());
+		StatUpdater.UpdateStats(playerNumber, newSelection.GetComponent<ShipObject>());
 	}
 
 	void StartGame() {

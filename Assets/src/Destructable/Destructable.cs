@@ -8,7 +8,7 @@ public class Destructable : MonoBehaviour {
 
 	#region Members
 
-	public List<ShipAction> Container = new List<ShipAction>();
+	public List<ShipObject> Container = new List<ShipObject>();
 
 	public int maxHealth;
 	public float maxDissipation;
@@ -141,7 +141,10 @@ public class Destructable : MonoBehaviour {
 		// itself is a member of the physical GameObject and so referencing gameObject raises an error.
 		// The object sometimes tries to be destroyed twice in one frame. This check prevents that.
 		if (gameObject != null){
-			Container.Remove(GetComponent<ShipAction>());
+			Container.Remove(GetComponent<ShipObject>());
+			var explosions = GameObject.FindObjectOfType<SceneHandler>().Explosions;
+			var explosion = explosions[Random.Range(1, explosions.Count) - 1];
+			Instantiate(explosion, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
 	}

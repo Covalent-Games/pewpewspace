@@ -18,7 +18,7 @@ public class ConditionHandler : MonoBehaviour {
 	
 	IEnumerator ReduceDamage(Condition condition, int mod, float duration){
 
-		ShipAction ship = GetComponent<ShipAction>();
+		ShipObject ship = GetComponent<ShipObject>();
 		if (ship.ActiveConditions.Contains(condition)) {
 			yield break;
 		}
@@ -38,7 +38,7 @@ public class ConditionHandler : MonoBehaviour {
     /// </summary>
     IEnumerator ReduceSpeed(Condition condition, int mod, float duration) {
 
-        ShipAction ship = GetComponent<ShipAction>();
+        ShipObject ship = GetComponent<ShipObject>();
         if (ship.ActiveConditions.Contains(condition)) {
             yield break;
         }
