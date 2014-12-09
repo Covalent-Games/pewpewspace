@@ -50,7 +50,7 @@ public class BoonHandler : MonoBehaviour {
 
 	IEnumerator IncreaseFireRate(Boon boon, float mod, float duration) {
 
-		ShipAction ship = GetComponent<ShipAction>();
+		ShipObject ship = GetComponent<ShipObject>();
 
 		if (ship == null)
 			yield break;

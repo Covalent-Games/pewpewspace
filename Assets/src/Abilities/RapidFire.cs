@@ -12,7 +12,7 @@ public class RapidFire : BaseAbility, IAbility{
 		Percentage = 0.2f;
 	}
 	
-	public void Begin(ShipAction ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
