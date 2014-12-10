@@ -77,7 +77,7 @@ public class ShipObject : Destructable {
 		this logic will depend on which player is controlling the ship.*/
 		SetUpBaseAttributes();
 		this.shotPerSecond = 1f/this.shotPerSecond;
-		this.fireCost = this.maxDissipation / 10f * this.shotPerSecond;
+		this.fireCost = this.MaxHeat / 10f * this.shotPerSecond;
 		//Debug.Log("Fire cost = " + fireCost);
 		this.overheated = false;
 		AcquireHud();
@@ -113,13 +113,14 @@ public class ShipObject : Destructable {
 		switch (ShipClass){
 			case ShipType.Guardian:
 				Ability1 = AddAbility("SonicDisruption");
-				Ability2 = AddAbility("BullRush");
-				Ability3 = AddAbility("SustainDrone");
+				Ability2 = AddAbility("ShieldCover");
+				Ability3 = AddAbility("BullRush");
+				Ability4 = AddAbility("SustainDrone");
 			break;
 			case ShipType.Outrunner:
 				Ability1 = AddAbility("SalvageConversionRounds");
 				Ability2 = AddAbility("EmpowerOther");
-				Ability3 = AddAbility("BatteryDrone");
+				Ability3 = AddAbility("RepairDrone");
 				break;
 			case ShipType.Raider:
                 Ability1 = AddAbility("DeconstructionLaser");
@@ -163,22 +164,22 @@ public class ShipObject : Destructable {
 			Fire();
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonA)){
-			if (Dissipation < this.maxDissipation && !Ability1.Executing){
+			if (Heat < this.MaxHeat && !Ability1.Executing){
 				Ability1.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonB)){
-			if (Dissipation < this.maxDissipation && !Ability2.Executing) {
+			if (Heat < this.MaxHeat && !Ability2.Executing) {
 				Ability2.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonX)){
-			if (Dissipation < this.maxDissipation && !Ability3.Executing) {
+			if (Heat < this.MaxHeat && !Ability3.Executing) {
 				Ability3.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(player.Controller.ButtonY)){
-			if (Dissipation < this.maxDissipation && !Ability4.Executing) {
+			if (Heat < this.MaxHeat && !Ability4.Executing) {
 				Ability4.Begin(GetComponent<ShipObject>());
 			}
 		}
@@ -210,7 +211,7 @@ public class ShipObject : Destructable {
 		projectile.Damage = GetDamage();
 
 		// TODO: match standard fire heat generation with cooldown
-		Dissipation += this.fireCost;
+		Heat += this.fireCost;
 	}
 	
 	void FindNewTarget(){
@@ -265,8 +266,8 @@ public class ShipObject : Destructable {
 	/// </summary>
 	void UpdateHUD() {
 		
-		float healthRatio = (float)this.Health/(float)this.maxHealth;
-		float dissipationRatio = this.Dissipation/this.maxDissipation;
+		float healthRatio = (float)this.Armor/(float)this.MaxArmor;
+		float dissipationRatio = this.Heat/this.MaxHeat;
 		
 		this.healthBar.GetComponent<Image>().fillAmount = healthRatio;
 		this.dissipationBar.GetComponent<Image>().fillAmount = dissipationRatio > 1f ? 1f : dissipationRatio;
@@ -275,7 +276,7 @@ public class ShipObject : Destructable {
 	
 	void Update () {
 		
-		if (this.Dissipation < this.maxDissipation && !overheated) {
+		if (this.Heat < this.MaxHeat && !overheated) {
 			UpdateShotTimer();
 			FindNewTarget();
 			HandleInput();
@@ -302,21 +303,21 @@ public class ShipObject : Destructable {
 			// 1. Slow player by 25%
 			originalSpeed = this.Speed;
 			this.Speed *= 0.75f;
-			float overheatedBy = this.Dissipation - this.maxDissipation;
-			this.Dissipation = this.maxDissipation;
+			float overheatedBy = this.Heat - this.MaxHeat;
+			this.Heat = this.MaxHeat;
 			// 2. Calculate how long the player will overheat for
 			overheatTime = Mathf.Sqrt(overheatedBy);
 			Debug.Log("Overheat time = " + overheatTime);
 			if (overheatTime < 3f)
 				overheatTime = 3f;
-			coolAmount = this.maxDissipation * 0.25f;
+			coolAmount = this.MaxHeat * 0.25f;
 			overheatTimer = 0f;
 		} 
 		if (this.overheated) {
 			// 3. Overheat loop
 			//Debug.Log("cooling..." + overheatTimer);
 			float cooldown = coolAmount / overheatTime * Time.deltaTime;
-			this.Dissipation -= cooldown;
+			this.Heat -= cooldown;
 			overheatTimer += Time.deltaTime;
 
 			if (overheatTimer > overheatTime) {
@@ -347,6 +348,6 @@ public class ShipObject : Destructable {
 		if (destructable == null) { return; }
 		
 		// On collision with another destructable object, deal 10% of max health as Damage
-		destructable.DamageArmor(Mathf.RoundToInt(this.maxHealth/10f));
+		destructable.DamageArmor(Mathf.RoundToInt(this.MaxArmor/10f));
 	}
 }

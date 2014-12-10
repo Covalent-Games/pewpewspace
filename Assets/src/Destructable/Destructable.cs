@@ -10,15 +10,15 @@ public class Destructable : MonoBehaviour {
 
 	public List<ShipObject> Container = new List<ShipObject>();
 
-	public int maxHealth;
-	public float maxDissipation;
+	public int MaxArmor;
+	public float MaxHeat;
 	//public int maxShields;
 	public float baseSpeed;
 	
 	[SerializeField]
-	int health;
+	int armor;
 	[SerializeField]
-	float dissipation;
+	float heat;
 	//int shields;
 	public float Speed;
 	
@@ -30,62 +30,51 @@ public class Destructable : MonoBehaviour {
 	public bool InvulnerableArmor = false;
 	[SerializeField]
 	public bool InvulnerableDissipation = false;
-	//public bool InvulnerableShield = false;
+	
 	
 	#endregion
 	
 	#region Properties	
-	public int Health {
-		get { return this.health; }
+	public int Armor {
+		get { return this.armor; }
 		set {
-			this.health = value;
-			if(this.health <= 0) {
+			this.armor = value;
+			if(this.armor <= 0) {
 				End ();
 			}
-			if (this.health > this.maxHealth){
-				this.health = this.maxHealth;
+			if (this.armor > this.MaxArmor){
+				this.armor = this.MaxArmor;
 			}
 		}
 	}
-	public float Dissipation {
+	public float Heat {
 		get {
-			return this.dissipation;
+			return this.heat;
 		}
 		set {
-			this.dissipation = value;
-			if (this.dissipation < 0){
-				this.dissipation = 0f;
+			this.heat = value;
+			if (this.heat < 0){
+				this.heat = 0f;
 			}
 		}
 	}
 
-	/*
-	public int Shields {
-		get {
-			return this.shields;
-		}
-		set {
-			this.shields = value;
-			if (this.shields > this.maxShields){
-				this.shields = this.maxShields;
-			}
-		}
-	}
-	*/
 	#endregion
 	
-	// Dissipation change: no longer damages shields.
+	/// <summary>
+	/// DEPRICATED: DO NOT USE
+	/// </summary>
 	public int DamageShip(int damage){
 	
 		if (this.Invulnerable){ 
-				return this.Health;
+				return this.Armor;
 		}
 		if (!this.InvulnerableArmor){
-			this.Health -= damage;
+			this.Armor -= damage;
 
             DisplayFloatingDamage(damage);
 
-			return this.Health;
+			return this.Armor;
 		}
 		
 		return 0;
@@ -94,31 +83,31 @@ public class Destructable : MonoBehaviour {
 	public int DamageArmor(int damage){
 
 		if (!this.Invulnerable & !this.InvulnerableArmor){
-			this.Health -= damage;
+			this.Armor -= damage;
 
             DisplayFloatingDamage(damage);
 
-			return this.Health;
+			return this.Armor;
 		}
 
-		return this.Health;
+		return this.Armor;
 	}
 
 	public int RestoreArmor(int restoreAmount){
 	
-		this.Health += restoreAmount;
-		return this.Health;
+		this.Armor += restoreAmount;
+		return this.Armor;
 	}
 
 	public float RestoreDissipation(float cooldown) {
 
-		this.Dissipation -= cooldown;
-		return this.Dissipation;
+		this.Heat -= cooldown;
+		return this.Heat;
 	}
 
 	protected float DissipationCooldown() {
 
-		float cooldown = this.maxDissipation / 10f * Time.deltaTime;
+		float cooldown = this.MaxHeat / 10f * Time.deltaTime;
 		return RestoreDissipation(cooldown);
 	}
 
@@ -132,10 +121,10 @@ public class Destructable : MonoBehaviour {
 
 	void Start () {
 		
-		this.health = this.maxHealth;
+		this.armor = this.MaxArmor;
 	}
 
-	void End(){
+	public virtual void End(){
 		
 		//FIXME The comment below is a lie, and I don't currently know the fix. It's a rare bug. 'gameObject'
 		// itself is a member of the physical GameObject and so referencing gameObject raises an error.
@@ -151,8 +140,8 @@ public class Destructable : MonoBehaviour {
 	
 	public void SetUpBaseAttributes(){
 	
-		this.Health = this.maxHealth;
-		this.Dissipation = 0f;
+		this.Armor = this.MaxArmor;
+		this.Heat = 0f;
 		//this.Shields = this.maxShields;
 		this.Speed = this.baseSpeed;
 	}

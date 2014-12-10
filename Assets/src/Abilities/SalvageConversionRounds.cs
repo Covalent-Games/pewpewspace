@@ -38,7 +38,7 @@ public class SalvageConversionRounds : BaseAbility, IAbility{
 		while (Toggle){
 			// TODO: This might not be responsive enough at 1 second.
 			yield return new WaitForSeconds(1f);
-			if (Ship.maxDissipation - Ship.Dissipation < Cost){
+			if (Ship.MaxHeat - Ship.Heat < Cost){
 				Toggle = false;
 				TearDown();
 				yield break;

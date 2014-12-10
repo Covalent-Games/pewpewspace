@@ -248,11 +248,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Container: []
-  maxHealth: 250
-  maxDissipation: 200
+  MaxArmor: 250
+  MaxHeat: 100
   baseSpeed: 1.20000005
-  health: 0
-  dissipation: 0
+  armor: 0
+  heat: 0
   Speed: 0
   Invulnerable: 0
   InvulnerableArmor: 0

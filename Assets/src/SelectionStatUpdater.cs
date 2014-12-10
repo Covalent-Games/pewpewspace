@@ -33,7 +33,7 @@ public class SelectionStatUpdater : MonoBehaviour {
 		foreach (Text label in list) {
 			switch (label.name) {
 				case "HealthText":
-					label.text = ship.maxHealth.ToString();
+					label.text = ship.MaxArmor.ToString();
 					break;
 				case "DamageText":
 					label.text = ship.GetDamage().ToString();

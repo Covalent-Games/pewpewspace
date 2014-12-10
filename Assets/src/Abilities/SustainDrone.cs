@@ -7,10 +7,9 @@ public class SustainDrone : BaseAbility, IAbility{
 	
 	public void Start() {
 		
-		Cost = 50f;
+		Cost = 40f;
 		Duration = 7f;
-		PrimaryEffect = 10;
-		SecondaryEffect = 6;
+		SecondaryEffect = 2;
 	}
 	
 	public void Begin(ShipObject ship){
@@ -31,12 +30,8 @@ public class SustainDrone : BaseAbility, IAbility{
 			DurationTimer += Time.time - lastFrameTime;
 			lastFrameTime = Time.time;
 
-			//if (Ship.Shields < Ship.maxShields/2f){
-			//	Ship.RestoreShields(PrimaryEffect);
-			//} else {
-				Ship.RestoreArmor(SecondaryEffect);
-			//}
-			yield return new WaitForSeconds(.25f);
+			Ship.RestoreArmor(SecondaryEffect);
+			yield return new WaitForEndOfFrame();
 		}
 
 		TearDown();

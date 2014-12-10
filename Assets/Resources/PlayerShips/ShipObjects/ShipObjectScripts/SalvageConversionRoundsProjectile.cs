@@ -27,7 +27,7 @@ public class SalvageConversionRoundsProjectile : MonoBehaviour, IProjectile {
 		Destructable destructable = collider.GetComponent<Destructable>();
 		
 		if (destructable != null){
-			int oldHealth = destructable.Health;
+			int oldHealth = destructable.Armor;
 			destructable.DamageShip(this.Damage);
 			int damageDealt = oldHealth - oldHealth;
 			int restoreAmount = Mathf.RoundToInt(damageDealt/(float)SceneHandler.PlayerShips.Count);

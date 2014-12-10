@@ -35,7 +35,7 @@ public class GoingDark : BaseAbility, IAbility{
 	public void Setup(){
 		
 		Executing = true;
-		Ship.Dissipation += Cost;
+		Ship.Heat += Cost;
 	}
 	
 	public void TearDown(){

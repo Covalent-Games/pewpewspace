@@ -44,7 +44,7 @@ public class DeconstructionLaser : BaseAbility, IAbility{
 	public void Setup(){
 		
 		Executing = true;
-        Ship.Dissipation += Cost;
+        Ship.Heat += Cost;
 	}
 	
 	public void TearDown(){

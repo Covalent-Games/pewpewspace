@@ -14,6 +14,7 @@ public class BaseAbility: MonoBehaviour{
 	public Object Resource;
 	
 	// These exist to outline what the current abilities can handle and to keep naming uniform.
+	// NOTE: With levels, these are basically useless
 	public Condition Condition;
 	public Boon Boon;
 	public bool Toggle;
