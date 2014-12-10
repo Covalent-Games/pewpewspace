@@ -61,28 +61,9 @@ public class Destructable : MonoBehaviour {
 
 	#endregion
 	
-	/// <summary>
-	/// DEPRICATED: DO NOT USE
-	/// </summary>
-	public int DamageShip(int damage){
-	
-		if (this.Invulnerable){ 
-				return this.Armor;
-		}
-		if (!this.InvulnerableArmor){
-			this.Armor -= damage;
-
-            DisplayFloatingDamage(damage);
-
-			return this.Armor;
-		}
-		
-		return 0;
-	}
-	
 	public int DamageArmor(int damage){
 
-		if (!this.Invulnerable & !this.InvulnerableArmor){
+		if (!this.Invulnerable){
 			this.Armor -= damage;
 
             DisplayFloatingDamage(damage);
@@ -91,6 +72,21 @@ public class Destructable : MonoBehaviour {
 		}
 
 		return this.Armor;
+	}
+
+	public int DamageArmor(int damage, ShipObject offender) {
+
+		int armor = DamageArmor(damage);
+		BaseShipAI ai = GetComponent<BaseShipAI>();
+		if (ai != null) {
+			if (ai.ThreatTable.ContainsKey(offender)) {
+				ai.ThreatTable[offender] += damage;
+			} else {
+				ai.ThreatTable.Add(offender, damage);
+			}
+		}
+
+		return armor;
 	}
 
 	public int RestoreArmor(int restoreAmount){

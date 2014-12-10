@@ -37,7 +37,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 		
 		ShipObject target = collider.GetComponent<ShipObject>();
 		if (target == null) { return; }
-		target.DamageShip(this.PrimaryEffect);
+		target.DamageArmor(this.PrimaryEffect, Ship);
 		target.GetComponent<ConditionHandler>().ApplyCondition(this.Condition, this.SecondaryEffect, this.Duration);
 	}
 	

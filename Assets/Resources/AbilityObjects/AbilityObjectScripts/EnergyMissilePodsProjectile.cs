@@ -6,7 +6,7 @@ public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
 	public ShipObject Target { get; set; }
     bool tracking;
     public int Damage { get; set; }
-    public ShipObject Owner;
+	public ShipObject Owner { get; set; }
     public Vector3 Direction { get; set; }
     public Vector3 oldPosition;
     public Vector3 newPosition;
@@ -82,19 +82,19 @@ public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
 		if (target == null)
 			Debug.LogError("Collider does not have a gameobject");
 
-        ShipObject shipAction = target.GetComponent<ShipObject>();
+        ShipObject shipObject = target.GetComponent<ShipObject>();
 
-        if (shipAction == null) {
-			Debug.Log("Shipaction is null");
+        if (shipObject == null) {
+			Debug.Log("shipObject is null");
             return;
         }
 
-        if (AbilityUtils.IsPlayer(shipAction)) {
+        if (AbilityUtils.IsPlayer(shipObject)) {
 			Debug.Log("IsPlayer");
             return;
         }
 
-        shipAction.DamageShip(Damage);
+        shipObject.DamageArmor(Damage, Owner);
         Debug.Log("Dealing " + Damage + " damage");
 
         tracking = false;

@@ -57,7 +57,7 @@ public class DeconstructionLaser : BaseAbility, IAbility{
 
         ShipObject target = collider.GetComponent<ShipObject>();
         if (target == null) {  return; };
-        target.DamageShip(this.Damage);
+        target.DamageArmor(this.Damage, Ship);
     }
 	
 	public void TriggerStay(Collider collider){}

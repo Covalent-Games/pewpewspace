@@ -43,6 +43,7 @@ public class ReaperMan : BaseAbility, IAbility{
                 Ship.transform.rotation);
         ReaperManProjectile projectile = projectileGO.GetComponent<ReaperManProjectile>();
         SetTarget(projectile);
+		projectile.Owner = Ship;
         StartCoroutine(projectile.TrackToTarget());
 
 	}

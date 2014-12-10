@@ -37,9 +37,9 @@ public class BaseAbility: MonoBehaviour{
 
 public static class AbilityUtils {
 
-	public static bool IsPlayer(ShipObject shipAction){
+	public static bool IsPlayer(ShipObject shipObject){
 	
-		int value = (int)shipAction.ShipClass;
+		int value = (int)shipObject.ShipClass;
 
 		if (value >= 0 & value <= 20){
 			return true;

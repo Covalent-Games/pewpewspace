@@ -40,7 +40,7 @@ public class ShieldCover : BaseAbility, IAbility {
 		Shield.transform.parent = transform;
 		ShieldCoverObject shield = Shield.GetComponent<ShieldCoverObject>();
 		shield.Size = new Vector3(15f, 10f, 15f);
-		shield.InvulnerableArmor = true;
+		shield.Invulnerable = true;
 		
 		
 	}

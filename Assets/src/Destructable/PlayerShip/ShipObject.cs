@@ -59,6 +59,8 @@ public class ShipObject : Destructable {
 	
         if (!AbilityUtils.IsPlayer(this)) {
 			Turret = transform.FindChild("Turret");
+			BaseShipAI ai = GetComponent<BaseShipAI>();
+			ai.StartCoroutine(ai.DissipateThreat());
 		}
 	}
 	
@@ -209,6 +211,7 @@ public class ShipObject : Destructable {
 			projectile.Target = Target.GetComponent<ShipObject>();
 		}
 		projectile.Damage = GetDamage();
+		projectile.Owner = this;
 
 		// TODO: match standard fire heat generation with cooldown
 		Heat += this.fireCost;
@@ -337,6 +340,7 @@ public class ShipObject : Destructable {
 		// FIXME: this.shotPerSecond is actually seconds per shot, but shots per second for the players. *shrug*.
 		if (this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
+			GetComponent<BaseShipAI>().AcquireTarget();
 			Fire();
 		}
 	}

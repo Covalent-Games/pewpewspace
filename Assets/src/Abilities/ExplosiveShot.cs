@@ -43,6 +43,7 @@ public class ExplosiveShot : BaseAbility, IAbility{
 		projectile.Damage = this.Damage;
 		projectile.Direction = Ship.Turret.rotation.eulerAngles;
 		projectile.damageRadius = 15f;
+		projectile.Owner = Ship;
 
 	}
 	
