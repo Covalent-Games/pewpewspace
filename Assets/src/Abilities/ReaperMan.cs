@@ -35,7 +35,7 @@ public class ReaperMan : BaseAbility, IAbility{
 	public void Setup(){
 		
 		Executing = true;
-        Ship.Dissipation += Cost;
+        Ship.Heat += Cost;
 
         GameObject projectileGO = (GameObject)Instantiate(
                 Resource, 
@@ -43,6 +43,7 @@ public class ReaperMan : BaseAbility, IAbility{
                 Ship.transform.rotation);
         ReaperManProjectile projectile = projectileGO.GetComponent<ReaperManProjectile>();
         SetTarget(projectile);
+		projectile.Owner = Ship;
         StartCoroutine(projectile.TrackToTarget());
 
 	}

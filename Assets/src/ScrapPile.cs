@@ -64,15 +64,12 @@ public class ScrapPile {
 		switch (scrap.Quality) { 
 			case ScrapObject.QualityRating.Low:
 				QualityLow += scrap.Quantity;
-				Debug.Log("Added " + scrap.Quantity + " low quality scrap");
 				break;
 			case ScrapObject.QualityRating.Medium:
 				QualityMedium += scrap.Quantity;
-				Debug.Log("Added " + scrap.Quantity + " med quality scrap");
 				break;
 			case ScrapObject.QualityRating.High:
 				QualityHigh += scrap.Quantity;
-				Debug.Log("Added " + scrap.Quantity + " high quality scrap");
 				break;
 		}
 		PreviousScrapGained = scrap.Quantity;

@@ -2,7 +2,7 @@
 
 <Mission>
   <NumberOfWaves>1</NumberOfWaves>
-  <EnemiesPerWave>10</EnemiesPerWave>
+  <EnemiesPerWave>1</EnemiesPerWave>
   <TimeBetweenWaves>1</TimeBetweenWaves>
   <ScrapReward>100</ScrapReward>
   <ScrapQuality>Low</ScrapQuality>

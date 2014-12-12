@@ -34,7 +34,7 @@ public class BullRush : BaseAbility, IAbility{
 		moveTowards = new Vector3(0, 0, 20f) + Ship.transform.position;
 		ShipMove.moveEnabled = false;
 		Ship.Invulnerable = true;
-		Ship.Dissipation += Cost;
+		Ship.Heat += Cost;
 	}
 	
 	public void TearDown(){

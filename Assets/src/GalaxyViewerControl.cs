@@ -11,13 +11,13 @@ public class GalaxyViewerControl : MonoBehaviour {
 		Player = GameValues.Players[1];
 	}
 
-	void FixedUpdate() {
+	void Move() {
 
 		float xMove = Input.GetAxis(Player.Controller.LeftStickX);
 		float yMove = Input.GetAxis(Player.Controller.LeftStickY);
 
 		Vector3 direction = Vector3.ClampMagnitude(new Vector3(xMove, 0f, yMove), 1f);
-		transform.Translate(direction * Time.deltaTime * 4, Space.World);
+		GetComponent<CharacterController>().Move(direction * Time.deltaTime * 4);
 
 	}
 
@@ -26,5 +26,11 @@ public class GalaxyViewerControl : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Return)) {
 			Application.LoadLevel("ShipSelection");
 		}
+
+		Move();
+	}
+
+	void OnCollisionEnter(Collision col) {
+		Debug.Log("Bink..");
 	}
 }

@@ -37,13 +37,13 @@ public class SonicDisruption : BaseAbility, IAbility{
 		
 		ShipObject target = collider.GetComponent<ShipObject>();
 		if (target == null) { return; }
-		target.DamageShip(this.PrimaryEffect);
+		target.DamageArmor(this.PrimaryEffect, Ship);
 		target.GetComponent<ConditionHandler>().ApplyCondition(this.Condition, this.SecondaryEffect, this.Duration);
 	}
 	
 	public void Setup(){
 		
-		this.Ship.Dissipation += this.Cost;
+		this.Ship.Heat += this.Cost;
 		Executing = true;
 
 		var sphere = (GameObject)Instantiate(Resource, Ship.transform.position, Quaternion.identity);

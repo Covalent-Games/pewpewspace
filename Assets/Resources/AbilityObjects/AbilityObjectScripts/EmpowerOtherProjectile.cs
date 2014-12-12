@@ -34,19 +34,19 @@ public class EmpowerOtherProjectile : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider collider){
 	
-		ShipObject shipAction = collider.GetComponent<ShipObject>();
+		ShipObject shipObject = collider.GetComponent<ShipObject>();
 		
-		if (shipAction == null){
+		if (shipObject == null){
 			return;
 		}
 		
-		if (shipAction != Target){
+		if (shipObject != Target){
 			return;
 		}
 		
-		int dmg = shipAction.GetDamage();
+		int dmg = shipObject.GetDamage();
 		int dmgMod = Mathf.RoundToInt(dmg * DamageModifier);
-		shipAction.GetComponent<BoonHandler>().ApplyBoon(Boon.Damage, dmgMod, Duration);
+		shipObject.GetComponent<BoonHandler>().ApplyBoon(Boon.Damage, dmgMod, Duration);
 		
 		tracking = false;
 		Destroy(gameObject);

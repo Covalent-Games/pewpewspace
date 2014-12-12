@@ -6,6 +6,7 @@ public class ReaperManProjectile : MonoBehaviour {
     public ShipObject Target;
     bool tracking;
     public int damage;
+	public ShipObject Owner;
 
     public IEnumerator TrackToTarget()
     {
@@ -37,18 +38,18 @@ public class ReaperManProjectile : MonoBehaviour {
     void OnTriggerEnter(Collider collider)
     {
 
-        ShipObject shipAction = collider.GetComponent<ShipObject>();
+        ShipObject shipObject = collider.GetComponent<ShipObject>();
 
-        if (shipAction == null)
+        if (shipObject == null)
         {
             return;
         }
 
-        if (AbilityUtils.IsPlayer(shipAction)) {
+        if (AbilityUtils.IsPlayer(shipObject)) {
             return;
         }
 
-        shipAction.DamageShip(damage);
+        shipObject.DamageArmor(damage, Owner);
 
         tracking = false;
         Destroy(gameObject);

@@ -14,6 +14,7 @@ public class BaseAbility: MonoBehaviour{
 	public Object Resource;
 	
 	// These exist to outline what the current abilities can handle and to keep naming uniform.
+	// NOTE: With levels, these are basically useless
 	public Condition Condition;
 	public Boon Boon;
 	public bool Toggle;
@@ -36,9 +37,9 @@ public class BaseAbility: MonoBehaviour{
 
 public static class AbilityUtils {
 
-	public static bool IsPlayer(ShipObject shipAction){
+	public static bool IsPlayer(ShipObject shipObject){
 	
-		int value = (int)shipAction.ShipClass;
+		int value = (int)shipObject.ShipClass;
 
 		if (value >= 0 & value <= 20){
 			return true;

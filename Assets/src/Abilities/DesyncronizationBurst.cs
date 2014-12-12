@@ -39,7 +39,7 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 	
 	public void Setup(){
 
-        this.Ship.Dissipation += this.Cost;
+        this.Ship.Heat += this.Cost;
 		Executing = true;
 
         var sphere = (GameObject)Instantiate(Resource, Ship.transform.position, Quaternion.identity);

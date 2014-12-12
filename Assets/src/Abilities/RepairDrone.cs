@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class BatteryDrone : BaseAbility, IAbility{	
+public class RepairDrone : BaseAbility, IAbility{	
 	
 	public void Start() {
 		
 		Cost = 75f;
-		PrimaryEffect = 100;
+		PrimaryEffect = 75;
 	}
 	
 	public void Begin(ShipObject ship){
@@ -23,7 +23,7 @@ public class BatteryDrone : BaseAbility, IAbility{
 		
 		Setup();
 		foreach(ShipObject ship in SceneHandler.PlayerShips){
-		//	ship.RestoreShields((int)PrimaryEffect);
+			ship.RestoreArmor(PrimaryEffect);
 		}
 		yield return new WaitForEndOfFrame();
 		TearDown();

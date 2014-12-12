@@ -5,6 +5,7 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
 
 	bool tracking;
 	public float damageRadius;
+	public ShipObject Owner;
 
 
 	// Use this for initialization
@@ -36,13 +37,13 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
 	
     void OnTriggerEnter(Collider collider) {
 
-        ShipObject shipAction = collider.GetComponent<ShipObject>();
+        ShipObject shipObject = collider.GetComponent<ShipObject>();
 
-        if (shipAction == null) {
+        if (shipObject == null) {
             return;
         }
 
-        if (AbilityUtils.IsPlayer(shipAction)) {
+        if (AbilityUtils.IsPlayer(shipObject)) {
             return;
         }
 
@@ -51,7 +52,7 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
 			float distance = Vector3.Distance(enemy.transform.position, transform.position);
 
 			if (distance <= damageRadius) {
-				enemy.GetComponent<ShipObject>().DamageShip(this.Damage);
+				enemy.GetComponent<ShipObject>().DamageArmor(this.Damage, Owner);
 				Debug.Log("Explosive shot hit " + enemy.ToString());
 			}
 		}

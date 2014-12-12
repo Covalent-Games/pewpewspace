@@ -35,7 +35,7 @@ public class ExplosiveShot : BaseAbility, IAbility{
 	
 	public void Setup(){
 
-		Ship.Dissipation += Cost;
+		Ship.Heat += Cost;
 		Executing = true;
 
 		GameObject explosiveShotProjectile = (GameObject)Instantiate(Resource, Ship.transform.position, Ship.Turret.rotation);
@@ -43,6 +43,7 @@ public class ExplosiveShot : BaseAbility, IAbility{
 		projectile.Damage = this.Damage;
 		projectile.Direction = Ship.Turret.rotation.eulerAngles;
 		projectile.damageRadius = 15f;
+		projectile.Owner = Ship;
 
 	}
 	

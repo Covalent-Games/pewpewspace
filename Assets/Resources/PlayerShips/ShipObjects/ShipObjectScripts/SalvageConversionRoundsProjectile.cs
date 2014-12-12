@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SalvageConversionRoundsProjectile : MonoBehaviour, IProjectile {
+public class SalvageConversionRoundsProjectile : Projectile, IProjectile {
 
 	public ShipObject Target { get; set; }
 	public float velocity;
@@ -27,8 +27,8 @@ public class SalvageConversionRoundsProjectile : MonoBehaviour, IProjectile {
 		Destructable destructable = collider.GetComponent<Destructable>();
 		
 		if (destructable != null){
-			int oldHealth = destructable.Health;
-			destructable.DamageShip(this.Damage);
+			int oldHealth = destructable.Armor;
+			destructable.DamageArmor(this.Damage, Owner);
 			int damageDealt = oldHealth - oldHealth;
 			int restoreAmount = Mathf.RoundToInt(damageDealt/(float)SceneHandler.PlayerShips.Count);
 			
