@@ -24,10 +24,6 @@ public class RapidFire : BaseAbility, IAbility{
 		
 		Setup();
 
-		foreach (var ship in SceneHandler.PlayerShips) {
-			ship.GetComponent<BoonHandler>().ApplyBoon(Boon.FireRate, this.Percentage, this.Duration);
-		}
-
 		// Prevent player from using this ability again until boon wears off
 		while (DurationTimer < Duration){
 			DurationTimer += Time.deltaTime;
@@ -39,7 +35,10 @@ public class RapidFire : BaseAbility, IAbility{
 	
 	public void Setup(){
 
-        Ship.Dissipation += this.Cost;
+        Ship.Heat += this.Cost;
+		foreach (ShipObject ship in SceneHandler.PlayerShips) {
+			ship.GetComponent<BoonHandler>().ApplyBoon(Boon.FireRate, this.Percentage, this.Duration);
+		}
 		Executing = true;
 	}
 	
