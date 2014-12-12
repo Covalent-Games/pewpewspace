@@ -55,10 +55,10 @@ public class BoonHandler : MonoBehaviour {
 		if (ship == null)
 			yield break;
 
-		float fireRateDelta = ship.shotPerSecond *= mod;
+		float fireRateDelta = ship.shotPerSecond * mod;
 		print(ship.gameObject.name + "'s original rate of fire: " + ship.shotPerSecond);
 		print(ship.gameObject.name + "'s RoF buff value: " + fireRateDelta);
-		ship.shotPerSecond -= fireRateDelta;
+		ship.shotPerSecond += fireRateDelta;
 		print(ship.gameObject.name + "'s new rate of fire: " + ship.shotPerSecond);
 
 		
@@ -68,7 +68,7 @@ public class BoonHandler : MonoBehaviour {
 			yield return new WaitForFixedUpdate();
 		}
 
-		ship.shotPerSecond += fireRateDelta;
+		ship.shotPerSecond -= fireRateDelta;
 		print(ship.gameObject.name + "'s rate of fire went back to normal: " + ship.shotPerSecond);
 	}
 }
