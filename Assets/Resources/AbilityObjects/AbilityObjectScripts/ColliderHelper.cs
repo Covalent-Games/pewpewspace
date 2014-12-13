@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AreaOfEffectSphere : MonoBehaviour {
+public class ColliderHelper : MonoBehaviour {
 
 	public BaseAbility Ability;
 
@@ -10,8 +10,6 @@ public class AreaOfEffectSphere : MonoBehaviour {
 			Debug.LogWarning("AreaOfEffectShere.Ability: " + Ability.ToString());
 			return;
 		}
-        Debug.Log("Did I hit yeh?");
-
 		Ability.TriggerEnter(collider);
 	}
 	
