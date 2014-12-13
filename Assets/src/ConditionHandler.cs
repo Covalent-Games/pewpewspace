@@ -13,6 +13,9 @@ public class ConditionHandler : MonoBehaviour {
             case Condition.Speed:
                 StartCoroutine(ReduceSpeed(condition, modifier, duration));
                 break;
+			case Condition.Targeting:
+				StartCoroutine(DisableTargeting(duration));
+				break;
 		}
 	}
 	
@@ -53,4 +56,17 @@ public class ConditionHandler : MonoBehaviour {
         ship.Speed += speedChange;
         Debug.Log(ship + " is no longer slowed");
     }
+
+	IEnumerator DisableTargeting(float duration) {
+
+		BaseShipAI ship = GetComponent<BaseShipAI>();
+		ship.CanTarget = false;
+
+		float timer = 0f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			yield return new WaitForEndOfFrame();
+		}
+		ship.CanTarget = true;
+	}
 }

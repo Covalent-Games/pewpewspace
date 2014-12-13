@@ -12,8 +12,15 @@ public class BaseShipAI : MonoBehaviour {
 	[SerializeField]
     public ShipObject target;
     public Vector3 Destination;
+	public bool CanTarget = true;
 	
 	public void AcquireTarget(){
+
+		if (!CanTarget) {
+			target = null;
+			GoNuts();
+			return;
+		}
 
 		if (SceneHandler.PlayerShips.Count <= 0) {
 			return;
@@ -48,6 +55,12 @@ public class BaseShipAI : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	private void GoNuts() {
+
+		int fireAngle = Random.Range(0, 360);
+		actions.Turret.Rotate(0, fireAngle, 0);
 	}
 
 	public IEnumerator DissipateThreat() {

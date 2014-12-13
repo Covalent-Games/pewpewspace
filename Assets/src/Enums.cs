@@ -17,6 +17,7 @@ public enum Condition {
 	
 	Damage,	
     Speed,
+	Targeting,
 }
 
 // Order should match that of Condition

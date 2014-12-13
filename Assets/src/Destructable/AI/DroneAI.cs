@@ -23,8 +23,10 @@ public class DroneAI : BaseShipAI {
 	
 	void AimAndShoot(){
 
-		Transform turret = transform.FindChild("Turret");
-		turret.LookAt(this.target.transform.position);
+		if (target != null) {
+			Transform turret = transform.FindChild("Turret");
+			turret.LookAt(this.target.transform.position);
+		}
 		actions.AIUpdate();
 	}
 	

@@ -132,6 +132,7 @@ public class ShipObject : Destructable {
                 Ability1 = AddAbility("DesyncronizationBurst");
 				Ability2 = AddAbility("ExplosiveShot");
 				Ability3 = AddAbility("RapidFire");
+				Ability4 = AddAbility("RadarJam");
 				break;
 		}	
 	}
