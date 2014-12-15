@@ -23,7 +23,7 @@ public class BullRush : BaseAbility, IAbility{
 		while (DurationTimer < Duration){
 			DurationTimer += Time.deltaTime;
 			ShipMove.MoveShip(Vector3.MoveTowards(Ship.transform.position, moveTowards, Time.deltaTime * ShipMove.moveSpeed * 4));
-			yield return new WaitForFixedUpdate();
+			yield return new WaitForEndOfFrame();
 		}
 		TearDown();
 	}

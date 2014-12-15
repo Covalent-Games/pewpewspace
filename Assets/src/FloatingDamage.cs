@@ -23,7 +23,7 @@ public class FloatingDamage : MonoBehaviour {
             ticker += Time.deltaTime;
             canvasGroup.alpha -= Time.deltaTime / .75f;
             transform.position += new Vector3(0f, 0f, 2 * Time.deltaTime);
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForEndOfFrame();
         }
 
         Destroy(gameObject);

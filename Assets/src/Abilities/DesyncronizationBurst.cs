@@ -10,13 +10,13 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 
 	public void Start() {
 		
-		this.Cost = 35f;
-		this.Duration = 4f;
+		Cost = 35f;
+		Duration = 4f;
 
         // Effect = reduction by 35%
-        this.PrimaryEffect = 35;    
-        this.Condition = Condition.Speed;
-        this.Resource = Resources.Load("AbilityObjects/AreaOfEffectSphere", typeof(GameObject));
+        PrimaryEffect = 35;    
+        Condition = Condition.Speed;
+        Resource = Resources.Load("AbilityObjects/AreaOfEffectSphere", typeof(GameObject));
     }
 	
 	public void Begin(ShipObject ship){
@@ -32,7 +32,7 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 		Setup();
 
         //NOTE: Quick burst or lingering field?
-		yield return new WaitForFixedUpdate();
+		yield return null;
 
 		TearDown();
 	}
@@ -43,10 +43,10 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 		Executing = true;
 
         var sphere = (GameObject)Instantiate(Resource, Ship.transform.position, Quaternion.identity);
-        this.Sphere = sphere.GetComponent<AreaOfEffectSphere>();
-        this.Sphere.transform.position = Ship.transform.position;
-        this.Sphere.ModifySphereRadius(9);
-        this.Sphere.Ability = this;
+        Sphere = sphere.GetComponent<AreaOfEffectSphere>();
+		Sphere.transform.position = Ship.transform.position;
+        Sphere.ModifySphereRadius(9);
+        Sphere.Ability = this;
 	}
 	
 	public void TearDown(){
@@ -54,14 +54,19 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 		Executing = false;
 		DurationTimer = 0f;
         Destroy(this.Sphere.gameObject);
-        this.Sphere = null;
+        Sphere = null;
 	}
 	
 	public override void TriggerEnter(Collider collider){
 
         ShipObject target = collider.GetComponent<ShipObject>();
         if (target == null) { return; }
-        target.GetComponent<ConditionHandler>().ApplyCondition(this.Condition, this.PrimaryEffect, this.Duration);
+        target.GetComponent<ConditionHandler>().ApplyCondition(
+				Condition, 
+				AbilityID.DesyncBurst, 
+				PrimaryEffect, 
+				Duration, 
+				true);
     }
 	
 	public override void TriggerStay(Collider collider){}

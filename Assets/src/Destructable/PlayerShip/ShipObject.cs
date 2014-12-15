@@ -30,8 +30,8 @@ public class ShipObject : Destructable {
 	public Player player;
 	public Transform Target;
 	public Transform Turret;
-	public List<Condition> ActiveConditions = new List<Condition>();
-	public List<Boon> ActiveBoons = new List<Boon>();
+	public List<Modifier> ActiveConditions = new List<Modifier>();
+	public List<Modifier> ActiveBoons = new List<Modifier>();
 	public float fireCost;
 	public bool overheated;
 	
@@ -296,13 +296,6 @@ public class ShipObject : Destructable {
 
 		if (!this.overheated) {
 			this.overheated = true;
-			//this.dissipationBar.GetComponentInChildren<Animator>().enabled = true;
-			//Animation animation = this.dissipationBar.GetComponentInChildren<Animation>();
-			//Debug.Log("animation = " + animation);
-			//bool animationWorked = animation.Play();
-			//if (!animationWorked) {
-			//	Debug.Log("Animation did not play");
-			//}
 			// 1. Slow player by 25%
 			originalSpeed = this.Speed;
 			this.Speed *= 0.75f;
@@ -318,16 +311,12 @@ public class ShipObject : Destructable {
 		} 
 		if (this.overheated) {
 			// 3. Overheat loop
-			//Debug.Log("cooling..." + overheatTimer);
 			float cooldown = coolAmount / overheatTime * Time.deltaTime;
 			this.Heat -= cooldown;
 			overheatTimer += Time.deltaTime;
 
 			if (overheatTimer > overheatTime) {
 				// 4. Return player to normal
-				//this.dissipationBar.GetComponentInChildren<Animator>().enabled = false;
-				//this.dissipationBar.GetComponentInChildren<Animator>().gameObject.GetComponent<Image>().color = Color.white;
-				//this.dissipationBar.GetComponentInChildren<Animation>().Stop();
 				this.Speed = originalSpeed;
 				this.overheated = false;
 			}
@@ -340,8 +329,11 @@ public class ShipObject : Destructable {
 		// FIXME: this.shotPerSecond is actually seconds per shot, but shots per second for the players. *shrug*.
 		if (this.shotTimer >= this.shotPerSecond){
 			this.shotTimer = 0f;
-			GetComponent<BaseShipAI>().AcquireTarget();
-			Fire();
+			BaseShipAI ai = GetComponent<BaseShipAI>();
+			ai.AcquireTarget();
+			if (ai.target != null) {
+				Fire();
+			}
 		}
 	}
 	

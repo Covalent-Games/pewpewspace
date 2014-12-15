@@ -26,7 +26,7 @@ public class EmpowerOther : BaseAbility, IAbility{
 	public IEnumerator Execute(){
 		
 		Setup();
-		yield return new WaitForFixedUpdate();
+		yield return null;
 		TearDown();
 	}
 	

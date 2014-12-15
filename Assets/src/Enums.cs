@@ -35,3 +35,20 @@ public enum WinCondition {
 
 	AllEnemiesKilled = 0,
 }
+
+public enum AbilityID {
+
+	None,
+	BatteryDrone,
+	BullRush,
+	DeconLaser,
+	DesyncBurst,
+	EmpowerOther,
+	EnergyMissilePods,
+	GoingDark,
+	ReaperMan,
+	SalvageConversionRounds,
+	ShieldCover,
+	SonicDisruption,
+	SustainDrone,
+ }

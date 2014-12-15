@@ -30,7 +30,7 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
 			if (viewPos.y > 1 | viewPos.y < 0) { Destroy(gameObject);}
 
 			transform.position = transform.position + (transform.forward * Time.deltaTime * speed);
-			yield return new WaitForFixedUpdate();
+			yield return new WaitForEndOfFrame();
 		}
 
 	}

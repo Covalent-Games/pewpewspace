@@ -33,7 +33,7 @@ public class DeconstructionLaser : BaseAbility, IAbility{
         while (DurationTimer < Duration) {
             DurationTimer += Time.deltaTime;
             laser.transform.position = Ship.transform.position;
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForEndOfFrame();
         }
 
         Destroy(laser);

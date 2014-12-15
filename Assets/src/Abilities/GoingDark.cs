@@ -26,7 +26,7 @@ public class GoingDark : BaseAbility, IAbility{
 		while (DurationTimer < Duration){
 			DurationTimer += Time.deltaTime;
 			// ABILITY DURATION LOGIC
-			yield return new WaitForFixedUpdate();
+			yield return new WaitForEndOfFrame();
 		}
 
 		TearDown();

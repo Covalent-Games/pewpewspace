@@ -28,7 +28,7 @@ public class EmpowerOtherProjectile : MonoBehaviour {
 					Target.transform.position, 
 					Time.deltaTime * speed);
 
-			yield return new WaitForFixedUpdate();
+			yield return new WaitForEndOfFrame();
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class EmpowerOtherProjectile : MonoBehaviour {
 		
 		int dmg = shipObject.GetDamage();
 		int dmgMod = Mathf.RoundToInt(dmg * DamageModifier);
-		shipObject.GetComponent<BoonHandler>().ApplyBoon(Boon.Damage, dmgMod, Duration);
+		shipObject.GetComponent<BoonHandler>().ApplyBoon(Boon.Damage, AbilityID.EmpowerOther, dmgMod, Duration);
 		
 		tracking = false;
 		Destroy(gameObject);

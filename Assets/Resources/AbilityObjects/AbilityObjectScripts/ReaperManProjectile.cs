@@ -31,7 +31,7 @@ public class ReaperManProjectile : MonoBehaviour {
                     Target.transform.position,
                     Time.deltaTime * speed);
 
-            yield return new WaitForFixedUpdate();
+            yield return new WaitForEndOfFrame();
         }
     }
 

@@ -29,7 +29,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 	public IEnumerator Execute(){
 		
 		Setup();
-		yield return new WaitForFixedUpdate();
+		yield return null;
 		TearDown();
 	}
 	
@@ -38,7 +38,11 @@ public class SonicDisruption : BaseAbility, IAbility{
 		ShipObject target = collider.GetComponent<ShipObject>();
 		if (target == null) { return; }
 		target.DamageArmor(this.PrimaryEffect, Ship);
-		target.GetComponent<ConditionHandler>().ApplyCondition(this.Condition, this.SecondaryEffect, this.Duration);
+		target.GetComponent<ConditionHandler>().ApplyCondition(
+				this.Condition, 
+				AbilityID.SonicDisruption, 
+				this.SecondaryEffect, 
+				this.Duration);
 	}
 	
 	public void Setup(){

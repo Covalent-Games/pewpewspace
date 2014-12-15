@@ -25,8 +25,7 @@ public class ReaperMan : BaseAbility, IAbility{
 		
 		Setup();
 
-
-        yield return new WaitForFixedUpdate();
+        yield return null;
 
 		TearDown();
 	}

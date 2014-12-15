@@ -32,7 +32,7 @@ public class FadeCanvas : MonoBehaviour {
 		while (canvasGroup.alpha < 1f) {
 			// FixedUpdate happens 60/sec, so 1 second lerp would be 1 sec divided by 60
 			canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, 1f, Time.deltaTime);
-			yield return new WaitForFixedUpdate();
+			yield return new WaitForEndOfFrame();
 		}
 	}
 }

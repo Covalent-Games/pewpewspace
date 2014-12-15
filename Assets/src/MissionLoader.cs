@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 public class MissionLoader : MonoBehaviour {
 
-	public void LoadMissionOne() {
+	public string SceneToLoad;
 
-		Application.LoadLevel("ShipSelection");
-	}
-
+	/// <summary>
+	/// Loads the scene specified in the member SceneToLoad.
+	/// </summary>
 	internal void LoadMission() {
 		
-		Application.LoadLevel("ShipSelection");
+		Application.LoadLevel(SceneToLoad);
 	}
 }

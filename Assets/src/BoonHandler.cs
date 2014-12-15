@@ -2,40 +2,38 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BoonHandler : MonoBehaviour {
+// TODO: Unit testing is needed for all boons and conditions.
+
+public class BoonHandler : BaseModifierHandler {
 	
-	public void ApplyBoon(Boon boon, int modifier, float duration){
+	public void ApplyBoon(Boon boon, AbilityID id, int modifier, float duration, bool stacking=false){
 		
 		switch(boon){
 		case Boon.Damage:
-			StartCoroutine(IncreaseDamage(boon, modifier, duration));
+			StartCoroutine(IncreaseDamage(boon, id, modifier, duration));
 			break;
 		}
 	}
 	
-	IEnumerator IncreaseDamage(Boon boon, int mod, float duration){
+	IEnumerator IncreaseDamage(Boon boon, AbilityID id, int mod, float duration){
 		
 		ShipObject ship = GetComponent<ShipObject>();
-		
-		// If the ship is destroyed before this effect ends it will raise an exception.
-		if (ship == null) {
+		Modifier modifier = new Modifier(ship, id, duration, mod, boon);
+
+		if (Exists(modifier, out modifier)) {
+			modifier.DurationTimer = 0f;
 			yield break;
 		}
-		
-		/*FIXME: This is actually incorrect. This will prevent all damage increases after the first.
-		We'll want to create a way of maintaining which specific boons are present and whether
-		they're stacking or not.*/
-		if (ship.ActiveBoons.Contains(boon)) {
-			yield break;
-		}
+
 		ship.DamageMod += mod;
 		print (ship.gameObject.name + "'s Damage = " + ship.GetDamage());
 		float timer = 0f;
 		while (timer < duration){
 			timer += Time.deltaTime;
-			yield return new WaitForFixedUpdate();
+			yield return new WaitForEndOfFrame();
 		}
 		ship.DamageMod -= mod;
+		ship.ActiveBoons.Remove(modifier);
 		print (ship.gameObject.name + "'s Damage = " + ship.GetDamage());
 	}
 }

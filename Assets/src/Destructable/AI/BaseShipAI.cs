@@ -7,18 +7,24 @@ public class BaseShipAI : MonoBehaviour {
 
 	public ShipObject actions;
 	public int ThreatDissipationSpeed = 2;
+	public int DistancePerception = -1;
 	public Dictionary<ShipObject, int> ThreatTable = new Dictionary<ShipObject, int>();
 
 	[SerializeField]
     public ShipObject target;
     public Vector3 Destination;
 	
+
+	/// <summary>
+	/// Chooses a target based on a threat algorithm.
+	/// </summary>
 	public void AcquireTarget(){
 
 		if (SceneHandler.PlayerShips.Count <= 0) {
 			return;
 		}
 
+		// TODO: Cut this down to 1 loop instead of 2
 		bool noThreatFound = true;
 		foreach (int threat in ThreatTable.Values) {
 			if (threat > 0) {
@@ -39,17 +45,30 @@ public class BaseShipAI : MonoBehaviour {
 
 		} else {
 			// Start threat below in case no one has generated threat and all are at 0.
-			int highestThreat = -1;
+			int highestThreat = DistancePerception ;
 			foreach (var threatObject in ThreatTable){
-				if (threatObject.Value > highestThreat){
-					Debug.Log(threatObject.Key.gameObject.name + " -- " + threatObject.Value);
+
+				// Skip the players who are in the table but are posing no threat at all
+				// If all players are posing no threat one will be randomly chosen
+				if (threatObject.Value == 0) {
+					continue;
+				}
+
+				// Distance is inverted to negative so that the mod decreases and distance increases
+				float distanceModifier = Vector3.Distance(transform.position, threatObject.Key.transform.position) / 4;
+				int threat = threatObject.Value - Mathf.RoundToInt(distanceModifier);
+
+				if (threat > highestThreat){
 					target = threatObject.Key;
-					highestThreat = threatObject.Value;
+					highestThreat = threat;
 				}
 			}
 		}
 	}
 
+	/// <summary>
+	/// Slowly lowers threat of all ShipObjects within the threat table.
+	/// </summary>
 	public IEnumerator DissipateThreat() {
 
 		while (true) {
