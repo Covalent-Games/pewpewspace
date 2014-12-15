@@ -13,7 +13,7 @@ GameObject:
   - 135: {fileID: 13500000}
   - 114: {fileID: 11400000}
   m_Layer: 9
-  m_Name: AreaOfEffectSphere
+  m_Name: ColliderHelper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b0c85c1fbda124f84f8f03fff96e03, type: 3}
+  m_Script: {fileID: 11500000, guid: affa58ac902eb1d46bde265b1d949da2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Ability: {fileID: 0}

@@ -87,10 +87,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24b0c85c1fbda124f84f8f03fff96e03, type: 3}
+  m_Script: {fileID: 11500000, guid: 193408eb29482f547bd04e4b984e5f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ability: {fileID: 0}
+  ShipClass: 0
+  Level: 1
+  Resource: {fileID: 0}
+  Condition: 0
+  Boon: 0
+  Toggle: 0
+  PrimaryEffect: 0
+  SecondaryEffect: 0
+  Percentage: 0
+  Damage: 0
+  ArmorRepair: 0
+  ShieldRepair: 0
+  Duration: 0
+  DurationTimer: 0
+  AbilityRadius: 0
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
