@@ -24,6 +24,7 @@ public class SelectionHandler : MonoBehaviour {
 	int[] currentSelection = new int[] {0, 0, 0, 0};
 	//	What screen is the player on?
 	int[] playerStatus = new int[4];
+	GameObject[] readyScreens = new GameObject[4];
 	//	Which ship did the player select?
 	GameObject[] selectedShip = new GameObject[4];
 	// 	Did the player select "ready"?
@@ -48,6 +49,7 @@ public class SelectionHandler : MonoBehaviour {
 			selectPrefabScreen.GetComponent<Canvas>().enabled = true;
 			this.isReady[i-1] = false;
 			this.playerStatus[i-1] = (int)selectionStatus.ship;
+			this.readyScreens[i - 1] = GameObject.Find(string.Format("P{0}NextLabel", i));
 		}
 	}
 
@@ -97,6 +99,24 @@ public class SelectionHandler : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Updates the screen state of a given player.
+	/// </summary>
+	/// <param name="playerIndex"></param> Player number - 1
+	void updatePlayerSelectionScreen(int playerIndex) {
+
+		switch (this.playerStatus[playerIndex]) {
+			case (int)selectionStatus.ship:
+				readyScreens[playerIndex].GetComponent<Text>().text = "Press 'A' to select";
+				break;
+			case (int)selectionStatus.ability:
+				break;
+			case (int)selectionStatus.join:
+				readyScreens[playerIndex].GetComponent<Text>().text = "Ready!";
+				break;
+		}
+	}
+
 	void Update() {
 		
 		if (Input.GetKeyDown(KeyCode.Return)) {
@@ -107,19 +127,33 @@ public class SelectionHandler : MonoBehaviour {
 		foreach (var player in GameValues.Players){
 			// Since player.Key ranges from 1 to 4, need index from 0 to 3;
 			int playerIndex = player.Key - 1;
+
+			// Press A
 			if(Input.GetButtonDown(player.Value.Controller.ButtonA)) {
 				// If this player is on ship selection, procede
 				if(this.playerStatus[playerIndex] == (int)selectionStatus.ship) {
 					this.isReady[playerIndex] = true;
+					this.playerStatus[playerIndex] = (int)selectionStatus.join;
+					updatePlayerSelectionScreen(playerIndex);
 					// Check if everyone is ready
 					if(AllReady()) {
 						StartGame();
 					}
 				}
-			}		
+			}
+
+			// Press B
+			if (Input.GetButtonDown(player.Value.Controller.ButtonB)) {
+				// If this player is readied, go back to selection
+				if (this.playerStatus[playerIndex] == (int)selectionStatus.join) {
+					this.isReady[playerIndex] = false;
+					this.playerStatus[playerIndex] = (int)selectionStatus.ship;
+					updatePlayerSelectionScreen(playerIndex);
+				}
+			}
 
 			// Force delay for selection change
-			if(GetComponent<InputDelay>().SignalAllowed(playerIndex)) {
+			if(GetComponent<InputDelay>().SignalAllowed(playerIndex) && playerStatus[playerIndex] != (int)selectionStatus.join) {
 
 				float input = Input.GetAxis(player.Value.Controller.LeftStickX);
 				// -1 if left, 1 if right.

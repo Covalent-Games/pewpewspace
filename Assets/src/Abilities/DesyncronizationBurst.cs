@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class DesyncronizationBurst : BaseAbility, IAbility{
 
     [SerializeField]
-    AreaOfEffectSphere Sphere;
+    ColliderHelper Sphere;
 
 	public void Start() {
 		
@@ -14,9 +14,9 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 		Duration = 4f;
 
         // Effect = reduction by 35%
-        PrimaryEffect = 35;    
-        Condition = Condition.Speed;
-        Resource = Resources.Load("AbilityObjects/AreaOfEffectSphere", typeof(GameObject));
+        this.PrimaryEffect = 35;    
+        this.Condition = Condition.Speed;
+        this.Resource = Resources.Load("AbilityObjects/ColliderHelper", typeof(GameObject));
     }
 	
 	public void Begin(ShipObject ship){
@@ -43,10 +43,10 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 		Executing = true;
 
         var sphere = (GameObject)Instantiate(Resource, Ship.transform.position, Quaternion.identity);
-        Sphere = sphere.GetComponent<AreaOfEffectSphere>();
-		Sphere.transform.position = Ship.transform.position;
-        Sphere.ModifySphereRadius(9);
-        Sphere.Ability = this;
+        this.Sphere = sphere.GetComponent<ColliderHelper>();
+        this.Sphere.transform.position = Ship.transform.position;
+        this.Sphere.ModifySphereRadius(9);
+        this.Sphere.Ability = this;
 	}
 	
 	public void TearDown(){

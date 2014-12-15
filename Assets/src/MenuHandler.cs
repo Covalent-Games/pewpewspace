@@ -7,7 +7,9 @@ public class MenuHandler : MonoBehaviour {
 
 
 	public void OpenEscapeMenu() {
-		
+
+		this.isPaused = !this.isPaused;
+
 		if(this.isPaused) {
 			Screen.showCursor = true;
 			Screen.lockCursor = false;
@@ -18,38 +20,42 @@ public class MenuHandler : MonoBehaviour {
 			ResumeEverything();
 		}
 
-		this.isPaused = !this.isPaused;
 	}
 
+	// Pause
 	void StopEverything() {
-		
-		// TODO: Figure out a better way to do this. Timescale = 0?
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		foreach(GameObject player in players) {
-            if (player == null) {
-                continue;
-            }
-			player.GetComponent<ShipMovement>().enabled = false;
+
+		Time.timeScale = 0;
+		foreach (ShipObject player in SceneHandler.PlayerShips) {
+			if (player == null) {
+				continue;
+			}
 			player.GetComponent<ShipObject>().enabled = false;
 		}
 	}
 
+	// Resume
 	void ResumeEverything() {
 
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		foreach(GameObject player in players) {
-            if (player == null) {
-                continue;
-            }
-			player.GetComponent<ShipMovement>().enabled = true;
+		Time.timeScale = 1;
+		foreach (ShipObject player in SceneHandler.PlayerShips) {
+			if (player == null) {
+				continue;
+			}
 			player.GetComponent<ShipObject>().enabled = true;
 		}
 	}
 
 	void Update() {
 
-		if (Input.GetKeyDown(KeyCode.Escape)) {
+		if (Input.GetKeyDown(KeyCode.Escape)){
 			OpenEscapeMenu();
+		}
+
+		foreach (var player in GameValues.Players) {
+			if (Input.GetButtonDown(player.Value.Controller.ButtonStart)) {
+				OpenEscapeMenu();
+			}
 		}
 	}
 

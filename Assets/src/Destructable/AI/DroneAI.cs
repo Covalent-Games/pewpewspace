@@ -22,15 +22,11 @@ public class DroneAI : BaseShipAI {
 	}
 	
 	void AimAndShoot(){
-		
-		// HACK
-		if (target == null) { 
-			Debug.LogWarning(name + " has no target!");
-			return;
-		}
 
+		if (target != null) {
 		Transform turret = transform.FindChild("Turret");
 		turret.LookAt(this.target.transform.position);
+		}
 		actions.AIUpdate();
 	}
 	

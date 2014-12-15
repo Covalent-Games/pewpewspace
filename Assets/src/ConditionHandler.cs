@@ -15,6 +15,9 @@ public class ConditionHandler : BaseModifierHandler {
             case Condition.Speed:
                 StartCoroutine(ReduceSpeed(condition, id, modifier, duration, stacking));
                 break;
+			case Condition.Targeting:
+				StartCoroutine(DisableTargeting(duration));
+				break;
 		}
 	}
 	
@@ -67,4 +70,17 @@ public class ConditionHandler : BaseModifierHandler {
 		ship.ActiveConditions.Remove(modifier);
         Debug.Log(ship + " is no longer slowed");
     }
+
+	IEnumerator DisableTargeting(float duration) {
+
+		BaseShipAI ship = GetComponent<BaseShipAI>();
+		ship.CanTarget = false;
+
+		float timer = 0f;
+		while (timer < duration) {
+			timer += Time.deltaTime;
+			yield return new WaitForEndOfFrame();
+		}
+		ship.CanTarget = true;
+	}
 }

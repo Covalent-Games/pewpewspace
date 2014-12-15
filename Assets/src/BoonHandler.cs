@@ -14,6 +14,15 @@ public class BoonHandler : BaseModifierHandler {
 			break;
 		}
 	}
+
+	public void ApplyBoon(Boon boon, float modifier, float duration) {
+
+		switch (boon) {
+			case Boon.FireRate:
+				StartCoroutine(IncreaseFireRate(boon, modifier, duration));
+				break;
+		}
+	}
 	
 	IEnumerator IncreaseDamage(Boon boon, AbilityID id, int mod, float duration){
 		
@@ -35,5 +44,20 @@ public class BoonHandler : BaseModifierHandler {
 		ship.DamageMod -= mod;
 		ship.ActiveBoons.Remove(modifier);
 		print (ship.gameObject.name + "'s Damage = " + ship.GetDamage());
+	}
+
+	IEnumerator IncreaseFireRate(Boon boon, float mod, float duration) {
+
+		ShipObject ship = GetComponent<ShipObject>();
+
+		if (ship == null)
+			yield break;
+
+		float fireRateDelta = ship.shotPerSecond * mod;
+		ship.shotPerSecond += fireRateDelta;
+
+		yield return new WaitForSeconds(duration);
+
+		ship.shotPerSecond -= fireRateDelta;
 	}
 }

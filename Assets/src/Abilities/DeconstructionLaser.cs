@@ -25,10 +25,9 @@ public class DeconstructionLaser : BaseAbility, IAbility{
 	public IEnumerator Execute(){
 		
 		Setup();
-		Debug.Log("Executing destruction laser");
         Vector3 originShift = new Vector3(0, 0, 50) + Ship.transform.position;
         GameObject laser = (GameObject)Instantiate(Resource, originShift, Quaternion.identity);
-        laser.GetComponent<AreaOfEffectSphere>().Ability = this;
+        laser.GetComponent<ColliderHelper>().Ability = this;
 
         while (DurationTimer < Duration) {
             DurationTimer += Time.deltaTime;

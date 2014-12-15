@@ -78,8 +78,7 @@ public class ShipObject : Destructable {
 		/*These 4 lines have been moved from Start() because a lot of 
 		this logic will depend on which player is controlling the ship.*/
 		SetUpBaseAttributes();
-		this.shotPerSecond = 1f/this.shotPerSecond;
-		this.fireCost = this.MaxHeat / 10f * this.shotPerSecond;
+		this.fireCost = 0;
 		//Debug.Log("Fire cost = " + fireCost);
 		this.overheated = false;
 		AcquireHud();
@@ -132,6 +131,8 @@ public class ShipObject : Destructable {
 			case ShipType.Valkyrie:
                 Ability1 = AddAbility("DesyncronizationBurst");
 				Ability2 = AddAbility("ExplosiveShot");
+				Ability3 = AddAbility("RapidFire");
+				Ability4 = AddAbility("RadarJam");
 				break;
 		}	
 	}
@@ -161,7 +162,8 @@ public class ShipObject : Destructable {
 	void HandleInput(){
 		
 		triggerValue = Input.GetAxis(player.Controller.LeftRightTrigger);
-		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= this.shotPerSecond){
+		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= GetShotTime()){
+			print("Shot interval: " + this.shotTimer);
 			this.shotTimer = 0f;
 			Fire();
 		}
@@ -188,6 +190,11 @@ public class ShipObject : Destructable {
 		if (Input.GetButtonDown(player.Controller.LeftBumper)){
 			UnTarget();
 		}
+	}
+
+	public float GetShotTime() {
+
+		return 1f / this.shotPerSecond;
 	}
 	
 	void Fire(){
@@ -327,7 +334,7 @@ public class ShipObject : Destructable {
 		
 		UpdateShotTimer();
 		// FIXME: this.shotPerSecond is actually seconds per shot, but shots per second for the players. *shrug*.
-		if (this.shotTimer >= this.shotPerSecond){
+		if (this.shotTimer >= GetShotTime()){
 			this.shotTimer = 0f;
 			BaseShipAI ai = GetComponent<BaseShipAI>();
 			ai.AcquireTarget();
