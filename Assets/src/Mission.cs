@@ -21,7 +21,6 @@ public class Mission {
 
 		bool result = false;
 
-		Debug.Log(SceneHandler.Enemies.Count + " left to kill");
 		if (SceneHandler.Enemies.Count <= 0) {
 			result = true;
 		}

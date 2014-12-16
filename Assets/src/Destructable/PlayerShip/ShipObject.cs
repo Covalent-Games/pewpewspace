@@ -123,6 +123,7 @@ public class ShipObject : Destructable {
 				Ability1 = AddAbility("SalvageConversionRounds");
 				Ability2 = AddAbility("EmpowerOther");
 				Ability3 = AddAbility("RepairDrone");
+				Ability4 = AddAbility("GoingDark");
 				break;
 			case ShipType.Raider:
                 Ability1 = AddAbility("DeconstructionLaser");
@@ -190,7 +191,10 @@ public class ShipObject : Destructable {
 		}
 	}
 	
-	void Fire(){
+	/// <summary>
+	/// Creates a projectile object facing the same direction as the Turret child object.
+	/// </summary>
+	public void Fire(){
 
 		Vector3 projectileOrigin = transform.position;
 		GameObject projectileGO = (GameObject)Instantiate(
@@ -214,7 +218,7 @@ public class ShipObject : Destructable {
 		projectile.Owner = this;
 
 		// TODO: match standard fire heat generation with cooldown
-		Heat += this.fireCost;
+		Heat += fireCost;
 	}
 	
 	void FindNewTarget(){
@@ -327,12 +331,16 @@ public class ShipObject : Destructable {
 		
 		UpdateShotTimer();
 		// FIXME: this.shotPerSecond is actually seconds per shot, but shots per second for the players. *shrug*.
-		if (this.shotTimer >= this.shotPerSecond){
-			this.shotTimer = 0f;
+		if (shotTimer >= shotPerSecond){
+			shotTimer = 0f;
 			BaseShipAI ai = GetComponent<BaseShipAI>();
 			ai.AcquireTarget();
-			if (ai.target != null) {
+			if (ai.target) {
+				Transform turret = transform.FindChild("Turret");
+				turret.LookAt(ai.target.transform.position);
 				Fire();
+			} else {
+				Debug.Log(gameObject.name + " has no target this round");
 			}
 		}
 	}
@@ -344,6 +352,6 @@ public class ShipObject : Destructable {
 		if (destructable == null) { return; }
 		
 		// On collision with another destructable object, deal 10% of max health as Damage
-		destructable.DamageArmor(Mathf.RoundToInt(this.MaxArmor/10f));
+		destructable.DamageArmor(Mathf.RoundToInt(MaxArmor/10f));
 	}
 }

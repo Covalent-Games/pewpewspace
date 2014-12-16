@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class BaseShipAI : MonoBehaviour {
 
-	public ShipObject actions;
+	public ShipObject BaseShip;
 	public int ThreatDissipationSpeed = 2;
 	public int DistancePerception = -1;
 	public Dictionary<ShipObject, int> ThreatTable = new Dictionary<ShipObject, int>();
@@ -36,12 +36,29 @@ public class BaseShipAI : MonoBehaviour {
 		// Otherwise, pick the player with the highest generated threat.
 		if (noThreatFound) {
 			
+			// TODO: Determine if this should be here. It might be skipping needed logic
 			// If we already have a target we don't need to randomly pick a new one.
 			if (target != null) { return; }
 
 			int index;
-			index = Random.Range(0, SceneHandler.PlayerShips.Count);
-			target = SceneHandler.PlayerShips[index];
+
+			// There's definitely a faster way to do this.
+			List<ShipObject> possibleTargets = new List<ShipObject>();
+			foreach (ShipObject ship in SceneHandler.PlayerShips) {
+				if (ship.CanBeTargetted) {
+					possibleTargets.Add(ship);
+				}
+			}
+
+			if (possibleTargets.Count == 0) {
+				// TODO: In this case, the AI should just fire a random shot, which I believe has
+				// already been added via another branch. 
+				Debug.Log("FIRE EVERYWHERE!");
+				return;
+			}
+
+			index = Random.Range(0, possibleTargets.Count);
+			target = possibleTargets[index];
 
 		} else {
 			// Start threat below in case no one has generated threat and all are at 0.

@@ -58,9 +58,8 @@ public class ConditionHandler : BaseModifierHandler {
         Debug.Log(ship + " has reduced speed");
         float speedChange = ship.Speed * (mod/100f);
         ship.Speed -= speedChange;
-        float timer = 0f;
-        while (timer < duration) {
-            timer += Time.deltaTime;
+        while (modifier.DurationTimer < duration) {
+            modifier.DurationTimer += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
         ship.Speed += speedChange;

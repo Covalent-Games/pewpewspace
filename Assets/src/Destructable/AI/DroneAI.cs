@@ -5,33 +5,20 @@ public class DroneAI : BaseShipAI {
 
 	void Start () {
 		
-		actions = GetComponent<ShipObject>();
-		actions.SetUpBaseAttributes();
+		BaseShip = GetComponent<ShipObject>();
+		BaseShip.SetUpBaseAttributes();
 		AcquireTarget();
 		AcquireDestination();
-		actions.Start();
+		BaseShip.Start();
 	}
 	
 	void Move(){
 	
 		
-		transform.position = Vector3.MoveTowards(transform.position, this.Destination, Time.deltaTime * 5 * actions.Speed);
+		transform.position = Vector3.MoveTowards(transform.position, this.Destination, Time.deltaTime * 5 * BaseShip.Speed);
 		if (transform.position == this.Destination){
 			AcquireDestination();
 		}
-	}
-	
-	void AimAndShoot(){
-		
-		// HACK
-		if (target == null) { 
-			Debug.LogWarning(name + " has no target!");
-			return;
-		}
-
-		Transform turret = transform.FindChild("Turret");
-		turret.LookAt(this.target.transform.position);
-		actions.AIUpdate();
 	}
 	
 	void AcquireDestination(){
@@ -42,8 +29,8 @@ public class DroneAI : BaseShipAI {
 	}
 	
 	void Update () {
-	
+
+		BaseShip.AIUpdate();
 		Move();
-		AimAndShoot();
 	}
 }

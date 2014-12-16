@@ -12,18 +12,15 @@ public class Destructable : MonoBehaviour {
 
 	public int MaxArmor;
 	public float MaxHeat;
-	//public int maxShields;
 	public float baseSpeed;
 	
 	[SerializeField]
 	int armor;
 	[SerializeField]
 	float heat;
-	//int shields;
 	public float Speed;
-	
-	float regenTimer;
-	
+	public bool CanBeTargetted = true;
+		
 	[SerializeField]
 	public bool Invulnerable = false;
 	[SerializeField]
@@ -36,7 +33,9 @@ public class Destructable : MonoBehaviour {
 	
 	#region Properties	
 	public int Armor {
-		get { return this.armor; }
+		get {
+			return this.armor;
+		}
 		set {
 			this.armor = value;
 			if(this.armor <= 0) {
@@ -145,11 +144,5 @@ public class Destructable : MonoBehaviour {
 	public void Update () {
 
 		DissipationCooldown();
-		//this.regenTimer += Time.deltaTime;
-		//if (this.regenTimer > 1) {
-		//	DissipationCooldown();
-		//	//ShieldRegen();
-		//	this.regenTimer = 0f;
-		//}
 	}
 }
