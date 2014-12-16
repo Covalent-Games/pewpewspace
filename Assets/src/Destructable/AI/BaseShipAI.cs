@@ -13,12 +13,19 @@ public class BaseShipAI : MonoBehaviour {
 	[SerializeField]
     public ShipObject target;
     public Vector3 Destination;
+	public bool CanTarget = true;
 	
 
 	/// <summary>
 	/// Chooses a target based on a threat algorithm.
 	/// </summary>
 	public void AcquireTarget(){
+
+		if (!CanTarget) {
+			target = null;
+			GoNuts();
+			return;
+		}
 
 		if (SceneHandler.PlayerShips.Count <= 0) {
 			return;
@@ -51,9 +58,8 @@ public class BaseShipAI : MonoBehaviour {
 			}
 
 			if (possibleTargets.Count == 0) {
-				// TODO: In this case, the AI should just fire a random shot, which I believe has
-				// already been added via another branch. 
-				Debug.Log("FIRE EVERYWHERE!");
+				//TODO: In this case the AI won't actually fire -- just rotate the turret. 
+				GoNuts();
 				return;
 			}
 
@@ -83,9 +89,12 @@ public class BaseShipAI : MonoBehaviour {
 		}
 	}
 
-	/// <summary>
-	/// Slowly lowers threat of all ShipObjects within the threat table.
-	/// </summary>
+	private void GoNuts() {
+
+		int fireAngle = Random.Range(0, 360);
+		BaseShip.Turret.Rotate(0, fireAngle, 0);
+	}
+
 	public IEnumerator DissipateThreat() {
 
 		while (true) {

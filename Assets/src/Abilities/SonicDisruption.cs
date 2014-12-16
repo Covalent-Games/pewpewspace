@@ -6,11 +6,11 @@ using System.Collections.Generic;
 public class SonicDisruption : BaseAbility, IAbility{
 
 	[SerializeField]
-	AreaOfEffectSphere Sphere;
+	ColliderHelper Sphere;
 	
 	void Start(){
 	
-		Resource = Resources.Load("AbilityObjects/AreaOfEffectSphere", typeof(GameObject));
+		Resource = Resources.Load("AbilityObjects/ColliderHelper", typeof(GameObject));
 		this.Cost = 25f;
 		this.Duration = 4f;
 		this.PrimaryEffect = 15;
@@ -51,7 +51,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 		Executing = true;
 
 		var sphere = (GameObject)Instantiate(Resource, Ship.transform.position, Quaternion.identity);
-		this.Sphere = sphere.GetComponent<AreaOfEffectSphere>();
+		this.Sphere = sphere.GetComponent<ColliderHelper>();
 		this.Sphere.transform.position = Ship.transform.position;
 		this.Sphere.ModifySphereRadius(8);
 		this.Sphere.Ability = this;

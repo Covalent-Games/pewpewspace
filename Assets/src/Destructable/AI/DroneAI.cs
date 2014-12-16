@@ -29,7 +29,7 @@ public class DroneAI : BaseShipAI {
 	}
 	
 	void Update () {
-
+	
 		BaseShip.AIUpdate();
 		Move();
 	}
