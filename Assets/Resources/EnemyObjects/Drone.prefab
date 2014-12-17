@@ -143,20 +143,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Container: []
-  MaxArmor: 99999
+  MaxArmor: 250
   MaxHeat: 100
   baseSpeed: 1.10000002
   armor: 0
   heat: 0
   Speed: 0
   CanBeTargetted: 1
+  CanTarget: 1
   Invulnerable: 0
   InvulnerableArmor: 0
   InvulnerableDissipation: 0
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
   shotPerSecond: 1.5
   Damage: 0
-  DamageMod: 0
+  DamageMod: 5
   triggerValue: 0
   PlayerNumber: 0
   ShipClass: 21

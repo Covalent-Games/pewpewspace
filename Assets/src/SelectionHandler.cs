@@ -161,7 +161,7 @@ public class SelectionHandler : MonoBehaviour {
 
 				// true if stick is angled more than 95%
 				// NOTE The control feels more responsive if the action happens the same time the stick "clicks".
-				if (Mathf.Abs(input) > 0.50f) {
+				if (Mathf.Abs(input) > 0.65f) {
 					RotateSelection(playerIndex, currentSelection[playerIndex], direction);
 					currentSelection[playerIndex] += direction;
 				}

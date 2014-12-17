@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class Destructable : MonoBehaviour {
+public class Destructible : MonoBehaviour {
 
 	#region Members
 
@@ -20,6 +20,7 @@ public class Destructable : MonoBehaviour {
 	float heat;
 	public float Speed;
 	public bool CanBeTargetted = true;
+	public bool CanTarget = true;
 		
 	[SerializeField]
 	public bool Invulnerable = false;
@@ -65,7 +66,7 @@ public class Destructable : MonoBehaviour {
 		if (!this.Invulnerable){
 			this.Armor -= damage;
 
-            DisplayFloatingDamage(damage);
+			DisplayFloatingDamage(damage);
 
 			return this.Armor;
 		}
@@ -107,12 +108,12 @@ public class Destructable : MonoBehaviour {
 	}
 
 
-    private void DisplayFloatingDamage(int damage) {
+	private void DisplayFloatingDamage(int damage) {
 
-        GameObject guiElement = (GameObject)Instantiate(Resources.Load("GUIPrefabs/FloatingDamage"), transform.position, Quaternion.identity);
-        Transform textTransform = guiElement.transform.FindChild("Text");
-        textTransform.GetComponent<Text>().text = damage.ToString();
-    }
+		GameObject guiElement = (GameObject)Instantiate(Resources.Load("GUIPrefabs/FloatingDamage"), transform.position, Quaternion.identity);
+		Transform textTransform = guiElement.transform.FindChild("Text");
+		textTransform.GetComponent<Text>().text = damage.ToString();
+	}
 
 	void Start () {
 		

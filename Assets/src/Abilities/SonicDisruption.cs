@@ -11,18 +11,18 @@ public class SonicDisruption : BaseAbility, IAbility{
 	void Start(){
 	
 		Resource = Resources.Load("AbilityObjects/ColliderHelper", typeof(GameObject));
-		this.Cost = 25f;
-		this.Duration = 4f;
-		this.PrimaryEffect = 15;
-		this.SecondaryEffect = 2;
-		this.Condition = Condition.Damage;
+		Cost = 25f;
+		Duration = 4f;
+		PrimaryEffect = 15;
+		SecondaryEffect = 2;
+		Condition = Condition.Damage;
 	}
 	
 	public void Begin(ShipObject ship){
 		
-		this.Ship = ship;
-		this.ShipMove = ship.GetComponent<ShipMovement>();
-		this.ShipClass = ship.ShipClass;
+		Ship = ship;
+		ShipMove = ship.GetComponent<ShipMovement>();
+		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
 	}
 	
@@ -47,14 +47,15 @@ public class SonicDisruption : BaseAbility, IAbility{
 	
 	public void Setup(){
 		
-		this.Ship.Heat += this.Cost;
+		Ship.Heat += this.Cost;
 		Executing = true;
 
 		var sphere = (GameObject)Instantiate(Resource, Ship.transform.position, Quaternion.identity);
-		this.Sphere = sphere.GetComponent<ColliderHelper>();
-		this.Sphere.transform.position = Ship.transform.position;
-		this.Sphere.ModifySphereRadius(8);
-		this.Sphere.Ability = this;
+		sphere.transform.Rotate(Vector3.right, 90f);
+		Sphere = sphere.GetComponent<ColliderHelper>();
+		Sphere.transform.position = Ship.transform.position;
+		Sphere.ModifySphereRadius(8);
+		Sphere.Ability = this;
 		//SetupParticleEffect();  // This currently is not working, and the particle system has been removed. 
 	}
 	
@@ -75,6 +76,6 @@ public class SonicDisruption : BaseAbility, IAbility{
 		Executing = false;
 		DurationTimer = 0f;
 		Destroy(this.Sphere.gameObject);
-		this.Sphere = null;
+		Sphere = null;
 	}
 }

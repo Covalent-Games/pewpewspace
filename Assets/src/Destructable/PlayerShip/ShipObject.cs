@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine.UI;
 
-public class ShipObject : Destructable {
+public class ShipObject : Destructible {
 	
 	public static Dictionary<string, System.Type> AbilityDict = new Dictionary<string, System.Type>();
 	
@@ -57,7 +57,7 @@ public class ShipObject : Destructable {
 		gameObject.AddComponent("ConditionHandler");
 		gameObject.AddComponent("BoonHandler");
 	
-        if (!AbilityUtils.IsPlayer(this)) {
+		if (!AbilityUtils.IsPlayer(this)) {
 			Turret = transform.FindChild("Turret");
 			BaseShipAI ai = GetComponent<BaseShipAI>();
 			ai.StartCoroutine(ai.DissipateThreat());
@@ -97,15 +97,15 @@ public class ShipObject : Destructable {
 				Resources.Load("GUIPrefabs/TargetPlayerCursorObject"),
 				Vector3.zero,
 				Quaternion.Euler(new Vector3(90, 0, 0)));
-            GameObject turret = (GameObject)Instantiate(
-                Resources.Load("PlayerShips/ShipObjects/Turret"),
-                transform.position,
-                transform.rotation);
-            turret.transform.parent = this.transform;
+			GameObject turret = (GameObject)Instantiate(
+				Resources.Load("PlayerShips/ShipObjects/Turret"),
+				transform.position,
+				transform.rotation);
+			turret.transform.parent = this.transform;
 			
 			EnemyCursor = enemyCursor.GetComponent<TargetCursor>();
 			PlayerCursor = playerCursor.GetComponent<TargetCursor>();
-            Turret = turret.transform;
+			Turret = turret.transform;
 		}
 	}
 	
@@ -125,12 +125,12 @@ public class ShipObject : Destructable {
 				Ability4 = AddAbility("GoingDark");
 				break;
 			case ShipType.Raider:
-                Ability1 = AddAbility("DeconstructionLaser");
-                Ability2 = AddAbility("ReaperMan");
-                Ability3 = AddAbility("EnergyMissilePods");
+				Ability1 = AddAbility("DeconstructionLaser");
+				Ability2 = AddAbility("ReaperMan");
+				Ability3 = AddAbility("EnergyMissilePods");
 				break;
 			case ShipType.Valkyrie:
-                Ability1 = AddAbility("DesyncronizationBurst");
+				Ability1 = AddAbility("DesyncronizationBurst");
 				Ability2 = AddAbility("ExplosiveShot");
 				Ability3 = AddAbility("RapidFire");
 				Ability4 = AddAbility("RadarJam");
@@ -164,7 +164,6 @@ public class ShipObject : Destructable {
 		
 		triggerValue = Input.GetAxis(player.Controller.LeftRightTrigger);
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= GetShotTime()){
-			print("Shot interval: " + this.shotTimer);
 			this.shotTimer = 0f;
 			Fire();
 		}
@@ -233,7 +232,7 @@ public class ShipObject : Destructable {
 		// 
 		if (player == null) { return; }
 
-        if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
+		if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
 		RaycastHit hitInfo;
 
 		bool rayHit = Physics.Raycast(
@@ -242,13 +241,13 @@ public class ShipObject : Destructable {
 				out hitInfo, 
 				Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
 
-            if (rayHit) {
+			if (rayHit) {
 			string tag = hitInfo.transform.gameObject.tag;
 			TargetCursor cursor;
-                if (tag == "Enemy" & Target != hitInfo.transform) {
+				if (tag == "Enemy" & Target != hitInfo.transform) {
 				cursor = EnemyCursor;
 				PlayerCursor.Tracking = null;
-                } else if (tag == "Player" & Target != hitInfo.transform) {
+				} else if (tag == "Player" & Target != hitInfo.transform) {
 				cursor = PlayerCursor;
 				EnemyCursor.Tracking = null;
 			} else {
@@ -354,7 +353,7 @@ public class ShipObject : Destructable {
 	
 	void OnTriggerEnter(Collider collider){
 		
-		Destructable destructable = collider.GetComponent<Destructable>();
+		Destructible destructable = collider.GetComponent<Destructible>();
 		
 		if (destructable == null) { return; }
 		

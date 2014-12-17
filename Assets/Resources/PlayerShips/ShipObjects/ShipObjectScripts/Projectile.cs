@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour, IProjectile {
 	
 	void OnTriggerEnter(Collider collider){
 		
-		Destructable destructable = collider.GetComponent<Destructable>();
+		Destructible destructable = collider.GetComponent<Destructible>();
 		
 		if (destructable != null){
 			destructable.DamageArmor(this.Damage, Owner);

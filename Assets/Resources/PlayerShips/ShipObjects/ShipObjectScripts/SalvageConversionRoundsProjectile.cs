@@ -20,7 +20,7 @@ public class SalvageConversionRoundsProjectile : Projectile, IProjectile {
 	
 	void OnTriggerEnter(Collider collider){
 		
-		Destructable destructable = collider.GetComponent<Destructable>();
+		Destructible destructable = collider.GetComponent<Destructible>();
 		
 		if (destructable != null){
 			int oldHealth = destructable.Armor;

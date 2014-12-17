@@ -11,17 +11,15 @@ public class BaseShipAI : MonoBehaviour {
 	public Dictionary<ShipObject, int> ThreatTable = new Dictionary<ShipObject, int>();
 
 	[SerializeField]
-    public ShipObject target;
-    public Vector3 Destination;
-	public bool CanTarget = true;
-	
+	public ShipObject target;
+	public Vector3 Destination;	
 
 	/// <summary>
 	/// Chooses a target based on a threat algorithm.
 	/// </summary>
 	public void AcquireTarget(){
 
-		if (!CanTarget) {
+		if (!BaseShip.CanTarget) {
 			target = null;
 			GoNuts();
 			return;

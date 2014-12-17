@@ -9,7 +9,7 @@ public class SustainDrone : BaseAbility, IAbility{
 		
 		Cost = 40f;
 		Duration = 7f;
-		SecondaryEffect = 2;
+		SecondaryEffect = 1;
 	}
 	
 	public void Begin(ShipObject ship){
