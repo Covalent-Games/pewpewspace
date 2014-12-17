@@ -7,6 +7,7 @@ public class EnergyMissilePods : BaseAbility, IAbility {
 
     GameObject CustomProjectile;
     GameObject OriginalProjectile;
+	float OriginalCost;
 
     public void Start() {
 
@@ -34,9 +35,6 @@ public class EnergyMissilePods : BaseAbility, IAbility {
             Setup();
         }
 
-		float originalCost = Ship.fireCost;
-		Ship.fireCost = this.Cost;
-
         while (Toggle) {
             // TODO: This might not be responsive enough at 1 second.
             yield return new WaitForSeconds(1f);
@@ -47,19 +45,20 @@ public class EnergyMissilePods : BaseAbility, IAbility {
             }
         }
 
-		Ship.fireCost = originalCost;
-
         TearDown();
     }
 
     public void Setup() {
-        Debug.Log("Setting up");
-        OriginalProjectile = Ship.projectilePrefab;
+
+		OriginalCost = Ship.FireCost;
+		Ship.FireCost = Cost;
+		OriginalProjectile = Ship.projectilePrefab;
         Ship.projectilePrefab = CustomProjectile;
     }
 
     public void TearDown() {
 
+		Ship.FireCost = OriginalCost;
         Ship.projectilePrefab = OriginalProjectile;
     }
 

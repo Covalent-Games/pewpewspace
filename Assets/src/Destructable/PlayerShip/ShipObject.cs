@@ -27,13 +27,13 @@ public class ShipObject : Destructible {
 	IAbility Ability3;
 	IAbility Ability4;
 	public ShipType ShipClass;
-	public Player player;
+	public Player PlayerObject;
 	public Transform Target;
 	public Transform Turret;
 	public List<Modifier> ActiveConditions = new List<Modifier>();
 	public List<Modifier> ActiveBoons = new List<Modifier>();
-	public float fireCost;
-	public bool overheated;
+	public float FireCost;
+	public bool Overheated;
 	
 	// HUD elements
 	public GameObject healthBar;
@@ -68,19 +68,16 @@ public class ShipObject : Destructible {
 		
 		this.PlayerNumber = playerNumber;
 		
-		GameValues.Players.TryGetValue(playerNumber, out this.player);
-		if (this.player == null){
+		GameValues.Players.TryGetValue(playerNumber, out this.PlayerObject);
+		if (this.PlayerObject == null){
 			Debug.LogWarning("Had to manually create a new Player! Something may be wrong. Ignore this if testing.");
-			this.player = new Player(playerNumber);
+			this.PlayerObject = new Player(playerNumber);
 		}
-		GetComponent<ShipMovement>().player = this.player;
+		GetComponent<ShipMovement>().player = this.PlayerObject;
 		
-		/*These 4 lines have been moved from Start() because a lot of 
-		this logic will depend on which player is controlling the ship.*/
 		SetUpBaseAttributes();
-		this.fireCost = 0;
-		//Debug.Log("Fire cost = " + fireCost);
-		this.overheated = false;
+		FireCost = 0;
+		Overheated = false;
 		AcquireHud();
 		AssignAbilities();
 		
@@ -162,32 +159,32 @@ public class ShipObject : Destructible {
 	
 	void HandleInput(){
 		
-		triggerValue = Input.GetAxis(player.Controller.LeftRightTrigger);
+		triggerValue = Input.GetAxis(PlayerObject.Controller.LeftRightTrigger);
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= GetShotTime()){
 			this.shotTimer = 0f;
 			Fire();
 		}
-		if (Input.GetButtonDown(player.Controller.ButtonA)){
+		if (Input.GetButtonDown(PlayerObject.Controller.ButtonA)){
 			if (Heat < this.MaxHeat && !Ability1.Executing){
 				Ability1.Begin(GetComponent<ShipObject>());
 			}
 		}
-		if (Input.GetButtonDown(player.Controller.ButtonB)){
+		if (Input.GetButtonDown(PlayerObject.Controller.ButtonB)){
 			if (Heat < this.MaxHeat && !Ability2.Executing) {
 				Ability2.Begin(GetComponent<ShipObject>());
 			}
 		}
-		if (Input.GetButtonDown(player.Controller.ButtonX)){
+		if (Input.GetButtonDown(PlayerObject.Controller.ButtonX)){
 			if (Heat < this.MaxHeat && !Ability3.Executing) {
 				Ability3.Begin(GetComponent<ShipObject>());
 			}
 		}
-		if (Input.GetButtonDown(player.Controller.ButtonY)){
+		if (Input.GetButtonDown(PlayerObject.Controller.ButtonY)){
 			if (Heat < this.MaxHeat && !Ability4.Executing) {
 				Ability4.Begin(GetComponent<ShipObject>());
 			}
 		}
-		if (Input.GetButtonDown(player.Controller.LeftBumper)){
+		if (Input.GetButtonDown(PlayerObject.Controller.LeftBumper)){
 			UnTarget();
 		}
 	}
@@ -224,13 +221,14 @@ public class ShipObject : Destructible {
 		projectile.Owner = this;
 
 		// TODO: match standard fire heat generation with cooldown
-		Heat += fireCost;
+		Heat += FireCost;
+		Debug.Log(projectile.ToString() + " costing " + FireCost);
 	}
 	
 	void FindNewTarget(){
 		
 		// 
-		if (player == null) { return; }
+		if (PlayerObject == null) { return; }
 
 		if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
 		RaycastHit hitInfo;
@@ -289,7 +287,7 @@ public class ShipObject : Destructible {
 	
 	void Update () {
 		
-		if (this.Heat < this.MaxHeat && !overheated) {
+		if (this.Heat < this.MaxHeat && !Overheated) {
 			UpdateShotTimer();
 			FindNewTarget();
 			HandleInput();
@@ -304,8 +302,8 @@ public class ShipObject : Destructible {
 
 	public void Overheat() {
 
-		if (!this.overheated) {
-			this.overheated = true;
+		if (!this.Overheated) {
+			this.Overheated = true;
 			// 1. Slow player by 25%
 			originalSpeed = this.Speed;
 			this.Speed *= 0.75f;
@@ -319,7 +317,7 @@ public class ShipObject : Destructible {
 			coolAmount = this.MaxHeat * 0.25f;
 			overheatTimer = 0f;
 		} 
-		if (this.overheated) {
+		if (this.Overheated) {
 			// 3. Overheat loop
 			float cooldown = coolAmount / overheatTime * Time.deltaTime;
 			this.Heat -= cooldown;
@@ -328,7 +326,7 @@ public class ShipObject : Destructible {
 			if (overheatTimer > overheatTime) {
 				// 4. Return player to normal
 				this.Speed = originalSpeed;
-				this.overheated = false;
+				this.Overheated = false;
 			}
 		}
 	}

@@ -34,7 +34,7 @@ public class RadarJam : BaseAbility, IAbility{
 		this.Field = radarCone.GetComponent<ColliderHelper>();
 		this.Field.Ability = this;
 		
-		while (!Input.GetButtonDown(Ship.player.Controller.RightStickPress)){
+		while (!Input.GetButtonDown(Ship.PlayerObject.Controller.RightStickPress)){
 			yield return null;
 		}
 

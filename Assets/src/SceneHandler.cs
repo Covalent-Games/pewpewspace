@@ -140,7 +140,7 @@ public class SceneHandler : MonoBehaviour {
 
 		if (MissionOver) {
 			foreach (ShipObject ship in PlayerShips) {
-				if (Input.GetButtonDown(ship.player.Controller.ButtonA)) {
+				if (Input.GetButtonDown(ship.PlayerObject.Controller.ButtonA)) {
 					Application.LoadLevel("ShipSelection");
 				}
 			}
