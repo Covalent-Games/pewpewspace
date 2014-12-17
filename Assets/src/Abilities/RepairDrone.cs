@@ -30,7 +30,8 @@ public class RepairDrone : BaseAbility, IAbility{
 	}
 	
 	public void Setup(){
-		
+
+		Ship.Heat += Cost;
 		Executing = true;
 	}
 	

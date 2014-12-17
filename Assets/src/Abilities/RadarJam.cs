@@ -46,6 +46,7 @@ public class RadarJam : BaseAbility, IAbility{
 	
 	public void Setup(){
 
+		Ship.Heat += Cost;
 		Executing = true;
 	}
 	
