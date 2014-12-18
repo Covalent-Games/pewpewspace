@@ -26,14 +26,14 @@ public class SalvageConversionRoundsProjectile : Projectile, IProjectile {
 		
 		Destructible destructable = collider.GetComponent<Destructible>();
 		
-		if (destructable != null){
+		if (destructable){
 			int oldHealth = destructable.Armor;
-			destructable.DamageArmor(this.Damage, Owner);
-			int damageDealt = oldHealth - oldHealth;
-			int restoreAmount = Mathf.RoundToInt(damageDealt/(float)SceneHandler.PlayerShips.Count);
+			// TODO: Damage should be calculated elsewhere so it can be upgraded (2)
+			int damageDealt = oldHealth - destructable.DamageArmor(this.Damage / 2, Owner);
 			
 			foreach(ShipObject ship in SceneHandler.PlayerShips){
-				ship.RestoreArmor(restoreAmount);
+				print(ship.name + " repaired for " + damageDealt);
+				ship.RestoreArmor(damageDealt);
 			}
 			
 			//TODO: Trigger destructable.projectileJustHitMe particle effect

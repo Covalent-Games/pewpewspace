@@ -222,7 +222,6 @@ public class ShipObject : Destructible {
 
 		// TODO: match standard fire heat generation with cooldown
 		Heat += FireCost;
-		Debug.Log(projectile.ToString() + " costing " + FireCost);
 	}
 	
 	void FindNewTarget(){
