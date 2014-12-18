@@ -230,7 +230,7 @@ MeshCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
   m_Material: {fileID: 13400000, guid: 67db31eead11e8d6d00011d98d76c639, type: 2}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_SmoothSphereCollisions: 0
@@ -254,6 +254,8 @@ MonoBehaviour:
   armor: 0
   heat: 0
   Speed: 0
+  CanBeTargetted: 1
+  CanTarget: 1
   Invulnerable: 0
   InvulnerableArmor: 0
   InvulnerableDissipation: 0
@@ -266,10 +268,8 @@ MonoBehaviour:
   ShipClass: 2
   Target: {fileID: 0}
   Turret: {fileID: 0}
-  ActiveConditions: 
-  ActiveBoons: 
-  fireCost: 0
-  overheated: 0
+  FireCost: 0
+  Overheated: 0
   healthBar: {fileID: 0}
   dissipationBar: {fileID: 0}
   Ability1Icon: {fileID: 0}

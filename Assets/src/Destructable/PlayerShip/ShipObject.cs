@@ -351,10 +351,12 @@ public class ShipObject : Destructible {
 	void OnTriggerEnter(Collider collider){
 		
 		Destructible destructable = collider.GetComponent<Destructible>();
+
+		if (destructable) {
+			Debug.Log(collider.name + " collided with " + name);
+			// On collision with another destructable object, deal 10% of max health as Damage
+			destructable.DamageArmor(Mathf.RoundToInt(MaxArmor / 10f));
+		}
 		
-		if (destructable == null) { return; }
-		
-		// On collision with another destructable object, deal 10% of max health as Damage
-		destructable.DamageArmor(Mathf.RoundToInt(MaxArmor/10f));
 	}
 }
