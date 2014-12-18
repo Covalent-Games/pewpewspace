@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class SustainDrone : BaseAbility, IAbility{	
-	
+public class SustainDrone : BaseAbility, IAbility{
+
+	float UpdateFrequency = 0.25f;
+
 	public void Start() {
 		
-		Cost = 40f;
-		Duration = 7f;
-		SecondaryEffect = 1;
+		Cost = 45f;
+		Duration = 8f;
+		PrimaryEffect = 8;
 	}
 	
 	public void Begin(ShipObject ship){
@@ -21,17 +23,19 @@ public class SustainDrone : BaseAbility, IAbility{
 	}
 	
 	public IEnumerator Execute(){
-		
-		Setup();
-		float lastFrameTime = Time.time;
-		while (DurationTimer < Duration){
-		
-			// Custom delta time since Time.deltaTime only returns the time since the last frame.
-			DurationTimer += Time.time - lastFrameTime;
-			lastFrameTime = Time.time;
 
-			Ship.RestoreArmor(SecondaryEffect);
-			yield return new WaitForEndOfFrame();
+		if (Ship.Armor == Ship.MaxArmor) {
+			yield break;
+		}
+
+		Setup();
+		float time = Time.time;
+		while (DurationTimer < Duration){
+			DurationTimer += Time.time - time;
+			time = Time.time;
+
+			Ship.RestoreArmor(Mathf.RoundToInt(PrimaryEffect * UpdateFrequency));
+			yield return new WaitForSeconds(UpdateFrequency);
 		}
 
 		TearDown();
@@ -40,6 +44,7 @@ public class SustainDrone : BaseAbility, IAbility{
 	public void Setup(){
 		
 		//TODO: Art -- Create a drone which circles the player while this ability is active.
+		Ship.Heat += Cost;
 		Executing = true;
 	}
 	
