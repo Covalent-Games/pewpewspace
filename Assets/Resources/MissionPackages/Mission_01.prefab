@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: Mission1Package1
+  m_Name: Mission_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,9 +41,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InProgress: 0
   Ended: 0
+  DialogueCanvas: {fileID: 0}
+  DialogueText: {fileID: 0}
+  ScrapReward: 100
+  ScrapBonusReward: 10
+  ScrapQuality: 0
   SequencePadding: []
   Sequences:
+  - {fileID: 100000, guid: 241430fae40a6c0479981b99529f495f, type: 2}
   - {fileID: 100000, guid: 2d52d79fee12f8a42af8efb0380bdd89, type: 2}
+  - {fileID: 100000, guid: 7c624265a2d788a42b5fc8748192d07e, type: 2}
+  - {fileID: 100000, guid: 2339b9690e864fa47962ff3cbcf85c6d, type: 2}
+  - {fileID: 100000, guid: 72917dd7c676df5409a22f6bf12434c9, type: 2}
+  - {fileID: 100000, guid: 84efee29e8e313245a1ac63372740b15, type: 2}
+  - {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

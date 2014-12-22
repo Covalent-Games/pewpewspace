@@ -25,7 +25,7 @@ public class DroneAI : BaseShipAI {
 	
 		float xpos = Random.Range(0f, 1f);
 		float ypos = Random.Range(0f, 1f);
-		this.Destination = Camera.main.ViewportToWorldPoint(new Vector3(xpos, ypos, 40f));
+		this.Destination = Camera.main.ViewportToWorldPoint(new Vector3(xpos, ypos, Camera.main.transform.position.y));
 	}
 	
 	void Update () {

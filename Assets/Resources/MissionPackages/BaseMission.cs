@@ -5,8 +5,16 @@ using System.Collections.Generic;
 
 public class BaseMission : MonoBehaviour {
 
+	[HideInInspector]
 	public bool InProgress = false;
+	[HideInInspector]
 	public bool Ended = false;
+	[HideInInspector]
+	public Canvas DialogueCanvas;
+	[HideInInspector]
+	public Text DialogueText;
+
+	[Tooltip("The reward amount on completing the missions")]
 	public int ScrapReward;
 	public int ScrapBonusReward;
 	public ScrapObject.QualityRating ScrapQuality;
@@ -16,6 +24,9 @@ public class BaseMission : MonoBehaviour {
 	[Tooltip("List of sequence prefabs in the order to be executed")]
 	public List<GameObject> Sequences = new List<GameObject>();
 
+	/// <summary>
+	/// Starts the mission. This is the clean way of starting a mission.
+	/// </summary>
 	public void StartMission() {
 
 		InProgress = true;
@@ -24,23 +35,45 @@ public class BaseMission : MonoBehaviour {
 
 	IEnumerator IterateSequences() {
 
+		// Loop through each attached sequence
 		for (int index = 0; index < Sequences.Count; index++) {
-			GameObject sequenceGO = Instantiate(Sequences[index]) as GameObject;
-			IMissionSequence sequence = sequenceGO.GetComponent(typeof(IMissionSequence)) as IMissionSequence;
 
+			GameObject sequenceGO;
+
+			// Grab the current sequence gameobject from the list
+			if (Sequences[index]) {
+				sequenceGO = Instantiate(Sequences[index]) as GameObject;
+			} else {
+				continue;
+			}
+
+			if (!sequenceGO) {
+				Debug.LogWarning(name + " has null sequence at index " + index);
+				continue;
+			}
+
+			// Get the interface and initialize the sequence
+			IMissionSequence sequence = sequenceGO.GetComponent(typeof(IMissionSequence)) as IMissionSequence;
+			sequence.Init(this);
+
+			// Wait one frame for everything to properly set up.
 			yield return null;
 
+			// Wait for the sequence to finish running.
 			Debug.Log("Waiting for " + sequenceGO.name + " sequence to finish");
 			while (sequence.Running) {
 				yield return new WaitForEndOfFrame();
 			}
-			Debug.Log(sequenceGO.name + " has finished");
+
+			// If time padding has been added, wait for the corresponding amount of time.
 			if (SequencePadding.Count > 0) {
 				yield return new WaitForSeconds(SequencePadding[index]);
 			}
+
 			Destroy(sequenceGO);
 		}
 
+		// Conclude the mission. 
 		InProgress = false;
 		Ended = true;
 	}
@@ -55,13 +88,25 @@ public class BaseMission : MonoBehaviour {
 
 	public void DisplayScrapReward(List<GameObject> rewardUI) {
 
+		foreach (ShipObject ship in SceneHandler.PlayerShips) {
+			ship.enabled = false;
+			ship.Movement.enabled = false;
+		}
+		GameObject.Find("PostMissionScore").GetComponent<Canvas>().enabled = true;
+
 		foreach (var playerDict in GameValues.Players) {
 			int playerNum = playerDict.Key;
 			Player player = playerDict.Value;
-			Transform[] uiElements = rewardUI[playerNum - 1].GetComponentsInChildren<Transform>();
-			// This line might be horrible... I haven't decided. 
-			rewardUI[playerNum - 1].transform.parent.GetComponent<Canvas>().enabled = true;
+			GameObject ui = rewardUI[playerNum - 1];
+
+			Transform[] uiElements = ui.GetComponentsInChildren<Transform>();
+
+			Transform uiParent = ui.transform.parent;
+			Canvas parentCanvas = uiParent.GetComponent<Canvas>();
+			parentCanvas.enabled = true;
+
 			Text text;
+
 			foreach (var element in uiElements) {
 				switch (element.name) {
 					case "PlayerName":

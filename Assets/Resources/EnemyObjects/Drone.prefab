@@ -142,8 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: []
-  MaxArmor: 250
+  MaxArmor: 1
   MaxHeat: 100
   baseSpeed: 1.10000002
   armor: 0
@@ -157,14 +156,14 @@ MonoBehaviour:
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
   shotPerSecond: 1.5
   Damage: 0
-  DamageMod: 5
+  DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
   ShipClass: 21
   Target: {fileID: 0}
   Turret: {fileID: 0}
-  fireCost: 0
-  overheated: 0
+  FireCost: 0
+  Overheated: 0
   healthBar: {fileID: 0}
   dissipationBar: {fileID: 0}
   Ability1Icon: {fileID: 0}
