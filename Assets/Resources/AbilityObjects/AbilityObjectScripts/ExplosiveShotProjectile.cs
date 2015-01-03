@@ -5,11 +5,9 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
 
 	bool tracking;
 	public float damageRadius;
-	public ShipObject Owner;
-
 
 	// Use this for initialization
-	void Start () {
+	void Start() {
 
 		StartCoroutine(Launch());
 	}
@@ -26,26 +24,26 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
 
 			Vector3 viewPos = Camera.main.WorldToViewportPoint(transform.position);
 			// If outside of screen, destroy
-			if (viewPos.x > 1 | viewPos.x < 0) { Destroy(gameObject);}
-			if (viewPos.y > 1 | viewPos.y < 0) { Destroy(gameObject);}
+			if (viewPos.x > 1 | viewPos.x < 0) { Destroy(gameObject); }
+			if (viewPos.y > 1 | viewPos.y < 0) { Destroy(gameObject); }
 
 			transform.position = transform.position + (transform.forward * Time.deltaTime * speed);
 			yield return new WaitForEndOfFrame();
 		}
 
 	}
-	
-    void OnTriggerEnter(Collider collider) {
 
-        ShipObject shipObject = collider.GetComponent<ShipObject>();
+	void OnTriggerEnter(Collider collider) {
 
-        if (shipObject == null) {
-            return;
-        }
+		ShipObject shipObject = collider.GetComponent<ShipObject>();
 
-        if (AbilityUtils.IsPlayer(shipObject)) {
-            return;
-        }
+		if (shipObject == null) {
+			return;
+		}
+
+		if (AbilityUtils.IsPlayer(shipObject)) {
+			return;
+		}
 
 		// Only damage enemies within blast radius
 		foreach (var enemy in SceneHandler.Enemies.ToArray()) {
@@ -57,7 +55,7 @@ public class ExplosiveShotProjectile : Projectile, IProjectile {
 			}
 		}
 
-        tracking = false;
-        Destroy(gameObject);
-    }
+		tracking = false;
+		Destroy(gameObject);
+	}
 }

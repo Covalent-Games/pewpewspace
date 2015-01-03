@@ -97,7 +97,7 @@ public class ShipObject : Destructible {
 				Vector3.zero,
 				Quaternion.Euler(new Vector3(90, 0, 0)));
 			GameObject turret = (GameObject)Instantiate(
-				Resources.Load("PlayerShips/ShipObjects/Turret"),
+				Resources.Load("PlayerShips/ShipObjects/Turret_TEST"),
 				transform.position,
 				transform.rotation);
 			turret.transform.parent = this.transform;

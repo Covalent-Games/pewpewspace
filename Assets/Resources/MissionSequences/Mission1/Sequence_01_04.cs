@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Sequence_01_01 : BaseSequence {
+public class Sequence_01_04 : BaseSequence {
 
 	public int SpawnQuantity;
 	public GameObject EnemyPrefab;
+	public GameObject Freighter;
 	public int EnemyArmor;
 	List<ShipObject> SpawnedEntities = new List<ShipObject>();
 
@@ -44,6 +45,15 @@ public class Sequence_01_01 : BaseSequence {
 			ShipObject newEnemy = newEnemyGO.GetComponent<ShipObject>();
 			newEnemy.MaxArmor = EnemyArmor;
 			newEnemy.AddContainers(SceneHandler.Enemies, SpawnedEntities);
+		}
+
+		GameObject freighter = (GameObject)Instantiate(Freighter, new Vector3(0f, 0f, 75f), Quaternion.identity);
+		Vector3 targetPosition = new Vector3(0f, 0f, 2f);
+
+		while (freighter.transform.position != targetPosition) {
+			freighter.transform.position = Vector3.MoveTowards(
+					freighter.transform.position, targetPosition, Time.deltaTime * 5);
+			yield return new WaitForEndOfFrame();
 		}
 
 		while (SpawnedEntities.Count > 0) {
