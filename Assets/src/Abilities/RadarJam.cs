@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class RadarJam : BaseAbility, IAbility{
 
 	ColliderHelper Field;
+	List<Collider> targets = new List<Collider>();
 
 	public void Start() {
 
@@ -27,10 +28,10 @@ public class RadarJam : BaseAbility, IAbility{
 	public IEnumerator Execute(){
 		
 		Setup();
-
+		print("*********executing radarjam");
 		GameObject radarCone = (GameObject)Instantiate(Resource, Ship.Turret.transform.position, Ship.Turret.transform.rotation);
 		radarCone.transform.parent = Ship.Turret;
-		radarCone.transform.localScale = new Vector3(12f, 12f, 12f);
+		radarCone.transform.localScale = new Vector3(500f, 500f, 1f);
 		radarCone.transform.Rotate(-90f, 0f, 0f);
 		this.Field = radarCone.GetComponent<ColliderHelper>();
 		this.Field.Ability = this;
@@ -39,10 +40,11 @@ public class RadarJam : BaseAbility, IAbility{
 			yield return null;
 		}
 
-		radarCone.GetComponent<MeshCollider>().enabled = true;
-		yield return null;
-		Destroy(radarCone);
+		// TODO: does not work every time. Find something more reliable.
+		//radarCone.GetComponent<MeshCollider>().enabled = true;
+		//yield return null;
 		TearDown();
+		Destroy(radarCone);
 	}
 	
 	public void Setup(){
@@ -53,6 +55,10 @@ public class RadarJam : BaseAbility, IAbility{
 	public void TearDown(){
 
 		Ship.Heat += Cost;
+		foreach (var target in targets) {
+			target.GetComponent<ConditionHandler>().ApplyCondition(Condition.Targeting, AbilityID.RadarJam, 0, Duration);
+		}
+		targets.Clear();
 		Executing = false;
 		DurationTimer = 0f;
 		Destroy(this.Field.gameObject);
@@ -61,14 +67,23 @@ public class RadarJam : BaseAbility, IAbility{
 	
 	public override void TriggerEnter(Collider collider){
 
-		print("Collided with an enemy");
 		if(collider.tag != "Enemy") {
 			return;
 		}
-		collider.GetComponent<ConditionHandler>().ApplyCondition(Condition.Targeting, 0, Duration);
+		if (!targets.Contains(collider)) {
+			targets.Add(collider);
+		}
 	}
 	
-	public void TriggerStay(Collider collider){}
+	public override void TriggerStay(Collider collider){}
 	
-	public void TriggerExit(Collider collider){}
+	public override void TriggerExit(Collider collider){
+
+		if (collider.tag != "Enemy") {
+			return;
+		}
+		if (targets.Contains(collider)) {
+			targets.Remove(collider);
+		}
+	}
 }

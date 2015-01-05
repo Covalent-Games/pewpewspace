@@ -48,6 +48,7 @@ public enum AbilityID {
 	EmpowerOther,
 	EnergyMissilePods,
 	GoingDark,
+	RadarJam,
 	ReaperMan,
 	SalvageConversionRounds,
 	ShieldCover,

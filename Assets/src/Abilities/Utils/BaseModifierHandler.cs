@@ -15,23 +15,16 @@ public class BaseModifierHandler : MonoBehaviour {
 
 		bool exists = false;
 
-		foreach (Modifier mod in newMod.Ship.ActiveBoons) {
-			if (mod.ID == newMod.ID) {
-				exists = true;
-				oldMod = mod;
-			}
-		}
+		// First check if modifier is in Boons
+		oldMod = newMod.Ship.ActiveBoons.Find(b => b.ID == newMod.ID);
 
-		if (!exists) {
-			foreach (Modifier mod in newMod.Ship.ActiveConditions) {
-				if (mod.ID == newMod.ID) {
-					exists = true;
-					oldMod = mod;
-				}
-			}
-		}
+		// If not, check Conditions
+		if (oldMod == null)
+			oldMod = newMod.Ship.ActiveConditions.Find(c => c.ID == newMod.ID);
 
-		oldMod = newMod;
+		// If not there either, it's new!
+		if(oldMod ==  null)
+			oldMod = newMod;
 		return exists;
 	}
 }

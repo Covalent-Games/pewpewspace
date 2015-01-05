@@ -79,7 +79,6 @@ public class ShipObject : Destructable {
 		this logic will depend on which player is controlling the ship.*/
 		SetUpBaseAttributes();
 		this.fireCost = 0;
-		//Debug.Log("Fire cost = " + fireCost);
 		this.overheated = false;
 		AcquireHud();
 		AssignAbilities();
@@ -226,7 +225,6 @@ public class ShipObject : Destructable {
 	
 	void FindNewTarget(){
 		
-		// 
 		if (player == null) { return; }
 
         if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
@@ -333,14 +331,12 @@ public class ShipObject : Destructable {
 	public void AIUpdate(){
 		
 		UpdateShotTimer();
-		// FIXME: this.shotPerSecond is actually seconds per shot, but shots per second for the players. *shrug*.
 		if (this.shotTimer >= GetShotTime()){
 			this.shotTimer = 0f;
 			BaseShipAI ai = GetComponent<BaseShipAI>();
 			ai.AcquireTarget();
-			if (ai.target != null) {
+			if(SceneHandler.PlayerShips.Count > 0)
 				Fire();
-			}
 		}
 	}
 	
