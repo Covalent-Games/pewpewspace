@@ -29,8 +29,4 @@ public class GalaxyViewerControl : MonoBehaviour {
 
 		Move();
 	}
-
-	void OnCollisionEnter(Collision col) {
-		Debug.Log("Bink..");
-	}
 }

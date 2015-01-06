@@ -6,7 +6,15 @@ using System.Collections.Generic;
 
 public class ConditionHandler : BaseModifierHandler {
 
-	public void ApplyCondition(Condition condition, AbilityID id, float modifier, float duration, bool stacking=false){
+	/// <summary>
+	/// Applies a condition to the owner.
+	/// </summary>
+	/// <param name="condition">Condition enum identifier.</param>
+	/// <param name="id">Ability enum identifier.</param>
+	/// <param name="modifier">Float value by which to modify the owner.</param>
+	/// <param name="duration">How long the condition will last.</param>
+	/// <param name="stacking">True if multiple instances can exist simultaneously.</param>
+	public void ApplyCondition(Condition condition, AbilityID id, int modifier, float duration, bool stacking=false){
 	
 		switch(condition){
 			case Condition.Damage:
@@ -29,18 +37,19 @@ public class ConditionHandler : BaseModifierHandler {
 		if (Exists(modifier, out modifier)) {
 			modifier.DurationTimer = 0f;
 			yield break;
+		} else {
+			ship.ActiveConditions.Add(modifier);
 		}
 
-		Debug.Log(ship + " has reduced damage");
-		ship.DamageMod -= Mathf.RoundToInt(mod);
-		float timer = 0f;
-		while (timer < duration){
-			timer += Time.deltaTime;
+		ship.DamageMod -= mod;
+
+		while (modifier.DurationTimer < duration){
+			modifier.DurationTimer += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
-		ship.DamageMod += Mathf.RoundToInt(mod);
+
+		ship.DamageMod += mod;
 		ship.ActiveConditions.Remove(modifier);
-		Debug.Log(ship + " is free from reduced damaged");
 	}
 
     /// <summary>
@@ -64,8 +73,9 @@ public class ConditionHandler : BaseModifierHandler {
 		cond.DurationTimer = 0f;
 		while (cond.DurationTimer < cond.Duration) {
 			cond.DurationTimer += Time.deltaTime;
-			yield return new WaitForEndOfFrame();
-		}
+            yield return new WaitForEndOfFrame();
+        }
+
         ship.Speed += speedChange;
 		ship.ActiveConditions.Remove(modifier);
     }

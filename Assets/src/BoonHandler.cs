@@ -6,25 +6,19 @@ using System.Collections.Generic;
 
 public class BoonHandler : BaseModifierHandler {
 	
-	public void ApplyBoon(Boon boon, AbilityID id, int modifier, float duration, bool stacking=false){
+	public void ApplyBoon(Boon boon, AbilityID id, float modifier, float duration, bool stacking=false){
 		
 		switch(boon){
-		case Boon.Damage:
-			StartCoroutine(IncreaseDamage(boon, id, modifier, duration));
-			break;
-		}
-	}
-
-	public void ApplyBoon(Boon boon, float modifier, float duration) {
-
-		switch (boon) {
-			case Boon.FireRate:
-				StartCoroutine(IncreaseFireRate(boon, modifier, duration));
+			case Boon.Damage:
+				StartCoroutine(IncreaseDamage(boon, id, modifier, duration));
 				break;
-		}
+			case Boon.FireRate:
+				StartCoroutine(IncreaseFireRate(boon, id, modifier, duration));
+				break;
+			}
 	}
 	
-	IEnumerator IncreaseDamage(Boon boon, AbilityID id, int mod, float duration){
+	IEnumerator IncreaseDamage(Boon boon, AbilityID id, float mod, float duration){
 		
 		ShipObject ship = GetComponent<ShipObject>();
 		Modifier modifier = new Modifier(ship, id, duration, mod, boon);
@@ -32,32 +26,46 @@ public class BoonHandler : BaseModifierHandler {
 		if (Exists(modifier, out modifier)) {
 			modifier.DurationTimer = 0f;
 			yield break;
+		} else {
+			ship.ActiveBoons.Add(modifier);
 		}
 
-		ship.DamageMod += mod;
-		print (ship.gameObject.name + "'s Damage = " + ship.GetDamage());
-		float timer = 0f;
-		while (timer < duration){
-			timer += Time.deltaTime;
+		ship.DamageMod += (int)mod;
+
+		while (modifier.DurationTimer < duration) {
+			modifier.DurationTimer += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
-		ship.DamageMod -= mod;
+
+		ship.DamageMod -= (int)mod;
 		ship.ActiveBoons.Remove(modifier);
-		print (ship.gameObject.name + "'s Damage = " + ship.GetDamage());
 	}
 
-	IEnumerator IncreaseFireRate(Boon boon, float mod, float duration) {
+	IEnumerator IncreaseFireRate(Boon boon, AbilityID id, float mod, float duration) {
 
 		ShipObject ship = GetComponent<ShipObject>();
+		Modifier modifier = new Modifier(ship, id, duration, mod, boon);
 
+		if (Exists(modifier, out modifier)) {
+			modifier.DurationTimer = 0f;
+			yield break;
+		} else {
+			ship.ActiveBoons.Add(modifier);
+		}
+
+		// TODO: Determine if this check is needed.
 		if (ship == null)
 			yield break;
 
 		float fireRateDelta = ship.shotPerSecond * mod;
 		ship.shotPerSecond += fireRateDelta;
 
-		yield return new WaitForSeconds(duration);
+		while (modifier.DurationTimer < duration) {
+			modifier.DurationTimer += Time.deltaTime;
+			yield return new WaitForEndOfFrame();
+		}
 
 		ship.shotPerSecond -= fireRateDelta;
+		ship.ActiveBoons.Remove(modifier);
 	}
 }

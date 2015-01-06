@@ -10,7 +10,6 @@ public class RadarJam : BaseAbility, IAbility{
 
 	public void Start() {
 
-		print("Attached Radar Jam");
 		Cost = 35f;
 		Duration = 5f;
 		Resource = Resources.Load("AbilityObjects/RadarJamCone");
@@ -19,7 +18,6 @@ public class RadarJam : BaseAbility, IAbility{
 	public void Begin(ShipObject ship){
 		
 		Ship = ship;
-		print("Attached ship: " + Ship.gameObject.name);
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
@@ -28,7 +26,7 @@ public class RadarJam : BaseAbility, IAbility{
 	public IEnumerator Execute(){
 		
 		Setup();
-		print("*********executing radarjam");
+
 		GameObject radarCone = (GameObject)Instantiate(Resource, Ship.Turret.transform.position, Ship.Turret.transform.rotation);
 		radarCone.transform.parent = Ship.Turret;
 		radarCone.transform.localScale = new Vector3(500f, 500f, 1f);
@@ -36,7 +34,7 @@ public class RadarJam : BaseAbility, IAbility{
 		this.Field = radarCone.GetComponent<ColliderHelper>();
 		this.Field.Ability = this;
 		
-		while (!Input.GetButtonDown(Ship.player.Controller.RightStickPress)){
+		while (!Input.GetButtonDown(Ship.PlayerObject.Controller.RightStickPress)){
 			yield return null;
 		}
 
@@ -78,7 +76,7 @@ public class RadarJam : BaseAbility, IAbility{
 	public override void TriggerStay(Collider collider){}
 	
 	public override void TriggerExit(Collider collider){
-
+	
 		if (collider.tag != "Enemy") {
 			return;
 		}

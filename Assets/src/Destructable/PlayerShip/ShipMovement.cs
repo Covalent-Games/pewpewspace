@@ -20,7 +20,7 @@ public class ShipMovement : MonoBehaviour {
 		
 		if (!moveEnabled){ return; }
 		
-		Destructable ship = gameObject.GetComponent<Destructable>();
+		Destructible ship = gameObject.GetComponent<Destructible>();
 		
 		// Calculate total modifier
 		float moveSpeedModifier = this.moveSpeed * ship.Speed * Time.deltaTime;

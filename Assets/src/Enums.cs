@@ -49,6 +49,7 @@ public enum AbilityID {
 	EnergyMissilePods,
 	GoingDark,
 	RadarJam,
+	RapidFire,
 	ReaperMan,
 	SalvageConversionRounds,
 	ShieldCover,

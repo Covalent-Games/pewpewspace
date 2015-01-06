@@ -41,8 +41,9 @@ public class EmpowerOther : BaseAbility, IAbility{
 		EmpowerOtherProjectile projectile = projectileGO.GetComponent<EmpowerOtherProjectile>();
 
 		SetTarget(projectile);
-		
 		StartCoroutine(projectile.TrackToTarget());
+
+		Ship.Heat += Cost;
 	}
 	
 	void SetTarget(EmpowerOtherProjectile projectile){

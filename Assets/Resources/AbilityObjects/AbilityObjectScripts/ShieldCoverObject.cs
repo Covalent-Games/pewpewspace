@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ShieldCoverObject : Destructable {
+public class ShieldCoverObject : Destructible {
 
 	public Vector3 Size;
 

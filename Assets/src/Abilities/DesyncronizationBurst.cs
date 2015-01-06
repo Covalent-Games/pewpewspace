@@ -25,6 +25,7 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		Debug.Log("Firing desync");
 	}
 	
 	public IEnumerator Execute(){
@@ -43,10 +44,11 @@ public class DesyncronizationBurst : BaseAbility, IAbility{
 		Executing = true;
 
         var sphere = (GameObject)Instantiate(Resource, Ship.transform.position, Quaternion.identity);
-        this.Sphere = sphere.GetComponent<ColliderHelper>();
-        this.Sphere.transform.position = Ship.transform.position;
-        this.Sphere.ModifySphereRadius(9);
-        this.Sphere.Ability = this;
+		sphere.transform.Rotate(Vector3.right, 90f);
+        Sphere = sphere.GetComponent<ColliderHelper>();
+        Sphere.transform.position = Ship.transform.position;
+        Sphere.ModifySphereRadius(9);
+        Sphere.Ability = this;
 	}
 	
 	public void TearDown(){
