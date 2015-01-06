@@ -22,6 +22,7 @@ public class ExplosiveShot : BaseAbility, IAbility{
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		Debug.Log("Explosive Shot");
 	}
 	
 	public IEnumerator Execute(){

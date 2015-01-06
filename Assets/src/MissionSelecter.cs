@@ -6,7 +6,7 @@ public class MissionSelecter : MonoBehaviour {
 
 	void OnTriggerStay(Collider collider) {
 
-		if (Input.GetButtonDown(GameValues.Players[1].Controller.ButtonA)) {
+		if (Input.GetButton(GameValues.Players[1].Controller.ButtonA)) {
 			collider.GetComponent<MissionLoader>().LoadMission();
 		}
 	}

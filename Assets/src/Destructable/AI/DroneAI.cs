@@ -5,41 +5,32 @@ public class DroneAI : BaseShipAI {
 
 	void Start () {
 		
-		actions = GetComponent<ShipObject>();
-		actions.SetUpBaseAttributes();
+		BaseShip = GetComponent<ShipObject>();
+		BaseShip.SetUpBaseAttributes();
 		AcquireTarget();
 		AcquireDestination();
-		actions.Start();
+		BaseShip.Start();
 	}
 	
 	void Move(){
 	
 		
-		transform.position = Vector3.MoveTowards(transform.position, this.Destination, Time.deltaTime * 5 * actions.Speed);
+		transform.position = Vector3.MoveTowards(transform.position, this.Destination, Time.deltaTime * 5 * BaseShip.Speed);
 		if (transform.position == this.Destination){
 			AcquireDestination();
 		}
-	}
-	
-	void AimAndShoot(){
-
-		if (target != null) {
-		Transform turret = transform.FindChild("Turret");
-		turret.LookAt(this.target.transform.position);
-		}
-		actions.AIUpdate();
 	}
 	
 	void AcquireDestination(){
 	
 		float xpos = Random.Range(0f, 1f);
 		float ypos = Random.Range(0f, 1f);
-		this.Destination = Camera.main.ViewportToWorldPoint(new Vector3(xpos, ypos, 40f));
+		this.Destination = Camera.main.ViewportToWorldPoint(new Vector3(xpos, ypos, Camera.main.transform.position.y));
 	}
 	
 	void Update () {
 	
+		BaseShip.AIUpdate();
 		Move();
-		AimAndShoot();
 	}
 }

@@ -41,7 +41,7 @@ public class ShieldCover : BaseAbility, IAbility {
 		ShieldCoverObject shield = Shield.GetComponent<ShieldCoverObject>();
 		shield.Size = new Vector3(15f, 10f, 15f);
 		shield.Invulnerable = true;
-		
+		Ship.Heat += Cost;
 		
 	}
 

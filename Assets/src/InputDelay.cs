@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class InputDelay: MonoBehaviour {
 
-	float MaxDelay = 0.20f;
+	float MaxDelay = 0.25f;
 	public float[] DelayTimer = new float[] { 0f, 0f, 0f, 0f };
 	Coroutine UpdateRoutine;
 

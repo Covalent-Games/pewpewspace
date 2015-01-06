@@ -4,26 +4,24 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class Destructable : MonoBehaviour {
+public class Destructible : MonoBehaviour {
 
 	#region Members
 
-	public List<ShipObject> Container = new List<ShipObject>();
+	public List<List<ShipObject>> Containers = new List<List<ShipObject>>();
 
 	public int MaxArmor;
 	public float MaxHeat;
-	//public int maxShields;
 	public float baseSpeed;
 	
 	[SerializeField]
 	int armor;
 	[SerializeField]
 	float heat;
-	//int shields;
 	public float Speed;
-	
-	float regenTimer;
-	
+	public bool CanBeTargetted = true;
+	public bool CanTarget = true;
+		
 	[SerializeField]
 	public bool Invulnerable = false;
 	[SerializeField]
@@ -36,7 +34,9 @@ public class Destructable : MonoBehaviour {
 	
 	#region Properties	
 	public int Armor {
-		get { return this.armor; }
+		get {
+			return this.armor;
+		}
 		set {
 			this.armor = value;
 			if(this.armor <= 0) {
@@ -61,12 +61,17 @@ public class Destructable : MonoBehaviour {
 
 	#endregion
 	
+	/// <summary>
+	/// Deals non tracked damage. The offender will not be recorded.
+	/// </summary>
+	/// <param name="damage">The amount of damage.</param>
+	/// <returns></returns>
 	public int DamageArmor(int damage){
 
 		if (!this.Invulnerable){
 			this.Armor -= damage;
 
-            DisplayFloatingDamage(damage);
+			DisplayFloatingDamage(damage);
 
 			return this.Armor;
 		}
@@ -74,6 +79,12 @@ public class Destructable : MonoBehaviour {
 		return this.Armor;
 	}
 
+	/// <summary>
+	/// Deals tracked damage. The offender will be recorded.
+	/// </summary>
+	/// <param name="damage">The amount of damage.</param>
+	/// <param name="offender">The ShipObject that dealt the damage.</param>
+	/// <returns></returns>
 	public int DamageArmor(int damage, ShipObject offender) {
 
 		int armor = DamageArmor(damage);
@@ -107,13 +118,13 @@ public class Destructable : MonoBehaviour {
 		return RestoreDissipation(cooldown);
 	}
 
+	// TODO: This should be more generic, provide an optional text argument, and hover direction.
+	private void DisplayFloatingDamage(int damage) {
 
-    private void DisplayFloatingDamage(int damage) {
-
-        GameObject guiElement = (GameObject)Instantiate(Resources.Load("GUIPrefabs/FloatingDamage"), transform.position, Quaternion.identity);
-        Transform textTransform = guiElement.transform.FindChild("Text");
-        textTransform.GetComponent<Text>().text = damage.ToString();
-    }
+		GameObject guiElement = (GameObject)Instantiate(Resources.Load("GUIPrefabs/FloatingDamage"), transform.position, Quaternion.identity);
+		Transform textTransform = guiElement.transform.FindChild("Text");
+		textTransform.GetComponent<Text>().text = damage.ToString();
+	}
 
 	void Start () {
 		
@@ -126,7 +137,10 @@ public class Destructable : MonoBehaviour {
 		// itself is a member of the physical GameObject and so referencing gameObject raises an error.
 		// The object sometimes tries to be destroyed twice in one frame. This check prevents that.
 		if (gameObject != null){
-			Container.Remove(GetComponent<ShipObject>());
+			// Remove the object from all associated lists.
+			foreach (var container in Containers) {
+				container.Remove(GetComponent<ShipObject>());
+			}
 			var explosions = GameObject.FindObjectOfType<SceneHandler>().Explosions;
 			var explosion = explosions[Random.Range(1, explosions.Count) - 1];
 			Instantiate(explosion, transform.position, Quaternion.identity);
@@ -142,14 +156,25 @@ public class Destructable : MonoBehaviour {
 		this.Speed = this.baseSpeed;
 	}
 
+	/// <summary>
+	/// Adds this entity to containers. If the entity is destroyed it will be removed from all containers.
+	/// </summary>
+	/// <param name="containers">Any number of containers to add this entity to.</param>
+	/// <returns>Exhaustive list of all containers this entity is referenced.</returns>
+	public List<List<ShipObject>> AddContainers(params List<ShipObject>[] containers) {
+
+		ShipObject ship = GetComponent<ShipObject>();
+
+		foreach (var container in containers) {
+			container.Add(ship);
+			Containers.Add(container);
+		}
+
+		return Containers;
+	}
+
 	public void Update () {
 
 		DissipationCooldown();
-		//this.regenTimer += Time.deltaTime;
-		//if (this.regenTimer > 1) {
-		//	DissipationCooldown();
-		//	//ShieldRegen();
-		//	this.regenTimer = 0f;
-		//}
 	}
 }

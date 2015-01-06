@@ -44,7 +44,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5.60580015, y: 0, z: 9.9137001}
-  m_LocalScale: {x: 2, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
   m_Father: {fileID: 0}
@@ -87,7 +87,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 54f9acecb5b8a5f44bfbfa9e6287e4fa, type: 3}
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -113,8 +113,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.41947722, y: .811405182, z: 1.95710611}
+  m_Center: {x: -.00476741791, y: .0942974091, z: .112762451}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -126,7 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6c5e20556861004a814f6746eea8f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actions: {fileID: 0}
+  BaseShip: {fileID: 0}
+  ThreatDissipationSpeed: 2
+  DistancePerception: -1
   target: {fileID: 0}
   Destination: {x: 0, y: 0, z: 0}
 --- !u!114 &11400002
@@ -140,29 +142,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: []
-  MaxArmor: 50
+  MaxArmor: 1
   MaxHeat: 100
   baseSpeed: 1.10000002
   armor: 0
   heat: 0
   Speed: 0
+  CanBeTargetted: 1
+  CanTarget: 1
   Invulnerable: 0
   InvulnerableArmor: 0
   InvulnerableDissipation: 0
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
-  shotPerSecond: 1.5
-  Damage: 7
+  shotPerSecond: 2
+  Damage: 5
   DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
   ShipClass: 21
+  Movement: {fileID: 0}
   Target: {fileID: 0}
   Turret: {fileID: 0}
-  ActiveConditions: 
-  ActiveBoons: 
-  fireCost: 0
-  overheated: 0
+  FireCost: 0
+  Overheated: 0
   healthBar: {fileID: 0}
   dissipationBar: {fileID: 0}
   Ability1Icon: {fileID: 0}

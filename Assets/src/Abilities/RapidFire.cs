@@ -18,6 +18,7 @@ public class RapidFire : BaseAbility, IAbility{
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		Debug.Log("Rapid Fire");
 	}
 	
 	public IEnumerator Execute(){
@@ -31,13 +32,17 @@ public class RapidFire : BaseAbility, IAbility{
 		}
 
 		TearDown();
+		
 	}
 	
 	public void Setup(){
 
         Ship.Heat += this.Cost;
 		foreach (ShipObject ship in SceneHandler.PlayerShips) {
-			ship.GetComponent<BoonHandler>().ApplyBoon(Boon.FireRate, this.Percentage, this.Duration);
+
+			if (ship) {
+				ship.GetComponent<BoonHandler>().ApplyBoon(Boon.FireRate, AbilityID.RapidFire, this.Percentage, this.Duration);
+			}
 		}
 		Executing = true;
 	}
