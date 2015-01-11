@@ -41,14 +41,15 @@ public class ConditionHandler : BaseModifierHandler {
 			ship.ActiveConditions.Add(modifier);
 		}
 
-		ship.DamageMod -= mod;
+		int change = Mathf.RoundToInt(ship.DamageMod * mod);
+		ship.DamageMod -= change;
 
 		while (modifier.DurationTimer < duration){
 			modifier.DurationTimer += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
 
-		ship.DamageMod += mod;
+		ship.DamageMod += change;
 		ship.ActiveConditions.Remove(modifier);
 	}
 
@@ -83,24 +84,24 @@ public class ConditionHandler : BaseModifierHandler {
 	IEnumerator DisableTargeting(Condition condition, AbilityID id, float mod, float duration, bool stacking) {
 
 		BaseShipAI ship = GetComponent<BaseShipAI>();
-		Modifier modifier = new Modifier(ship.actions, id, duration, mod, condition, stacking);
+		Modifier modifier = new Modifier(ship.BaseShip, id, duration, mod, condition, stacking);
 		Modifier modifierOut;
 		if (Exists(modifier, out modifierOut)) {
 			modifierOut.DurationTimer = 0f;
 			yield break;
 		} else {
-			ship.actions.ActiveConditions.Add(modifier);
+			ship.BaseShip.ActiveConditions.Add(modifier);
 		}
-		ship.CanTarget = false;
+		ship.BaseShip.CanTarget = false;
 
-		var cond = ship.actions.ActiveConditions.Find(m => m.ID == modifier.ID);
+		var cond = ship.BaseShip.ActiveConditions.Find(m => m.ID == modifier.ID);
 		cond.DurationTimer = 0f;
 		while (cond.DurationTimer < cond.Duration) {
 			cond.DurationTimer += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
-		ship.CanTarget = true;
-		ship.actions.ActiveConditions.Remove(modifier);
+		ship.BaseShip.CanTarget = true;
+		ship.BaseShip.ActiveConditions.Remove(modifier);
 
 	}
 }
