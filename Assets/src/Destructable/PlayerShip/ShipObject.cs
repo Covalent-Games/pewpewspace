@@ -127,6 +127,7 @@ public class ShipObject : Destructible {
                 Ability1 = AddAbility("DeconstructionLaser");
                 Ability2 = AddAbility("ReaperMan");
                 Ability3 = AddAbility("EnergyMissilePods");
+				Ability4 = AddAbility("CarpetBomb");
 				break;
 			case ShipType.Valkyrie:
                 Ability1 = AddAbility("DesyncronizationBurst");
@@ -331,20 +332,21 @@ public class ShipObject : Destructible {
 			}
 		}
 	}
-	
+
 	public void AIUpdate() {
-		
+
 		UpdateShotTimer();
-		if (this.shotTimer >= GetShotTime()){
+		if (this.shotTimer >= GetShotTime()) {
 			this.shotTimer = 0f;
 			BaseShipAI ai = GetComponent<BaseShipAI>();
 			ai.AcquireTarget();
-			if(SceneHandler.PlayerShips.Count > 0)
+			if (SceneHandler.PlayerShips.Count > 0) {
 				Fire();
 			} else {
 				Debug.Log(gameObject.name + " has no target this round");
 			}
 		}
+	}
 	
 	void OnTriggerEnter(Collider collider) {
 		
