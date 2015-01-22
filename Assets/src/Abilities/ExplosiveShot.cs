@@ -13,7 +13,7 @@ public class ExplosiveShot : BaseAbility, IAbility{
 		}
 		Cost = 18;
 		Duration = 1f/60f;
-		Damage = 15;
+		Damage = 15f;
 	}
 	
 	public void Begin(ShipObject ship){

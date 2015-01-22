@@ -17,7 +17,7 @@ public class CarpetBomb : BaseAbility, IAbility{
 
 		Cost = 40f;
 		Duration = 1f/60f;
-		Damage = 15;
+		Damage = 15f;
 	}
 	
 	public void Begin(ShipObject ship){

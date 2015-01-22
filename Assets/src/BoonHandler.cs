@@ -30,14 +30,14 @@ public class BoonHandler : BaseModifierHandler {
 			ship.ActiveBoons.Add(modifier);
 		}
 
-		ship.DamageMod += (int)mod;
+		ship.DamageMod += mod;
 
 		while (modifier.DurationTimer < duration) {
 			modifier.DurationTimer += Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
 
-		ship.DamageMod -= (int)mod;
+		ship.DamageMod -= mod;
 		ship.ActiveBoons.Remove(modifier);
 	}
 

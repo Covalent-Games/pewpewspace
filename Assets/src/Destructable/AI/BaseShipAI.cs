@@ -10,8 +10,6 @@ public class BaseShipAI : MonoBehaviour {
 	public int DistancePerception = -1;
 	public Dictionary<ShipObject, int> ThreatTable = new Dictionary<ShipObject, int>();
 
-	[SerializeField]
-	public ShipObject target;
 	public Vector3 Destination;	
 
 	/// <summary>
@@ -20,7 +18,7 @@ public class BaseShipAI : MonoBehaviour {
 	public void AcquireTarget(){
 
 		if (!BaseShip.CanTarget) {
-			target = null;
+			BaseShip.Target = null;
 			GoNuts();
 			return;
 		}
@@ -43,7 +41,7 @@ public class BaseShipAI : MonoBehaviour {
 			
 			// TODO: Determine if this should be here. It might be skipping needed logic
 			// If we already have a target we don't need to randomly pick a new one.
-			if (target != null) { return; }
+			if (BaseShip.Target != null) { return; }
 
 			int index;
 
@@ -62,7 +60,7 @@ public class BaseShipAI : MonoBehaviour {
 			}
 
 			index = Random.Range(0, possibleTargets.Count);
-			target = possibleTargets[index];
+			BaseShip.Target = possibleTargets[index].transform;
 
 		} else {
 			// Start threat below in case no one has generated threat and all are at 0.
@@ -80,7 +78,7 @@ public class BaseShipAI : MonoBehaviour {
 				int threat = threatObject.Value - Mathf.RoundToInt(distanceModifier);
 
 				if (threat > highestThreat){
-					target = threatObject.Key;
+					BaseShip.Target = threatObject.Key.transform;
 					highestThreat = threat;
 				}
 			}
@@ -91,6 +89,30 @@ public class BaseShipAI : MonoBehaviour {
 
 		int fireAngle = Random.Range(0, 360);
 		BaseShip.Turret.Rotate(0, fireAngle, 0);
+	}
+
+	public void Fire() {
+
+		if (BaseShip.Target)
+			BaseShip.Turret.LookAt(BaseShip.Target.position);
+		else if (!BaseShip.Target && SceneHandler.PlayerShips.Count > 0)
+			GoNuts();
+		else
+			return;
+
+		Vector3 projectileOrigin = transform.position;
+		GameObject projectileGO = (GameObject)Instantiate(
+				BaseShip.projectilePrefab,
+				projectileOrigin,
+				BaseShip.Turret.rotation);
+
+		IProjectile projectile = projectileGO.GetComponent(typeof(IProjectile)) as IProjectile;
+		// TODO: It would be nice to not have to do this. 
+		projectileGO.transform.Rotate(new Vector3(90, 0, 0));
+
+		projectile.Direction = Vector3.up;
+		projectile.Damage = BaseShip.GetDamage();
+		projectile.Owner = BaseShip;
 	}
 
 	public IEnumerator DissipateThreat() {

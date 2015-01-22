@@ -10,11 +10,11 @@ public class DroneAI : BaseShipAI {
 		AcquireTarget();
 		AcquireDestination();
 		BaseShip.Start();
+		StartCoroutine(BaseShip.AIUpdate());
 	}
 	
 	void Move(){
 	
-		
 		transform.position = Vector3.MoveTowards(transform.position, this.Destination, Time.deltaTime * 5 * BaseShip.Speed);
 		if (transform.position == this.Destination){
 			AcquireDestination();
@@ -30,7 +30,6 @@ public class DroneAI : BaseShipAI {
 	
 	void Update () {
 	
-		BaseShip.AIUpdate();
 		Move();
 	}
 }

@@ -27,12 +27,11 @@ public class SalvageConversionRoundsProjectile : Projectile, IProjectile {
 		Destructible destructable = collider.GetComponent<Destructible>();
 		
 		if (destructable){
-			int oldHealth = destructable.Armor;
+			float oldHealth = destructable.Armor;
 			// TODO: Damage should be calculated elsewhere so it can be upgraded (2)
-			int damageDealt = oldHealth - destructable.DamageArmor(this.Damage / 2, Owner);
+			float damageDealt = oldHealth - destructable.DamageArmor(this.Damage / 2, Owner);
 			
 			foreach(ShipObject ship in SceneHandler.PlayerShips){
-				print(ship.name + " repaired for " + damageDealt);
 				ship.RestoreArmor(damageDealt);
 			}
 			

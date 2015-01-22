@@ -5,7 +5,7 @@ public class ReaperManProjectile : MonoBehaviour {
 
     public ShipObject Target;
     bool tracking;
-    public int damage;
+    public float damage;
 	public ShipObject Owner;
 
     public IEnumerator TrackToTarget()

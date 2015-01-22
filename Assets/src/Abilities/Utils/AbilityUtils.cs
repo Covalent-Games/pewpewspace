@@ -21,12 +21,16 @@ public class BaseAbility: MonoBehaviour{
 	public int PrimaryEffect = 0;
 	public int SecondaryEffect = 0;
 	public float Percentage = 0f;
-	public int Damage = 0;
-	public int ArmorRepair = 0;
+	public float Damage = 0f;
+	public float ArmorRepair = 0f;
 	public int ShieldRepair = 0;
 	public float Duration = 0f;
 	public float DurationTimer = 0f;
 	public float AbilityRadius;
+
+	public virtual float GetDamage() {
+		return this.Ship.GetDamage();
+	}
 
 	public virtual void TriggerEnter(Collider collider){}
 	

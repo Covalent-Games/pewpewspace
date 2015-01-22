@@ -10,12 +10,12 @@ public class Destructible : MonoBehaviour {
 
 	public List<List<ShipObject>> Containers = new List<List<ShipObject>>();
 
-	public int MaxArmor;
+	public float MaxArmor;
 	public float MaxHeat;
 	public float baseSpeed;
 	
 	[SerializeField]
-	int armor;
+	float armor;
 	[SerializeField]
 	float heat;
 	public float Speed;
@@ -33,13 +33,13 @@ public class Destructible : MonoBehaviour {
 	#endregion
 	
 	#region Properties	
-	public int Armor {
+	public float Armor {
 		get {
 			return this.armor;
 		}
 		set {
 			this.armor = value;
-			if(this.armor <= 0) {
+			if(this.armor <= 0f) {
 				End ();
 			}
 			if (this.armor > this.MaxArmor){
@@ -66,7 +66,7 @@ public class Destructible : MonoBehaviour {
 	/// </summary>
 	/// <param name="damage">The amount of damage.</param>
 	/// <returns></returns>
-	public int DamageArmor(int damage){
+	public float DamageArmor(float damage){
 
 		if (!this.Invulnerable){
 			this.Armor -= damage;
@@ -85,22 +85,22 @@ public class Destructible : MonoBehaviour {
 	/// <param name="damage">The amount of damage.</param>
 	/// <param name="offender">The ShipObject that dealt the damage.</param>
 	/// <returns></returns>
-	public int DamageArmor(int damage, ShipObject offender) {
+	public float DamageArmor(float damage, ShipObject offender) {
 
-		int armor = DamageArmor(damage);
+		float armor = DamageArmor(damage);
 		BaseShipAI ai = GetComponent<BaseShipAI>();
 		if (ai != null) {
 			if (ai.ThreatTable.ContainsKey(offender)) {
-				ai.ThreatTable[offender] += damage;
+				ai.ThreatTable[offender] += Mathf.RoundToInt(damage);
 			} else {
-				ai.ThreatTable.Add(offender, damage);
+				ai.ThreatTable.Add(offender, Mathf.RoundToInt(damage));
 			}
 		}
 
 		return armor;
 	}
 
-	public int RestoreArmor(int restoreAmount){
+	public float RestoreArmor(float restoreAmount){
 	
 		this.Armor += restoreAmount;
 		return this.Armor;
@@ -119,11 +119,11 @@ public class Destructible : MonoBehaviour {
 	}
 
 	// TODO: This should be more generic, provide an optional text argument, and hover direction.
-	private void DisplayFloatingDamage(int damage) {
+	private void DisplayFloatingDamage(float damage) {
 
 		GameObject guiElement = (GameObject)Instantiate(Resources.Load("GUIPrefabs/FloatingDamage"), transform.position, Quaternion.identity);
 		Transform textTransform = guiElement.transform.FindChild("Text");
-		textTransform.GetComponent<Text>().text = damage.ToString();
+		textTransform.GetComponent<Text>().text = Mathf.RoundToInt(damage).ToString();
 	}
 
 	void Start () {

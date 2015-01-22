@@ -44,8 +44,8 @@ public class EmpowerOtherProjectile : MonoBehaviour {
 			return;
 		}
 		
-		int dmg = shipObject.GetDamage();
-		int dmgMod = Mathf.RoundToInt(dmg * DamageModifier);
+		float dmg = shipObject.GetDamage();
+		float dmgMod = dmg * DamageModifier;
 		shipObject.GetComponent<BoonHandler>().ApplyBoon(Boon.Damage, AbilityID.EmpowerOther, dmgMod, Duration);
 		
 		tracking = false;

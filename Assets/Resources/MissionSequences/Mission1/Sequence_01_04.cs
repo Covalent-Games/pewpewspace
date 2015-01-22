@@ -7,7 +7,7 @@ public class Sequence_01_04 : BaseSequence {
 	public int SpawnQuantity;
 	public GameObject EnemyPrefab;
 	public GameObject Freighter;
-	public int EnemyArmor;
+	public float EnemyArmor;
 	List<ShipObject> SpawnedEntities = new List<ShipObject>();
 
 	public override IEnumerator ExecuteSequence() {

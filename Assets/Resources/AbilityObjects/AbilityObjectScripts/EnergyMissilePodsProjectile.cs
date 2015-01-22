@@ -5,7 +5,7 @@ public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
 
 	public ShipObject Target { get; set; }
     bool tracking;
-    public int Damage { get; set; }
+    public float Damage { get; set; }
 	public ShipObject Owner { get; set; }
     public Vector3 Direction { get; set; }
     public Vector3 oldPosition;
@@ -44,7 +44,7 @@ public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
         }
 
         //TODO: Get damage from EnergyMissilePods.cs
-        this.Damage = 20;
+        this.Damage = 20f;
 
     }
 

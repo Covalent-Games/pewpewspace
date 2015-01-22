@@ -34,7 +34,7 @@ public class SustainDrone : BaseAbility, IAbility{
 			DurationTimer += Time.time - time;
 			time = Time.time;
 
-			Ship.RestoreArmor(Mathf.RoundToInt(PrimaryEffect * UpdateFrequency));
+			Ship.RestoreArmor(PrimaryEffect * UpdateFrequency);
 			yield return new WaitForSeconds(UpdateFrequency);
 		}
 

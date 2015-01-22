@@ -10,7 +10,7 @@ public class ReaperMan : BaseAbility, IAbility{
         Resource = Resources.Load("AbilityObjects/ReaperManProjectile");
 		Cost = 30f;
 		Duration = 1f/60f;
-        Damage = 100;
+        Damage = 100f;
 	}
 	
 	public void Begin(ShipObject ship){

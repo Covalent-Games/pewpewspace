@@ -14,11 +14,11 @@ public class ShipObject : Destructible {
 	/// <summary>
 	/// Unmodified damage. DO NOT call this directly. Use GetDamage() instead.
 	/// </summary>
-	public int Damage;
+	public float Damage;
 	/// <summary>
 	/// The damage modifier. Change this to modify damage. Do not access Damage directly.
 	/// </summary>
-	public int DamageMod = 0;
+	public float DamageMod = 0f;
 	public float triggerValue;
 	public int PlayerNumber;
 	
@@ -215,8 +215,6 @@ public class ShipObject : Destructible {
 		// If the player has no target
 		if (Target == null) {
 			projectile.Direction = Vector3.up;
-		} else if (Target != null && AbilityUtils.IsPlayer(Target.GetComponent<ShipObject>())) {
-			projectile.Direction = Vector3.up;
 		} else {
 			projectile.Target = Target.GetComponent<ShipObject>();
 		}
@@ -269,7 +267,7 @@ public class ShipObject : Destructible {
 		PlayerCursor.GetComponent<TargetCursor>().Tracking = null;
 	}
 	
-	public int GetDamage() {
+	public float GetDamage() {
 	
 		return this.Damage + this.DamageMod;
 	}
@@ -333,18 +331,15 @@ public class ShipObject : Destructible {
 		}
 	}
 
-	public void AIUpdate() {
+	public IEnumerator AIUpdate() {
 
-		UpdateShotTimer();
-		if (this.shotTimer >= GetShotTime()) {
-			this.shotTimer = 0f;
-			BaseShipAI ai = GetComponent<BaseShipAI>();
+		BaseShipAI ai = GetComponent<BaseShipAI>();
+		yield return new WaitForSeconds(GetShotTime());
+
+		while(true) {
 			ai.AcquireTarget();
-			if (SceneHandler.PlayerShips.Count > 0) {
-				Fire();
-			} else {
-				Debug.Log(gameObject.name + " has no target this round");
-			}
+			ai.Fire();
+			yield return new WaitForSeconds(GetShotTime());
 		}
 	}
 	

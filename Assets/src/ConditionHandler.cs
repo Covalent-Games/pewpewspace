@@ -41,7 +41,7 @@ public class ConditionHandler : BaseModifierHandler {
 			ship.ActiveConditions.Add(modifier);
 		}
 
-		int change = Mathf.RoundToInt(ship.DamageMod * mod);
+		float change = ship.DamageMod * mod;
 		ship.DamageMod -= change;
 
 		while (modifier.DurationTimer < duration){

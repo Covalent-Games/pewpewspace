@@ -9,7 +9,7 @@ public class DeconstructionLaser : BaseAbility, IAbility{
 		
 		Cost = 30f;
 		Duration = 0.5f;
-		Damage = 50;
+		Damage = 50f;
 
 		Resource = Resources.Load("AbilityObjects/DeconstructionLaserObject");
 	}

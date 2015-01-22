@@ -49,13 +49,11 @@ public class GoingDark : BaseAbility, IAbility{
 			foreach (ShipObject ship in new List<ShipObject>(table.Keys)) {
 				if (ship == Ship) {
 					table[ship] = 0;
-					print("Dropping threat to 0");
 				}
 			}
 
-			if (ai.target == Ship) {
-				ai.target = null;
-				print("Untargeted");
+			if (ai.BaseShip.Target == Ship.transform) {
+				ai.BaseShip.Target = null;
 			}
 		}
 	}
