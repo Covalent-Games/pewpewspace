@@ -3,41 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class CarpetBomb : BaseAbility, IAbility{
+public class CarpetBomb : BaseAbility, IAbility {
 
 	int NumberOfMissiles = 3;
 	static float rangeDegrees = 15f;
 	float Range = rangeDegrees * Mathf.PI / 180;
-	
+
 	public void Start() {
 
 		Resource = Resources.Load("PlayerShips/ShipObjects/CarpetBombProjectile", typeof(GameObject));
-		if(Resource == null)
+		if (Resource == null)
 			Debug.LogError("Resource ExplosiveShotProjectile did not load properly");
 
 		Cost = 40f;
-		Duration = 1f/60f;
+		Duration = 1f / 60f;
 		Damage = 15f;
 	}
-	
-	public void Begin(ShipObject ship){
-		
+
+	public void Begin(ShipObject ship) {
+
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
 	}
-	
-	public IEnumerator Execute(){
-		
+
+	public IEnumerator Execute() {
+
 		Setup();
 
 		yield return null;
 
 		TearDown();
 	}
-	
-	public void Setup(){
+
+	public void Setup() {
 
 		Ship.Heat += Cost;
 		Executing = true;
@@ -52,18 +52,18 @@ public class CarpetBomb : BaseAbility, IAbility{
 			projectile.Damage = this.Damage;
 			projectile.Owner = Ship;
 		}
-		
+
 	}
-	
-	public void TearDown(){
-		
+
+	public void TearDown() {
+
 		Executing = false;
 		DurationTimer = 0f;
 	}
-	
-	public void TriggerEnter(Collider collider){}
-	
-	public void TriggerStay(Collider collider){}
-	
-	public void TriggerExit(Collider collider){}
+
+	public override void TriggerEnter(Collider collider) { }
+
+	public override void TriggerStay(Collider collider) { }
+
+	public override void TriggerExit(Collider collider) { }
 }

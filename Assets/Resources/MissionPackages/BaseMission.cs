@@ -59,6 +59,12 @@ public class BaseMission : MonoBehaviour {
 			// Wait one frame for everything to properly set up.
 			yield return null;
 
+			// If sequence is concurrent, continue on to next sequence.
+			if (sequence.IsConcurrent()) {
+				Debug.Log(sequenceGO.name + " is concurrent. Moving to next sequence.");
+				continue;
+			}
+
 			// Wait for the sequence to finish running.
 			Debug.Log("Waiting for " + sequenceGO.name + " sequence to finish");
 			while (sequence.Running) {
@@ -69,8 +75,6 @@ public class BaseMission : MonoBehaviour {
 			if (SequencePadding.Count > 0) {
 				yield return new WaitForSeconds(SequencePadding[index]);
 			}
-
-			Destroy(sequenceGO);
 		}
 
 		// Conclude the mission. 
@@ -92,6 +96,8 @@ public class BaseMission : MonoBehaviour {
 			ship.enabled = false;
 			ship.Movement.enabled = false;
 		}
+
+		// TODO: Instantiate PostMissionScore object instead.
 		GameObject.Find("PostMissionScore").GetComponent<Canvas>().enabled = true;
 
 		foreach (var playerDict in GameValues.Players) {

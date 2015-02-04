@@ -5,6 +5,8 @@ using System.Collections;
 public class BaseSequence : MonoBehaviour, IMissionSequence {
 
 	public bool Running { get; set; }
+	[Tooltip("The proceeding sequence will execute immediately if true")]
+	public bool Concurrent;
 	public BaseMission ParentMission { get; set; }
 	public Canvas DialogueCanvas { get; set; }
 	public Text DialogueText { get; set; }
@@ -25,10 +27,16 @@ public class BaseSequence : MonoBehaviour, IMissionSequence {
 		StartCoroutine(ExecuteSequence());
 	}
 
+	public bool IsConcurrent() {
+
+		return Concurrent;
+	}
+
 	public virtual void Finish() {
 
 		Debug.Log(name + " has finished.");
 		Running = false;
+		Destroy(gameObject);
 	}
 
 	public virtual IEnumerator ExecuteSequence() {

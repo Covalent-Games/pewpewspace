@@ -14,6 +14,12 @@ public class SceneHandler : MonoBehaviour {
 	public List<GameObject> Explosions;
 	public List<GameObject> RewardUI;
 
+	void Awake() {
+
+		PlayerShips = new List<ShipObject>();
+		Enemies = new List<ShipObject>();
+	}
+
 	// Use this for initialization
 	void Start() {
 
@@ -27,13 +33,13 @@ public class SceneHandler : MonoBehaviour {
 		float xPos = 0f;
 		// Same as xPos but the bottom and top, respectively.
 		float yPos = 0.15f;
-		for (int playerNum = 0; playerNum < GameValues.numberOfPlayers; playerNum++) {
+		for (int playerNum = 0; playerNum < GameValues.NumberOfPlayers; playerNum++) {
 
 			GameObject hudGO = GameObject.Find(string.Format("Player{0}HUD", playerNum + 1));
 			hudGO.GetComponent<Canvas>().enabled = true;
 
 			// Offset the player's starting position.
-			xPos += 1f / (GameValues.numberOfPlayers + 1);
+			xPos += 1f / (GameValues.NumberOfPlayers + 1);
 			var viewpoint = new Vector3(xPos, yPos, Camera.main.transform.position.y);
 			Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(viewpoint);
 
@@ -71,4 +77,47 @@ public class SceneHandler : MonoBehaviour {
 			}
 		}
 	}
+
+	public static void LoadScene(string SceneToLoad, bool ShowLoadingScreen = false, string LoadingScreen = "") {
+
+		if (ShowLoadingScreen) {
+			Debug.LogWarning("Loading screen not implemented!");
+		}
+
+		GameValues.PreviousScene = Application.loadedLevelName;
+		Application.LoadLevel(SceneToLoad);
+	}
+
+	/// <summary>
+	/// Cleanly loads the next scene.
+	/// </summary>
+	/// <param name="ShowLoadingScreen">Default: false. True to display loading screen.</param>
+	/// <param name="LoadingScreen">Which loading screen to display. Only visible if ShowLoadingScreen
+	/// is true</param>
+	public static void LoadNextScene(bool ShowLoadingScreen = false, string LoadingScreen = "") {
+
+		if (ShowLoadingScreen) {
+			Debug.LogWarning("Loading screen not implemented!");
+		}
+
+		if (GameValues.NextScene != null) {
+			GameValues.PreviousScene = Application.loadedLevelName;
+			Application.LoadLevel(GameValues.NextScene);
+			GameValues.NextScene = null;
+		} else {
+			Debug.LogError("GameValues.NextScene is not set. Try using SceneHandler.LoadScene().");
+		}
+	}
+
+	/// <summary>
+	/// Cleanly loads the previous scene.
+	/// </summary>
+	/// <param name="ShowLoadingScreen">Default: false. True to display loading screen.</param>
+	/// <param name="LoadingScreen">Which loading screen to display. Only visible if ShowLoadingScreen
+	/// is true</param>
+	public static void LoadPreviousScene(bool ShowLoadingScreen = false, string LoadingScreen = "") {
+
+		Debug.LogError("Not implemented yet.");
+	}
+
 }

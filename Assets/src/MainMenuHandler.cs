@@ -67,7 +67,7 @@ public class MainMenuHandler : MonoBehaviour {
 	
 	void ShipSelection() {
 
-		GameValues.numberOfPlayers = playerNumber;
+		GameValues.NumberOfPlayers = playerNumber;
 		//TODO: This will likely be where the user login/data loading starts
 		for(int player = 2; player <= this.playerNumber; player++) {
 			GameValues.Players.Add(player, new Player(player));
@@ -77,7 +77,7 @@ public class MainMenuHandler : MonoBehaviour {
 
 	public void LoadGalaxyMenu() {
 
-		GameValues.numberOfPlayers = playerNumber;
+		GameValues.NumberOfPlayers = playerNumber;
 		//TODO: This will likely be where the user login/data loading starts
 		for (int player = 2; player <= this.playerNumber; player++) {
 			GameValues.Players.Add(player, new Player(player));

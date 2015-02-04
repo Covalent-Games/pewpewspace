@@ -7,7 +7,8 @@ public class MissionSelecter : MonoBehaviour {
 	void OnTriggerStay(Collider collider) {
 
 		if (Input.GetButton(GameValues.Players[1].Controller.ButtonA)) {
-			collider.GetComponent<MissionLoader>().LoadMission();
+			GameValues.NextScene = collider.GetComponent<MissionLoader>().SceneToLoad;
+			SceneHandler.LoadScene("ShipSelection");
 		}
 	}
 }

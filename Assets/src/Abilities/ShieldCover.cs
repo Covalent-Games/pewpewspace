@@ -42,7 +42,7 @@ public class ShieldCover : BaseAbility, IAbility {
 		shield.Size = new Vector3(15f, 10f, 15f);
 		shield.Invulnerable = true;
 		Ship.Heat += Cost;
-		
+
 	}
 
 	public void TearDown() {
@@ -52,9 +52,9 @@ public class ShieldCover : BaseAbility, IAbility {
 		Destroy(Shield);
 	}
 
-	public void TriggerEnter(Collider collider) { }
+	public override void TriggerEnter(Collider collider) { }
 
-	public void TriggerStay(Collider collider) { }
+	public override void TriggerStay(Collider collider) { }
 
-	public void TriggerExit(Collider collider) { }
+	public override void TriggerExit(Collider collider) { }
 }

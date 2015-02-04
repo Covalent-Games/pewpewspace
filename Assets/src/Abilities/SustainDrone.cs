@@ -3,26 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class SustainDrone : BaseAbility, IAbility{
+public class SustainDrone : BaseAbility, IAbility {
 
 	float UpdateFrequency = 0.25f;
 
 	public void Start() {
-		
+
 		Cost = 45f;
 		Duration = 8f;
 		PrimaryEffect = 8;
 	}
-	
-	public void Begin(ShipObject ship){
-		
+
+	public void Begin(ShipObject ship) {
+
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
 	}
-	
-	public IEnumerator Execute(){
+
+	public IEnumerator Execute() {
 
 		if (Ship.Armor == Ship.MaxArmor) {
 			yield break;
@@ -30,7 +30,7 @@ public class SustainDrone : BaseAbility, IAbility{
 
 		Setup();
 		float time = Time.time;
-		while (DurationTimer < Duration){
+		while (DurationTimer < Duration) {
 			DurationTimer += Time.time - time;
 			time = Time.time;
 
@@ -40,23 +40,23 @@ public class SustainDrone : BaseAbility, IAbility{
 
 		TearDown();
 	}
-	
-	public void Setup(){
-		
+
+	public void Setup() {
+
 		//TODO: Art -- Create a drone which circles the player while this ability is active.
 		Ship.Heat += Cost;
 		Executing = true;
 	}
-	
-	public void TearDown(){
-		
+
+	public void TearDown() {
+
 		Executing = false;
 		DurationTimer = 0f;
 	}
-	
-	public void TriggerEnter(Collider collider){}
-	
-	public void TriggerStay(Collider collider){}
-	
-	public void TriggerExit(Collider collider){}
+
+	public override void TriggerEnter(Collider collider) { }
+
+	public override void TriggerStay(Collider collider) { }
+
+	public override void TriggerExit(Collider collider) { }
 }

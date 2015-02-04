@@ -4,21 +4,67 @@ using System.Collections.Generic;
 
 public class Sequence_01_04 : BaseSequence {
 
-	public int SpawnQuantity;
+	// How many have been spawned already.
+	int SpawnCount = 0;
+	int GoalCounter = 0;
+	[Tooltip("How many enemies to destroy before progressing")]
+	public int GoalTarget;
+	public int MaxEnemiesOnScreen;
+	bool CountingEnabled = true;
+	public float SpawnDelay;
 	public GameObject EnemyPrefab;
 	public GameObject Freighter;
 	public float EnemyArmor;
+	bool NotYetWinning = true;
 	List<ShipObject> SpawnedEntities = new List<ShipObject>();
 
 	public override IEnumerator ExecuteSequence() {
 
-		yield return new WaitForSeconds(3f);
+		StartCoroutine(SpawnOverTime());
 
-		for (int i = 0; i < SpawnQuantity; i++) {
+		GameObject freighter = (GameObject)Instantiate(Freighter, new Vector3(0f, 0f, 75f), Quaternion.identity);
+		Vector3 targetPosition = new Vector3(0f, 0f, 2f);
 
-			float xpos;
-			float ypos;
-			switch (i % SpawnQuantity) {
+		StartCoroutine(MoveFreighter(freighter, new Vector3(0, 0, 2)));
+
+		// First Freighter Segment.
+		while (GoalCounter <= GoalTarget) {
+			// Wait .5 seconds before checking again since this doesn't need to be too accurate.
+			yield return new WaitForSeconds(0.5f);
+		}
+
+		GoalCounter = 0;
+		StartCoroutine(MoveFreighter(freighter, new Vector3(0, 0, -34)));
+
+		// Second Freighter Segment.
+		while (GoalCounter <= GoalTarget) {
+			// Wait .5 seconds before checking again since this doesn't need to be too accurate.
+			yield return new WaitForSeconds(0.5f);
+		}
+
+		GoalCounter = 0;
+		StartCoroutine(MoveFreighter(freighter, new Vector3(0, 0, -86)));
+
+		freighter.GetComponentInChildren<KingOfTheHill>().OnWin += Win;
+		// Third Freighter Segment.
+		while (NotYetWinning) {
+			// Wait .5 seconds before checking again since this doesn't need to be too accurate.
+			yield return new WaitForSeconds(0.5f);
+		}
+
+		Finish();
+	}
+
+	/// <summary>
+	/// Spawns enemies over the duration of the sequence.
+	/// </summary>
+	IEnumerator SpawnOverTime() {
+
+		float xpos;
+		float ypos;
+
+		while (SpawnCount < MaxEnemiesOnScreen) {
+			switch (SpawnCount % 5) {
 				default:
 					xpos = Random.Range(0f, 1f);
 					ypos = Random.Range(1.02f, 1.08f);
@@ -33,7 +79,6 @@ public class Sequence_01_04 : BaseSequence {
 					break;
 			}
 
-
 			var viewport = new Vector3(xpos, ypos, Camera.main.transform.position.y);
 			Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(viewport);
 
@@ -44,23 +89,42 @@ public class Sequence_01_04 : BaseSequence {
 
 			ShipObject newEnemy = newEnemyGO.GetComponent<ShipObject>();
 			newEnemy.MaxArmor = EnemyArmor;
+			// Add OnDestroy callback.
+			newEnemy.GetComponent<Destructible>().OnDestroy += IncreaseGoalCounter;
 			newEnemy.AddContainers(SceneHandler.Enemies, SpawnedEntities);
-		}
+			SpawnCount += 1;
 
-		GameObject freighter = (GameObject)Instantiate(Freighter, new Vector3(0f, 0f, 75f), Quaternion.identity);
-		Vector3 targetPosition = new Vector3(0f, 0f, 2f);
+			yield return new WaitForSeconds(SpawnDelay);
+		}
+	}
+
+	IEnumerator MoveFreighter(GameObject freighter, Vector3 targetPosition) {
+
+		CountingEnabled = false;
 
 		while (freighter.transform.position != targetPosition) {
 			freighter.transform.position = Vector3.MoveTowards(
 					freighter.transform.position, targetPosition, Time.deltaTime * 5);
-			yield return new WaitForEndOfFrame();
+			yield return null;
 		}
 
-		while (SpawnedEntities.Count > 0) {
-			// Wait .5 seconds before checking again since this doesn't need to be too accurate.
-			yield return new WaitForSeconds(0.5f);
-		}
+		CountingEnabled = true;
+	}
 
-		Finish();
+	/// <summary>
+	/// Increases the counter for how many enemies have to be destroyed to progress.
+	/// </summary>
+	public void IncreaseGoalCounter() {
+
+		if (CountingEnabled) {
+			GoalCounter += 1;
+			SpawnCount -= 1;
+			Debug.Log("GoalCounter is now" + GoalCounter.ToString());
+		}
+	}
+
+	public void Win() {
+
+		NotYetWinning = false;
 	}
 }

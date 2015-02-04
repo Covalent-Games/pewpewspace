@@ -5,9 +5,9 @@ using System.Reflection;
 using UnityEngine.UI;
 
 public class ShipObject : Destructible {
-	
+
 	public static Dictionary<string, System.Type> AbilityDict = new Dictionary<string, System.Type>();
-	
+
 	public GameObject projectilePrefab;
 	float shotTimer;
 	public float shotPerSecond;
@@ -21,7 +21,7 @@ public class ShipObject : Destructible {
 	public float DamageMod = 0f;
 	public float triggerValue;
 	public int PlayerNumber;
-	
+
 	IAbility Ability1;
 	IAbility Ability2;
 	IAbility Ability3;
@@ -35,7 +35,7 @@ public class ShipObject : Destructible {
 	public List<Modifier> ActiveBoons = new List<Modifier>();
 	public float FireCost;
 	public bool Overheated;
-	
+
 	// HUD elements
 	public GameObject healthBar;
 	public GameObject dissipationBar;
@@ -45,30 +45,30 @@ public class ShipObject : Destructible {
 	public GameObject Ability4Icon;
 	public TargetCursor EnemyCursor;
 	public TargetCursor PlayerCursor;
-	
+
 	// Overheat variables
 	float coolAmount;
 	float overheatTime;
 	float overheatTimer;
 	float originalSpeed;
 
-	
+
 	public void Start() {
-		
+
 		gameObject.AddComponent("ConditionHandler");
 		gameObject.AddComponent("BoonHandler");
-	
-        if (!AbilityUtils.IsPlayer(this)) {
+
+		if (!AbilityUtils.IsPlayer(this)) {
 			Turret = transform.FindChild("Turret");
 			BaseShipAI ai = GetComponent<BaseShipAI>();
 			ai.StartCoroutine(ai.DissipateThreat());
 		}
 	}
-	
+
 	public void SetupPlayer(int playerNumber) {
-		
+
 		this.PlayerNumber = playerNumber;
-		
+
 		GameValues.Players.TryGetValue(playerNumber, out this.PlayerObject);
 		if (this.PlayerObject == null) {
 			Debug.LogWarning("Had to manually create a new Player! Something may be wrong. Ignore this if testing.");
@@ -76,16 +76,16 @@ public class ShipObject : Destructible {
 		}
 		Movement = GetComponent<ShipMovement>();
 		Movement.player = this.PlayerObject;
-		
+
 		SetUpBaseAttributes();
 		FireCost = 0;
 		Overheated = false;
 		AcquireHud();
 		AssignAbilities();
-		
+
 		this.enabled = true;
 		GetComponent<ShipMovement>().enabled = true;
-		
+
 		// Initialize targeting cursors. TODO: This might need to be somewhere else. More graphics may eventually be needed.
 		if (AbilityUtils.IsPlayer(this)) {
 			GameObject enemyCursor = (GameObject)Instantiate(
@@ -96,27 +96,27 @@ public class ShipObject : Destructible {
 				Resources.Load("GUIPrefabs/TargetPlayerCursorObject"),
 				Vector3.zero,
 				Quaternion.Euler(new Vector3(90, 0, 0)));
-            GameObject turret = (GameObject)Instantiate(
+			GameObject turret = (GameObject)Instantiate(
 				Resources.Load("PlayerShips/ShipObjects/Turret_TEST"),
-                transform.position,
-                transform.rotation);
-            turret.transform.parent = this.transform;
-			
+				transform.position,
+				transform.rotation);
+			turret.transform.parent = this.transform;
+
 			EnemyCursor = enemyCursor.GetComponent<TargetCursor>();
 			PlayerCursor = playerCursor.GetComponent<TargetCursor>();
-            Turret = turret.transform;
+			Turret = turret.transform;
 		}
 	}
-	
+
 	void AssignAbilities() {
-		
+
 		switch (ShipClass) {
 			case ShipType.Guardian:
 				Ability1 = AddAbility("SonicDisruption");
 				Ability2 = AddAbility("ShieldCover");
 				Ability3 = AddAbility("BullRush");
 				Ability4 = AddAbility("SustainDrone");
-			break;
+				break;
 			case ShipType.Outrunner:
 				Ability1 = AddAbility("SalvageConversionRounds");
 				Ability2 = AddAbility("EmpowerOther");
@@ -124,44 +124,44 @@ public class ShipObject : Destructible {
 				Ability4 = AddAbility("GoingDark");
 				break;
 			case ShipType.Raider:
-                Ability1 = AddAbility("DeconstructionLaser");
-                Ability2 = AddAbility("ReaperMan");
-                Ability3 = AddAbility("EnergyMissilePods");
+				Ability1 = AddAbility("DeconstructionLaser");
+				Ability2 = AddAbility("ReaperMan");
+				Ability3 = AddAbility("EnergyMissilePods");
 				Ability4 = AddAbility("CarpetBomb");
 				break;
 			case ShipType.Valkyrie:
-                Ability1 = AddAbility("DesyncronizationBurst");
+				Ability1 = AddAbility("DesyncronizationBurst");
 				Ability2 = AddAbility("ExplosiveShot");
 				Ability3 = AddAbility("RapidFire");
 				Ability4 = AddAbility("RadarJam");
 				break;
-		}	
+		}
 	}
 
 	IAbility AddAbility(string name) {
-		
+
 		return (IAbility)gameObject.AddComponent(ShipObject.AbilityDict[name]);
 	}
-	
+
 	/// <summary>
 	/// Assigns the player HUD UI elements
 	/// </summary>
 	void AcquireHud() {
-		
+
 		// TODO: (Jesse) Put this on a "HUD" object in the scene, or even just on the 
 		// sceneHandler, and have it just display based on ships available instead of 
 		// being attached to the ship itself.
 		healthBar = GameObject.Find(string.Format("Player{0}ArmorBar", PlayerNumber));
 		dissipationBar = GameObject.Find(string.Format("Player{0}DissipationBar", PlayerNumber));
 	}
-	
+
 	void UpdateShotTimer() {
-		
+
 		this.shotTimer += Time.deltaTime;
 	}
-	
+
 	void HandleInput() {
-		
+
 		triggerValue = Input.GetAxis(PlayerObject.Controller.LeftRightTrigger);
 		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= GetShotTime()) {
 			this.shotTimer = 0f;
@@ -196,7 +196,7 @@ public class ShipObject : Destructible {
 
 		return 1f / this.shotPerSecond;
 	}
-	
+
 	/// <summary>
 	/// Creates a projectile object facing the same direction as the Turret child object.
 	/// </summary>
@@ -207,7 +207,7 @@ public class ShipObject : Destructible {
 				this.projectilePrefab,
 				projectileOrigin,
 				Turret.rotation);
-		
+
 		IProjectile projectile = projectileGO.GetComponent(typeof(IProjectile)) as IProjectile;
 		// TODO: It would be nice to not have to do this. 
 		projectileGO.transform.Rotate(new Vector3(90, 0, 0));
@@ -224,69 +224,69 @@ public class ShipObject : Destructible {
 		// TODO: match standard fire heat generation with cooldown
 		Heat += FireCost;
 	}
-	
+
 	void FindNewTarget() {
-		
+
 		// 
 		if (PlayerObject == null) { return; }
 
-        if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
-		RaycastHit hitInfo;
+		if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
+			RaycastHit hitInfo;
 
-		bool rayHit = Physics.Raycast(
-				transform.position,
-				Turret.forward, 
-				out hitInfo, 
-				Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
+			bool rayHit = Physics.Raycast(
+					transform.position,
+					Turret.forward,
+					out hitInfo,
+					Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
 
-            if (rayHit) {
-			string tag = hitInfo.transform.gameObject.tag;
-			TargetCursor cursor;
-                if (tag == "Enemy" & Target != hitInfo.transform) {
-				cursor = EnemyCursor;
-				PlayerCursor.Tracking = null;
-                } else if (tag == "Player" & Target != hitInfo.transform) {
-				cursor = PlayerCursor;
-				EnemyCursor.Tracking = null;
-			} else {
-				return;
+			if (rayHit) {
+				string tag = hitInfo.transform.gameObject.tag;
+				TargetCursor cursor;
+				if (tag == "Enemy" & Target != hitInfo.transform) {
+					cursor = EnemyCursor;
+					PlayerCursor.Tracking = null;
+				} else if (tag == "Player" & Target != hitInfo.transform) {
+					cursor = PlayerCursor;
+					EnemyCursor.Tracking = null;
+				} else {
+					return;
+				}
+
+				Target = hitInfo.transform;
+				cursor.Tracking = hitInfo.transform;
+
+				cursor.ThisRenderer.enabled = true;
 			}
-			
-			Target = hitInfo.transform;
-			cursor.Tracking = hitInfo.transform;
-
-			cursor.ThisRenderer.enabled = true;
 		}
 	}
-	}
-	
+
 	void UnTarget() {
-	
+
 		Target = null;
 		EnemyCursor.GetComponent<TargetCursor>().Tracking = null;
 		PlayerCursor.GetComponent<TargetCursor>().Tracking = null;
 	}
-	
+
 	public float GetDamage() {
-	
+
 		return this.Damage + this.DamageMod;
 	}
-	
+
 	/// <summary>
 	/// Updates the player's health and dissipation bars
 	/// </summary>
 	void UpdateHUD() {
-		
+
 		float healthRatio = (float)this.Armor / (float)this.MaxArmor;
 		float dissipationRatio = this.Heat / this.MaxHeat;
-		
+
 		this.healthBar.GetComponent<Image>().fillAmount = healthRatio;
 		this.dissipationBar.GetComponent<Image>().fillAmount = dissipationRatio > 1f ? 1f : dissipationRatio;
-		
+
 	}
-	
-	void Update() {
-		
+
+	public override void Update() {
+
 		if (this.Heat < this.MaxHeat && !Overheated) {
 			UpdateShotTimer();
 			FindNewTarget();
@@ -316,7 +316,7 @@ public class ShipObject : Destructible {
 				overheatTime = 3f;
 			coolAmount = this.MaxHeat * 0.25f;
 			overheatTimer = 0f;
-		} 
+		}
 		if (this.Overheated) {
 			// 3. Overheat loop
 			float cooldown = coolAmount / overheatTime * Time.deltaTime;
@@ -336,19 +336,19 @@ public class ShipObject : Destructible {
 		BaseShipAI ai = GetComponent<BaseShipAI>();
 		yield return new WaitForSeconds(GetShotTime());
 
-		while(true) {
+		while (true) {
 			ai.AcquireTarget();
 			ai.Fire();
 			yield return new WaitForSeconds(GetShotTime());
 		}
 	}
-	
+
 	void OnTriggerEnter(Collider collider) {
-		
+
 		Destructible destructable = collider.GetComponent<Destructible>();
-		
+
 		if (destructable) {
-		// On collision with another destructable object, deal 10% of max health as Damage
+			// On collision with another destructable object, deal 10% of max health as Damage
 			destructable.DamageArmor(Mathf.RoundToInt(MaxArmor / 10f));
 		}
 

@@ -39,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26184dbd5943bb741965b9b3ba66f95e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Concurrent: 0
   SpawnQuantity: 10
   EnemyPrefab: {fileID: 100000, guid: c24d70140caeee2488b1bc92fd0d681f, type: 2}
   EnemyArmor: 100

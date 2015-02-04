@@ -7,7 +7,6 @@ public class SelectionHandler : MonoBehaviour {
 	// Array of ship prefabs
 	public GameObject[] prefabs;
 	SelectionStatUpdater StatUpdater;
-	int maxSelection;
 
 	enum selectionStatus {
 		ship,
@@ -17,30 +16,27 @@ public class SelectionHandler : MonoBehaviour {
 
 	//HACK: make selection indexes better
 	// PLAYER ARRAYS
-	//	Which ship is the player currently viewing?
+	// Which ship is the player currently viewing?
 	GameObject[][] availableShips = new GameObject[4][];
-	//	Index of currently viewed ship
+	// Index of currently viewed ship
 	[SerializeField]
 	int[] currentSelection = new int[] { 0, 0, 0, 0 };
-	//	What screen is the player on?
+	// What screen is the player on?
 	int[] playerStatus = new int[4];
 	GameObject[] readyScreens = new GameObject[4];
-	//	Which ship did the player select?
-	GameObject[] selectedShip = new GameObject[4];
-	// 	Did the player select "ready"?
+	// Did the player select "ready"?
 	bool[] isReady = new bool[] { true, true, true, true };
 
 
 	void Start() {
 
 		StatUpdater = GetComponent<SelectionStatUpdater>();
-		this.maxSelection = prefabs.Length;
 
 		PopulateSelectableShips();
 
 		// Displays ship selectors depending on number of players
 		// Sets the ready status for real players to false and their current screen to ship selection
-		for (int i = 1; i <= GameValues.numberOfPlayers; i++) {
+		for (int i = 1; i <= GameValues.NumberOfPlayers; i++) {
 			string selectPrefabScreenName = string.Format("Player{0}ShipScreen", i);
 			GameObject selectPrefabScreen = GameObject.Find(selectPrefabScreenName);
 			if (selectPrefabScreen == null) {
@@ -60,7 +56,7 @@ public class SelectionHandler : MonoBehaviour {
 	/// </summary>
 	void PopulateSelectableShips() {
 
-		for (int playerNumber = 0; playerNumber < GameValues.numberOfPlayers; playerNumber++) {
+		for (int playerNumber = 0; playerNumber < GameValues.NumberOfPlayers; playerNumber++) {
 			// TODO: Convert this to a List (will make adding ship types in the future easier.
 			availableShips[playerNumber] = new GameObject[4];
 
@@ -175,7 +171,7 @@ public class SelectionHandler : MonoBehaviour {
 	/// </summary>
 	bool AllReady() {
 
-		for (int i = 0; i < GameValues.numberOfPlayers; i++) {
+		for (int i = 0; i < GameValues.NumberOfPlayers; i++) {
 			if (!this.isReady[i]) {
 				return false;
 			}
@@ -198,14 +194,13 @@ public class SelectionHandler : MonoBehaviour {
 	void StartGame() {
 
 		// Loop through participating players
-		for (int playerNumber = 0; playerNumber < GameValues.numberOfPlayers; playerNumber++) {
+		for (int playerNumber = 0; playerNumber < GameValues.NumberOfPlayers; playerNumber++) {
 			// Get a positive integar from 0 to the number of available ships that represents the player's selection.
 			int index = Mathf.Abs(currentSelection[playerNumber] % availableShips.Length);
 			// Set the player's selected ship.
 			GameValues.Players[playerNumber + 1].SelectedPrefab = this.prefabs[index];
 		}
-		// TODO: This prevents us from having more than one mission. Fix asap.
-		Application.LoadLevel("main");
+		SceneHandler.LoadNextScene();
 	}
 
 	void ReturnToMainMenu() {

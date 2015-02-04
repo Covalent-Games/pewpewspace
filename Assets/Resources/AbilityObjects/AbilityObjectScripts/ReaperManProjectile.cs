@@ -3,55 +3,50 @@ using System.Collections;
 
 public class ReaperManProjectile : MonoBehaviour {
 
-    public ShipObject Target;
-    bool tracking;
-    public float damage;
+	public ShipObject Target;
+	bool tracking;
+	public float damage;
 	public ShipObject Owner;
 
-    public IEnumerator TrackToTarget()
-    {
+	public IEnumerator TrackToTarget() {
 
-        tracking = true;
-        float speed = 15f;
+		tracking = true;
+		float speed = 15f;
 
-        while (tracking)
-        {
+		while (tracking) {
 
-            if (Target == null)
-            {
-                tracking = false;
-                Destroy(gameObject);
-                yield break;
-            }
+			if (Target == null) {
+				tracking = false;
+				Destroy(gameObject);
+				yield break;
+			}
 
-            speed += 0.4f;
+			speed += 0.4f;
 
-            transform.position = Vector3.MoveTowards(
-                    transform.position,
-                    Target.transform.position,
-                    Time.deltaTime * speed);
+			transform.position = Vector3.MoveTowards(
+					transform.position,
+					Target.transform.position,
+					Time.deltaTime * speed);
 
-            yield return new WaitForEndOfFrame();
-        }
-    }
+			yield return new WaitForEndOfFrame();
+		}
+	}
 
-    void OnTriggerEnter(Collider collider)
-    {
+	void OnTriggerEnter(Collider collider) {
 
-        ShipObject shipObject = collider.GetComponent<ShipObject>();
+		ShipObject shipObject = collider.GetComponent<ShipObject>();
 
-        if (shipObject == null)
-        {
-            return;
-        }
+		if (shipObject == null) {
+			return;
+		}
 
-        if (AbilityUtils.IsPlayer(shipObject)) {
-            return;
-        }
+		if (AbilityUtils.IsPlayer(shipObject)) {
+			return;
+		}
 
-        shipObject.DamageArmor(damage, Owner);
+		shipObject.DamageArmor(damage, Owner);
 
-        tracking = false;
-        Destroy(gameObject);
-    }
+		tracking = false;
+		Destroy(gameObject);
+	}
 }

@@ -53,7 +53,7 @@ MonoBehaviour:
   - {fileID: 100000, guid: 7c624265a2d788a42b5fc8748192d07e, type: 2}
   - {fileID: 100000, guid: 2339b9690e864fa47962ff3cbcf85c6d, type: 2}
   - {fileID: 100000, guid: 72917dd7c676df5409a22f6bf12434c9, type: 2}
-  - {fileID: 100000, guid: 84efee29e8e313245a1ac63372740b15, type: 2}
+  - {fileID: 0}
   - {fileID: 100000, guid: b8267c4ba2d7230438454cb535b54b25, type: 2}
 --- !u!1001 &100100000
 Prefab:

@@ -16,6 +16,7 @@ public interface IMissionSequence {
 	/// </summary>
 	/// <param name="parentMission">The mission that creates this sequence.</param>
 	void Init(BaseMission baseMission);
+	bool IsConcurrent();
 	IEnumerator ExecuteSequence();
 	void Finish();
 }

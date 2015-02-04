@@ -13,7 +13,7 @@ public class Destructible : MonoBehaviour {
 	public float MaxArmor;
 	public float MaxHeat;
 	public float baseSpeed;
-	
+
 	[SerializeField]
 	float armor;
 	[SerializeField]
@@ -21,28 +21,33 @@ public class Destructible : MonoBehaviour {
 	public float Speed;
 	public bool CanBeTargetted = true;
 	public bool CanTarget = true;
-		
+
 	[SerializeField]
 	public bool Invulnerable = false;
 	[SerializeField]
 	public bool InvulnerableArmor = false;
 	[SerializeField]
 	public bool InvulnerableDissipation = false;
-	
-	
+
+	// Delegate for destroy callback
+	public delegate void OnDestroyDelegate();
+	public OnDestroyDelegate OnDestroy;
+
+
+
 	#endregion
-	
-	#region Properties	
+
+	#region Properties
 	public float Armor {
 		get {
 			return this.armor;
 		}
 		set {
 			this.armor = value;
-			if(this.armor <= 0f) {
-				End ();
+			if (this.armor <= 0f) {
+				End();
 			}
-			if (this.armor > this.MaxArmor){
+			if (this.armor > this.MaxArmor) {
 				this.armor = this.MaxArmor;
 			}
 		}
@@ -53,22 +58,22 @@ public class Destructible : MonoBehaviour {
 		}
 		set {
 			this.heat = value;
-			if (this.heat < 0){
+			if (this.heat < 0) {
 				this.heat = 0f;
 			}
 		}
 	}
 
 	#endregion
-	
+
 	/// <summary>
 	/// Deals non tracked damage. The offender will not be recorded.
 	/// </summary>
 	/// <param name="damage">The amount of damage.</param>
 	/// <returns></returns>
-	public float DamageArmor(float damage){
+	public float DamageArmor(float damage) {
 
-		if (!this.Invulnerable){
+		if (!this.Invulnerable) {
 			this.Armor -= damage;
 
 			DisplayFloatingDamage(damage);
@@ -100,8 +105,8 @@ public class Destructible : MonoBehaviour {
 		return armor;
 	}
 
-	public float RestoreArmor(float restoreAmount){
-	
+	public float RestoreArmor(float restoreAmount) {
+
 		this.Armor += restoreAmount;
 		return this.Armor;
 	}
@@ -126,20 +131,24 @@ public class Destructible : MonoBehaviour {
 		textTransform.GetComponent<Text>().text = Mathf.RoundToInt(damage).ToString();
 	}
 
-	void Start () {
-		
+	void Start() {
+
 		this.armor = this.MaxArmor;
 	}
 
-	public virtual void End(){
-		
+	public virtual void End() {
+
 		//FIXME The comment below is a lie, and I don't currently know the fix. It's a rare bug. 'gameObject'
 		// itself is a member of the physical GameObject and so referencing gameObject raises an error.
 		// The object sometimes tries to be destroyed twice in one frame. This check prevents that.
-		if (gameObject != null){
+		if (gameObject != null) {
 			// Remove the object from all associated lists.
 			foreach (var container in Containers) {
 				container.Remove(GetComponent<ShipObject>());
+			}
+			// OnDestroy callback
+			if (OnDestroy != null) {
+				OnDestroy();
 			}
 			var explosions = GameObject.FindObjectOfType<SceneHandler>().Explosions;
 			var explosion = explosions[Random.Range(1, explosions.Count) - 1];
@@ -147,9 +156,9 @@ public class Destructible : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-	
-	public void SetUpBaseAttributes(){
-	
+
+	public void SetUpBaseAttributes() {
+
 		this.Armor = this.MaxArmor;
 		this.Heat = 0f;
 		//this.Shields = this.maxShields;
@@ -173,7 +182,7 @@ public class Destructible : MonoBehaviour {
 		return Containers;
 	}
 
-	public void Update () {
+	public virtual void Update() {
 
 		DissipationCooldown();
 	}

@@ -247,7 +247,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: []
   MaxArmor: 160
   MaxHeat: 100
   baseSpeed: 1
@@ -266,6 +265,7 @@ MonoBehaviour:
   triggerValue: 0
   PlayerNumber: 0
   ShipClass: 1
+  Movement: {fileID: 0}
   Target: {fileID: 0}
   Turret: {fileID: 0}
   FireCost: 0

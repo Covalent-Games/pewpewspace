@@ -9,11 +9,13 @@ public class Projectile : MonoBehaviour, IProjectile {
 	public ShipObject Owner { get; set; }
 	public float Damage { get; set; }
 
+	//TODO: This NEEDS to be a coroutine
 	void Update() {
 
 		if (Target != null) {
 			Direction = Vector3.Normalize(Target.transform.position - transform.position);
 			transform.position += this.velocity * Direction * Time.deltaTime;
+			transform.LookAt(Target.transform, Vector3.forward);
 		} else {
 			transform.position += transform.TransformDirection(this.velocity * Time.deltaTime * Direction);
 		}
