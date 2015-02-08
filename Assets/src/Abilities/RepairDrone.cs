@@ -7,6 +7,9 @@ public class RepairDrone : BaseAbility, IAbility {
 
 	public void Start() {
 
+		Resource = Resources.Load("Effects/RepairDroneEffect");
+		if (Resource == null)
+			Debug.LogError("Resource RepairDroneEffect did not load properly");
 		Cost = 75f;
 		PrimaryEffect = 75;
 	}
@@ -25,6 +28,7 @@ public class RepairDrone : BaseAbility, IAbility {
 
 		Setup();
 		foreach (ShipObject ship in SceneHandler.PlayerShips) {
+			StartCoroutine(CreateEffect(ship));
 			ship.RestoreArmor(PrimaryEffect);
 		}
 		yield return new WaitForEndOfFrame();
@@ -41,6 +45,15 @@ public class RepairDrone : BaseAbility, IAbility {
 
 		Executing = false;
 		DurationTimer = 0f;
+	}
+
+	public IEnumerator CreateEffect(ShipObject ship) {
+
+		var effect = (GameObject)Instantiate(Resource, ship.transform.position, Quaternion.identity);
+		effect.transform.parent = ship.transform;
+		effect.transform.Rotate(-90, -180, -180);
+		yield return new WaitForSeconds(2);
+		Destroy(effect);
 	}
 
 	public override void TriggerEnter(Collider collider) { }
