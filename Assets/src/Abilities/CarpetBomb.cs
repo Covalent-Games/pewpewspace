@@ -11,6 +11,7 @@ public class CarpetBomb : BaseAbility, IAbility {
 
 	public void Start() {
 
+		Name = "Carpet Bomb";
 		Resource = Resources.Load("PlayerShips/ShipObjects/CarpetBombProjectile", typeof(GameObject));
 		if (Resource == null)
 			Debug.LogError("Resource ExplosiveShotProjectile did not load properly");
@@ -26,6 +27,7 @@ public class CarpetBomb : BaseAbility, IAbility {
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
 
 	public IEnumerator Execute() {

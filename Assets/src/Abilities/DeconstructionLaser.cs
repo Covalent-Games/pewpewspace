@@ -10,7 +10,7 @@ public class DeconstructionLaser : BaseAbility, IAbility {
 		Cost = 30f;
 		Duration = 0.5f;
 		Damage = 50f;
-
+		Name = "Deconstruction Laser";
 		Resource = Resources.Load("AbilityObjects/DeconstructionLaserObject");
 	}
 
@@ -20,6 +20,7 @@ public class DeconstructionLaser : BaseAbility, IAbility {
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
 
 	public IEnumerator Execute() {

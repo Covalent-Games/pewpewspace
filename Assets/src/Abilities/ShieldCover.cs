@@ -9,6 +9,7 @@ public class ShieldCover : BaseAbility, IAbility {
 
 	public void Start() {
 
+		Name = "Shield Cover";
 		Cost = 60;
 		string path = "AbilityObjects/ShieldCoverObject";
 		Resource = Resources.Load(path, typeof(GameObject));
@@ -21,6 +22,7 @@ public class ShieldCover : BaseAbility, IAbility {
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
 
 	public IEnumerator Execute() {

@@ -39,10 +39,6 @@ public class ShipObject : Destructible {
 	// HUD elements
 	public GameObject healthBar;
 	public GameObject dissipationBar;
-	public GameObject Ability1Icon;
-	public GameObject Ability2Icon;
-	public GameObject Ability3Icon;
-	public GameObject Ability4Icon;
 	public TargetCursor EnemyCursor;
 	public TargetCursor PlayerCursor;
 

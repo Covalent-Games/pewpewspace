@@ -1,0 +1,2 @@
+Changelog:
+* Speed is displayed in selection window now

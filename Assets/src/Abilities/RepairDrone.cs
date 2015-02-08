@@ -13,10 +13,12 @@ public class RepairDrone : BaseAbility, IAbility {
 
 	public void Begin(ShipObject ship) {
 
+		Name = "Repair Drone";
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
 
 	public IEnumerator Execute() {

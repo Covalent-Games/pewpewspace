@@ -3,41 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class RapidFire : BaseAbility, IAbility{
+public class RapidFire : BaseAbility, IAbility {
 
 	public void Start() {
-		
+
+		Name = "Rapid Fire";
 		Cost = 53f;
 		Duration = 5f;
 		Percentage = 0.2f;
 	}
-	
-	public void Begin(ShipObject ship){
-		
+
+	public void Begin(ShipObject ship) {
+
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
-		Debug.Log("Rapid Fire");
+		DisplayName(Name);
 	}
-	
-	public IEnumerator Execute(){
-		
+
+	public IEnumerator Execute() {
+
 		Setup();
 
 		// Prevent player from using this ability again until boon wears off
-		while (DurationTimer < Duration){
+		while (DurationTimer < Duration) {
 			DurationTimer += Time.deltaTime;
 			yield return new WaitForFixedUpdate();
 		}
 
 		TearDown();
-		
-	}
-	
-	public void Setup(){
 
-        Ship.Heat += this.Cost;
+	}
+
+	public void Setup() {
+
+		Ship.Heat += this.Cost;
 		foreach (ShipObject ship in SceneHandler.PlayerShips) {
 
 			if (ship) {
@@ -46,16 +47,16 @@ public class RapidFire : BaseAbility, IAbility{
 		}
 		Executing = true;
 	}
-	
-	public void TearDown(){
-		
+
+	public void TearDown() {
+
 		Executing = false;
 		DurationTimer = 0f;
 	}
-	
-	public override void TriggerEnter(Collider collider){}
-	
-	public override void TriggerStay(Collider collider){}
-	
-	public override void TriggerExit(Collider collider){}
+
+	public override void TriggerEnter(Collider collider) { }
+
+	public override void TriggerStay(Collider collider) { }
+
+	public override void TriggerExit(Collider collider) { }
 }

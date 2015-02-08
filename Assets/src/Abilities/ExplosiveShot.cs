@@ -3,38 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class ExplosiveShot : BaseAbility, IAbility{	
-	
+public class ExplosiveShot : BaseAbility, IAbility {
+
 	public void Start() {
 
+		Name = "Explosive Shot";
 		Resource = Resources.Load("AbilityObjects/ExplosiveShotProjectile", typeof(GameObject));
 		if (Resource == null) {
 			Debug.LogError("Resource ExplosiveShotProjectile did not load properly");
 		}
 		Cost = 18;
-		Duration = 1f/60f;
+		Duration = 1f / 60f;
 		Damage = 15f;
 	}
-	
-	public void Begin(ShipObject ship){
-		
+
+	public void Begin(ShipObject ship) {
+
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
-		Debug.Log("Explosive Shot");
+		DisplayName(Name);
 	}
-	
-	public IEnumerator Execute(){
-		
+
+	public IEnumerator Execute() {
+
 		Setup();
 
 		yield return null;
 
 		TearDown();
 	}
-	
-	public void Setup(){
+
+	public void Setup() {
 
 		Ship.Heat += Cost;
 		Executing = true;
@@ -47,16 +48,16 @@ public class ExplosiveShot : BaseAbility, IAbility{
 		projectile.Owner = Ship;
 
 	}
-	
-	public void TearDown(){
-		
+
+	public void TearDown() {
+
 		Executing = false;
 		DurationTimer = 0f;
 	}
-	
-	public override void TriggerEnter(Collider collider){}
-	
-	public override void TriggerStay(Collider collider){}
-	
-	public override void TriggerExit(Collider collider){}
+
+	public override void TriggerEnter(Collider collider) { }
+
+	public override void TriggerStay(Collider collider) { }
+
+	public override void TriggerExit(Collider collider) { }
 }

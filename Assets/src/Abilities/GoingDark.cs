@@ -3,25 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class GoingDark : BaseAbility, IAbility{	
-	
+public class GoingDark : BaseAbility, IAbility {
+
 	public void Start() {
-		
+
+		Name = "Goind Dark";
 		Cost = 35f;
 		Duration = 3f;
 		Resource = Resources.Load("AbilityObjects/GoingDarkVeil");
 	}
-	
-	public void Begin(ShipObject ship){
-		
+
+	public void Begin(ShipObject ship) {
+
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
-	
-	public IEnumerator Execute(){
-		
+
+	public IEnumerator Execute() {
+
 		Setup();
 		GameObject veil = (GameObject)Instantiate(Resource, transform.position, Quaternion.identity);
 		veil.transform.Rotate(Vector3.right, 90f);
@@ -35,9 +37,9 @@ public class GoingDark : BaseAbility, IAbility{
 		Destroy(veil);
 		TearDown();
 	}
-	
-	public void Setup(){
-		
+
+	public void Setup() {
+
 		Executing = true;
 		Ship.Heat += Cost;
 		Ship.CanBeTargetted = false;
@@ -45,7 +47,7 @@ public class GoingDark : BaseAbility, IAbility{
 		// Reduce all current enemy's threat table entries for this player to 0.
 		foreach (ShipObject enemy in SceneHandler.Enemies.ToArray()) {
 			BaseShipAI ai = enemy.GetComponent<BaseShipAI>();
-		 	var table = ai.ThreatTable;
+			var table = ai.ThreatTable;
 			foreach (ShipObject ship in new List<ShipObject>(table.Keys)) {
 				if (ship == Ship) {
 					table[ship] = 0;
@@ -57,17 +59,17 @@ public class GoingDark : BaseAbility, IAbility{
 			}
 		}
 	}
-	
-	public void TearDown(){
+
+	public void TearDown() {
 
 		Ship.CanBeTargetted = true;
 		Executing = false;
 		DurationTimer = 0f;
 	}
-	
-	public override void TriggerEnter(Collider collider){}
-	
-	public override void TriggerStay(Collider collider){}
-	
-	public override void TriggerExit(Collider collider){}
+
+	public override void TriggerEnter(Collider collider) { }
+
+	public override void TriggerStay(Collider collider) { }
+
+	public override void TriggerExit(Collider collider) { }
 }

@@ -39,14 +39,14 @@ public class SelectionStatUpdater : MonoBehaviour {
 					label.text = ship.GetDamage().ToString();
 					break;
 				case "SpeedText":
-					label.text = ship.Speed.ToString();
+					label.text = ship.baseSpeed.ToString();
 					break;
 				case "ShipName":
 					label.text = ship.gameObject.name;
 					break;
 				// Placeholder until we have icons for each scrap type.
 				case "ScrapStock":
-					player = GameValues.Players[playerNumber+1];
+					player = GameValues.Players[playerNumber + 1];
 					int low = player.Scrap.QualityLow;
 					int med = player.Scrap.QualityMedium;
 					int high = player.Scrap.QualityHigh;

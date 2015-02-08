@@ -9,6 +9,7 @@ public class SustainDrone : BaseAbility, IAbility {
 
 	public void Start() {
 
+		Name = "Sustain Drone";
 		Cost = 45f;
 		Duration = 8f;
 		PrimaryEffect = 8;
@@ -20,6 +21,7 @@ public class SustainDrone : BaseAbility, IAbility {
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
 
 	public IEnumerator Execute() {

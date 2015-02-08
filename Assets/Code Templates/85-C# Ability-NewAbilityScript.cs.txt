@@ -26,7 +26,7 @@ public class #SCRIPTNAME# : BaseAbility, IAbility{
 		while (DurationTimer < Duration){
 			DurationTimer += Time.deltaTime;
 			// ABILITY DURATION LOGIC
-			yield return new WaitForEndOfFrame();
+			yield return null;
 		}
 
 		TearDown();
@@ -34,6 +34,7 @@ public class #SCRIPTNAME# : BaseAbility, IAbility{
 	
 	public void Setup(){
 		
+		Ship.Heat += Cost;
 		Executing = true;
 	}
 	

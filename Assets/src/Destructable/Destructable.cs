@@ -29,6 +29,9 @@ public class Destructible : MonoBehaviour {
 	[SerializeField]
 	public bool InvulnerableDissipation = false;
 
+	GameObject FloatingDamage;
+	public GameObject FloatingText;
+
 	// Delegate for destroy callback
 	public delegate void OnDestroyDelegate();
 	public OnDestroyDelegate OnDestroy;
@@ -65,6 +68,12 @@ public class Destructible : MonoBehaviour {
 	}
 
 	#endregion
+
+	void Awake() {
+
+		FloatingDamage = (GameObject)Resources.Load("GUIPrefabs/FloatingDamage");
+		FloatingText = (GameObject)Resources.Load("GUIPrefabs/FloatingText");
+	}
 
 	/// <summary>
 	/// Deals non tracked damage. The offender will not be recorded.
@@ -126,7 +135,7 @@ public class Destructible : MonoBehaviour {
 	// TODO: This should be more generic, provide an optional text argument, and hover direction.
 	private void DisplayFloatingDamage(float damage) {
 
-		GameObject guiElement = (GameObject)Instantiate(Resources.Load("GUIPrefabs/FloatingDamage"), transform.position, Quaternion.identity);
+		GameObject guiElement = (GameObject)Instantiate(FloatingDamage, transform.position, Quaternion.identity);
 		Transform textTransform = guiElement.transform.FindChild("Text");
 		textTransform.GetComponent<Text>().text = Mathf.RoundToInt(damage).ToString();
 	}

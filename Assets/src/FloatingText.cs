@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
-public class FloatingDamage : MonoBehaviour {
+public class FloatingText : MonoBehaviour {
 
 	public float FadeSpeed;
 	float DriftAngle;
@@ -10,7 +10,7 @@ public class FloatingDamage : MonoBehaviour {
 	void Start() {
 
 		transform.Rotate(new Vector3(90f, 0f, 0f));
-		transform.position += new Vector3(0f, 0f, 2f);
+		transform.position += new Vector3(0f, 0f, -2f);
 		StartCoroutine(Tick());
 	}
 
@@ -22,7 +22,7 @@ public class FloatingDamage : MonoBehaviour {
 		while (ticker < FadeSpeed) {
 			ticker += Time.deltaTime;
 			canvasGroup.alpha -= Time.deltaTime / .75f;
-			transform.position += new Vector3(0f, 0f, 2 * Time.deltaTime);
+			transform.position += new Vector3(0f, 0f, -2 * Time.deltaTime);
 			yield return new WaitForEndOfFrame();
 		}
 

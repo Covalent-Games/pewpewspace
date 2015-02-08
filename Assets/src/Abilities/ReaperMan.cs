@@ -7,6 +7,7 @@ public class ReaperMan : BaseAbility, IAbility {
 
 	public void Start() {
 
+		Name = "Reaper Man";
 		Resource = Resources.Load("AbilityObjects/ReaperManProjectile");
 		Cost = 30f;
 		Duration = 1f / 60f;
@@ -19,6 +20,7 @@ public class ReaperMan : BaseAbility, IAbility {
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
 
 	public IEnumerator Execute() {

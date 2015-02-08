@@ -11,6 +11,7 @@ public class SalvageConversionRounds : BaseAbility, IAbility {
 
 	public void Start() {
 
+		Name = "Salvage Conversion Rounds";
 		Cost = 10f;
 		Duration = 1f / 60f;
 		string path = "PlayerShips/ShipObjects/SalvageConversionProjectile";
@@ -25,6 +26,7 @@ public class SalvageConversionRounds : BaseAbility, IAbility {
 		Toggle = !Toggle;
 		Debug.Log("Salvage Conversion Rounds is on: " + Toggle);
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
 
 

@@ -11,6 +11,7 @@ public class EnergyMissilePods : BaseAbility, IAbility {
 
 	public void Start() {
 
+		Name = "Energy Missile Pods";
 		Cost = 20f;
 		Duration = 1f / 60f;
 		string path = "PlayerShips/ShipObjects/EnergyMissilePodsProjectile";
@@ -18,14 +19,14 @@ public class EnergyMissilePods : BaseAbility, IAbility {
 	}
 
 	public void Begin(ShipObject ship) {
-		Debug.Log("Energy Missile engaged!");
+
 		Ship = ship;
 		CustomProjectile.GetComponent<EnergyMissilePodsProjectile>().Owner = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
 		ShipClass = ship.ShipClass;
 		Toggle = !Toggle;
-		Debug.Log("Energy Missile Rounds is on: " + Toggle);
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
 
 

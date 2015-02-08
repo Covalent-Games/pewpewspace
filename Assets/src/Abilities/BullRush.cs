@@ -3,42 +3,48 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public class BullRush : BaseAbility, IAbility{
-	
+public class BullRush : BaseAbility, IAbility {
+
 	private Vector3 moveTowards;
-	
-	public void Begin(ShipObject ship){
-		
+
+	void Start() {
+
+		Cost = 50f;
+		Duration = 0.3f;
+		Name = "Bull Rush";
+	}
+
+	public void Begin(ShipObject ship) {
+
 		this.Ship = ship;
 		this.ShipMove = ship.GetComponent<ShipMovement>();
 		this.ShipClass = ship.ShipClass;
-		Cost = 50f;
-		Duration = 0.3f;
 		StartCoroutine(Execute());
+		DisplayName(Name);
 	}
-	
-	public IEnumerator Execute(){
-		
+
+	public IEnumerator Execute() {
+
 		Setup();
-		while (DurationTimer < Duration){
+		while (DurationTimer < Duration) {
 			DurationTimer += Time.deltaTime;
 			ShipMove.MoveShip(Vector3.MoveTowards(Ship.transform.position, moveTowards, Time.deltaTime * ShipMove.moveSpeed * 4));
 			yield return new WaitForEndOfFrame();
 		}
 		TearDown();
 	}
-	
-	public void Setup(){
-		
+
+	public void Setup() {
+
 		Executing = true;
 		moveTowards = new Vector3(0, 0, 20f) + Ship.transform.position;
 		ShipMove.moveEnabled = false;
 		Ship.Invulnerable = true;
 		Ship.Heat += Cost;
 	}
-	
-	public void TearDown(){
-		
+
+	public void TearDown() {
+
 		Executing = false;
 		ShipMove.moveEnabled = true;
 		Ship.Invulnerable = false;

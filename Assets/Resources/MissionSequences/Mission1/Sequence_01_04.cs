@@ -63,37 +63,38 @@ public class Sequence_01_04 : BaseSequence {
 		float xpos;
 		float ypos;
 
-		while (SpawnCount < MaxEnemiesOnScreen) {
-			switch (SpawnCount % 5) {
-				default:
-					xpos = Random.Range(0f, 1f);
-					ypos = Random.Range(1.02f, 1.08f);
-					break;
-				case 0:
-					ypos = Random.Range(0f, 1f);
-					xpos = Random.Range(1.02f, 1.08f);
-					break;
-				case 1:
-					ypos = Random.Range(0f, 1f);
-					xpos = Random.Range(-0.02f, -0.08f);
-					break;
+		while (enabled) {
+			if (SpawnCount < MaxEnemiesOnScreen) {
+				switch (SpawnCount % 5) {
+					default:
+						xpos = Random.Range(0f, 1f);
+						ypos = Random.Range(1.02f, 1.08f);
+						break;
+					case 0:
+						ypos = Random.Range(0f, 1f);
+						xpos = Random.Range(1.02f, 1.08f);
+						break;
+					case 1:
+						ypos = Random.Range(0f, 1f);
+						xpos = Random.Range(-0.02f, -0.08f);
+						break;
+				}
+
+				var viewport = new Vector3(xpos, ypos, Camera.main.transform.position.y);
+				Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(viewport);
+
+				GameObject newEnemyGO = (GameObject)Instantiate(
+						EnemyPrefab,
+						spawnPosition,
+						Quaternion.identity);
+
+				ShipObject newEnemy = newEnemyGO.GetComponent<ShipObject>();
+				newEnemy.MaxArmor = EnemyArmor;
+				// Add OnDestroy callback.
+				newEnemy.GetComponent<Destructible>().OnDestroy += IncreaseGoalCounter;
+				newEnemy.AddContainers(SceneHandler.Enemies, SpawnedEntities);
+				SpawnCount += 1;
 			}
-
-			var viewport = new Vector3(xpos, ypos, Camera.main.transform.position.y);
-			Vector3 spawnPosition = Camera.main.ViewportToWorldPoint(viewport);
-
-			GameObject newEnemyGO = (GameObject)Instantiate(
-					EnemyPrefab,
-					spawnPosition,
-					Quaternion.identity);
-
-			ShipObject newEnemy = newEnemyGO.GetComponent<ShipObject>();
-			newEnemy.MaxArmor = EnemyArmor;
-			// Add OnDestroy callback.
-			newEnemy.GetComponent<Destructible>().OnDestroy += IncreaseGoalCounter;
-			newEnemy.AddContainers(SceneHandler.Enemies, SpawnedEntities);
-			SpawnCount += 1;
-
 			yield return new WaitForSeconds(SpawnDelay);
 		}
 	}
