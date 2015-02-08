@@ -29,7 +29,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 	public IEnumerator Execute(){
 		
 		Setup();
-		yield return null;
+		yield return new WaitForSeconds(2);
 		TearDown();
 	}
 	
@@ -56,9 +56,12 @@ public class SonicDisruption : BaseAbility, IAbility{
 		Sphere.transform.position = Ship.transform.position;
 		Sphere.ModifySphereRadius(8);
 		Sphere.Ability = this;
-		//SetupParticleEffect();  // This currently is not working, and the particle system has been removed. 
+		var effect = Resources.Load("Effects/SonicDisruptorSparks");
+		var effectO = (GameObject)Instantiate(effect, sphere.transform.position, sphere.transform.rotation);
+
 	}
 	
+	// Currently does not get used.
 	void SetupParticleEffect(){
 	
 		Transform particleGO = this.Sphere.transform.FindChild("Particle System");
@@ -72,7 +75,7 @@ public class SonicDisruption : BaseAbility, IAbility{
 	}
 	
 	public void TearDown(){
-		
+
 		Executing = false;
 		DurationTimer = 0f;
 		Destroy(this.Sphere.gameObject);
