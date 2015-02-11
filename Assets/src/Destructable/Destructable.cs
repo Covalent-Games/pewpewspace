@@ -71,8 +71,8 @@ public class Destructible : MonoBehaviour {
 
 	void Awake() {
 
-		FloatingDamage = (GameObject)Resources.Load("GUIPrefabs/FloatingDamage");
-		FloatingText = (GameObject)Resources.Load("GUIPrefabs/FloatingText");
+		FloatingDamage = Resources.Load("GUIPrefabs/FloatingDamage") as GameObject;
+		FloatingText = Resources.Load("GUIPrefabs/FloatingText") as GameObject;
 	}
 
 	/// <summary>
