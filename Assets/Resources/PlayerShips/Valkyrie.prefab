@@ -38,21 +38,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &100004
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400004}
-  m_Layer: 0
-  m_Name: Turret
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100008
 GameObject:
   m_ObjectHideFlags: 1
@@ -128,21 +113,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400012}
-  - {fileID: 400004}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!4 &400004
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100004}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.00319269998, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400002}
-  m_RootOrder: 1
 --- !u!4 &400008
 Transform:
   m_ObjectHideFlags: 1
@@ -247,7 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: []
   MaxArmor: 250
   MaxHeat: 100
   baseSpeed: 1.20000005
@@ -259,6 +230,7 @@ MonoBehaviour:
   Invulnerable: 0
   InvulnerableArmor: 0
   InvulnerableDissipation: 0
+  FloatingText: {fileID: 0}
   projectilePrefab: {fileID: 100000, guid: 9b9a6eb5dc9202840863e408cf6a14c4, type: 2}
   shotPerSecond: 6
   Damage: 8
@@ -266,16 +238,13 @@ MonoBehaviour:
   triggerValue: 0
   PlayerNumber: 0
   ShipClass: 2
+  Movement: {fileID: 0}
   Target: {fileID: 0}
   Turret: {fileID: 0}
   FireCost: 0
   Overheated: 0
   healthBar: {fileID: 0}
   dissipationBar: {fileID: 0}
-  Ability1Icon: {fileID: 0}
-  Ability2Icon: {fileID: 0}
-  Ability3Icon: {fileID: 0}
-  Ability4Icon: {fileID: 0}
   EnemyCursor: {fileID: 0}
   PlayerCursor: {fileID: 0}
 --- !u!114 &11400004

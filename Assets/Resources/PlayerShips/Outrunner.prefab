@@ -1,20 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &100002
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 400002}
-  m_Layer: 0
-  m_Name: Turret
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,18 +55,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &400002
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.00315880007, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 400008}
-  m_RootOrder: 1
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 1
@@ -118,7 +91,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400004}
-  - {fileID: 400002}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &2300002
@@ -187,7 +159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: []
   MaxArmor: 175
   MaxHeat: 100
   baseSpeed: 1.29999995
@@ -199,6 +170,7 @@ MonoBehaviour:
   Invulnerable: 0
   InvulnerableArmor: 0
   InvulnerableDissipation: 0
+  FloatingText: {fileID: 0}
   projectilePrefab: {fileID: 100008, guid: b0df5a3ea8d6f08428a3da8af2e1ced9, type: 2}
   shotPerSecond: 5
   Damage: 8
@@ -206,16 +178,13 @@ MonoBehaviour:
   triggerValue: 0
   PlayerNumber: 0
   ShipClass: 3
+  Movement: {fileID: 0}
   Target: {fileID: 0}
   Turret: {fileID: 0}
   FireCost: 0
   Overheated: 0
   healthBar: {fileID: 0}
   dissipationBar: {fileID: 0}
-  Ability1Icon: {fileID: 0}
-  Ability2Icon: {fileID: 0}
-  Ability3Icon: {fileID: 0}
-  Ability4Icon: {fileID: 0}
   EnemyCursor: {fileID: 0}
   PlayerCursor: {fileID: 0}
 --- !u!114 &11400004

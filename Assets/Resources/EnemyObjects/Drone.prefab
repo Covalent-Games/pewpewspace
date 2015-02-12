@@ -129,7 +129,6 @@ MonoBehaviour:
   BaseShip: {fileID: 0}
   ThreatDissipationSpeed: 2
   DistancePerception: -1
-  target: {fileID: 0}
   Destination: {x: 0, y: 0, z: 0}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -153,9 +152,10 @@ MonoBehaviour:
   Invulnerable: 0
   InvulnerableArmor: 0
   InvulnerableDissipation: 0
+  FloatingText: {fileID: 0}
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
-  shotPerSecond: 2
-  Damage: 5
+  shotPerSecond: 1.20000005
+  Damage: 0
   DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
@@ -167,10 +167,6 @@ MonoBehaviour:
   Overheated: 0
   healthBar: {fileID: 0}
   dissipationBar: {fileID: 0}
-  Ability1Icon: {fileID: 0}
-  Ability2Icon: {fileID: 0}
-  Ability3Icon: {fileID: 0}
-  Ability4Icon: {fileID: 0}
   EnemyCursor: {fileID: 0}
   PlayerCursor: {fileID: 0}
 --- !u!1001 &100100000

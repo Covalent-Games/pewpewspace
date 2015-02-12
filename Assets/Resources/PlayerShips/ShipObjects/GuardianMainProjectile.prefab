@@ -27,7 +27,7 @@ GameObject:
   - 114: {fileID: 11400000}
   - 65: {fileID: 6544604}
   - 54: {fileID: 5400000}
-  - 212: {fileID: 21244604}
+  - 96: {fileID: 9629448}
   m_Layer: 9
   m_Name: GuardianMainProjectile
   m_TagString: Untagged
@@ -54,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: 197.032257, y: 412.682434, z: -658.15802}
+  m_LocalPosition: {x: 198.289993, y: 413.682007, z: -668.15802}
   m_LocalScale: {x: 1.20000005, y: 1.20000005, z: 1.20000005}
   m_Children:
   - {fileID: 400006}
@@ -82,11 +82,52 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .639999986, y: 1.28000033, z: .200000048}
-  m_Center: {x: 0, y: -.6400612, z: 0}
+  m_Size: {x: .400000006, y: .614102721, z: .400000006}
+  m_Center: {x: 0, y: -.305430114, z: -.00129696075}
+--- !u!96 &9629448
+TrailRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100008}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Time: .100000001
+  m_StartWidth: .5
+  m_EndWidth: .200000003
+  m_Colors:
+    m_Color[0]:
+      serializedVersion: 2
+      rgba: 4294939461
+    m_Color[1]:
+      serializedVersion: 2
+      rgba: 4294873669
+    m_Color[2]:
+      serializedVersion: 2
+      rgba: 4294807877
+    m_Color[3]:
+      serializedVersion: 2
+      rgba: 4294742085
+    m_Color[4]:
+      serializedVersion: 2
+      rgba: 16486213
+  m_MinVertexDistance: .100000001
+  m_Autodestruct: 0
 --- !u!108 &10800000
 Light:
   m_ObjectHideFlags: 1
@@ -96,9 +137,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 3
   m_Type: 2
-  m_Color: {r: 1, g: 1, b: .717647076, a: 1}
-  m_Intensity: 1
-  m_Range: 5
+  m_Color: {r: 0, g: .462069035, b: 1, a: 1}
+  m_Intensity: 5
+  m_Range: 4
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -133,29 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f03c856a27baf4a9c1f9f3dc5ce974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 50
---- !u!212 &21244604
-SpriteRenderer:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100008}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_LightmapIndex: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
-  m_SubsetIndices: 
-  m_StaticBatchRoot: {fileID: 0}
-  m_UseLightProbes: 0
-  m_LightProbeAnchor: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 50b29b760aa39464685dfaada121f734, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  velocity: 65
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -23,7 +23,6 @@ public class Sequence_01_04 : BaseSequence {
 		StartCoroutine(SpawnOverTime());
 
 		GameObject freighter = (GameObject)Instantiate(Freighter, new Vector3(0f, 0f, 75f), Quaternion.identity);
-		Vector3 targetPosition = new Vector3(0f, 0f, 2f);
 
 		StartCoroutine(MoveFreighter(freighter, new Vector3(0, 0, 2)));
 

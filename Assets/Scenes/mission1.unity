@@ -6942,7 +6942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f04ab1faafc8f2d46b9ee86cf348cfa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mission: {fileID: 104584, guid: 44e3bbd2023ca144ebf5a5949c639aa5, type: 2}
+  Mission: {fileID: 100000, guid: 434a35beea85b794a87e243363244ac4, type: 2}
   DialogueCanvas: {fileID: 1462900428}
   TargetingLayerMask:
     serializedVersion: 2

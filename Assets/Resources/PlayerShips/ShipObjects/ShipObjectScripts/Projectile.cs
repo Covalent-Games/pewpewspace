@@ -12,7 +12,7 @@ public class Projectile : MonoBehaviour, IProjectile {
 	//TODO: This NEEDS to be a coroutine
 	void Update() {
 
-		if (Target != null) {
+		if (Target) {
 			Direction = Vector3.Normalize(Target.transform.position - transform.position);
 			transform.position += this.velocity * Direction * Time.deltaTime;
 			transform.LookAt(Target.transform, Vector3.forward);

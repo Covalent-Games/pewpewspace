@@ -93,7 +93,7 @@ public class ShipObject : Destructible {
 				Vector3.zero,
 				Quaternion.Euler(new Vector3(90, 0, 0)));
 			GameObject turret = (GameObject)Instantiate(
-				Resources.Load("PlayerShips/ShipObjects/Turret_TEST"),
+				Resources.Load("PlayerShips/ShipObjects/Turret"),
 				transform.position,
 				transform.rotation);
 			turret.transform.parent = this.transform;
@@ -126,7 +126,7 @@ public class ShipObject : Destructible {
 				Ability4 = AddAbility("CarpetBomb");
 				break;
 			case ShipType.Valkyrie:
-				Ability1 = AddAbility("DesyncronizationBurst");
+				Ability1 = AddAbility("DesynchronizationBurst");
 				Ability2 = AddAbility("ExplosiveShot");
 				Ability3 = AddAbility("RapidFire");
 				Ability4 = AddAbility("RadarJam");
@@ -226,16 +226,18 @@ public class ShipObject : Destructible {
 		// 
 		if (PlayerObject == null) { return; }
 
-		if (GetComponent<ShipMovement>().AimingTurret | Target == null) {
+		if (Movement.AimingTurret | Target == null) {
 			RaycastHit hitInfo;
 
 			bool rayHit = Physics.Raycast(
 					transform.position,
 					Turret.forward,
 					out hitInfo,
+					Mathf.Infinity,
 					Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
 
 			if (rayHit) {
+				print("Pointing at " + hitInfo.transform.gameObject.name);
 				string tag = hitInfo.transform.gameObject.tag;
 				TargetCursor cursor;
 				if (tag == "Enemy" & Target != hitInfo.transform) {

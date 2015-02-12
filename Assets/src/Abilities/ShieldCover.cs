@@ -28,10 +28,7 @@ public class ShieldCover : BaseAbility, IAbility {
 	public IEnumerator Execute() {
 
 		Setup();
-		while (DurationTimer < Duration) {
-			DurationTimer += Time.deltaTime;
-			yield return new WaitForEndOfFrame();
-		}
+		yield return new WaitForSeconds(Duration);
 		TearDown();
 	}
 
