@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8577f92788efba94ca7b8f1cd9a151f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Debugging: 1
+  Debugging: 0
   levelToLoad: MainMenu
 --- !u!4 &1869568612
 Transform:

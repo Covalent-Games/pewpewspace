@@ -58,9 +58,9 @@ public class ShipMovement : MonoBehaviour {
 
 		if (ship.Target != null) {
 			if (AbilityUtils.IsPlayer(ship.Target.GetComponent<ShipObject>())) {
-				UpdateTargetingLine(turret, Vector3.Distance(transform.position, ship.Target.position), Color.green);
+				UpdateTargetingLine(turret, 25f, Color.green);
 			} else {
-				UpdateTargetingLine(turret, Vector3.Distance(transform.position, ship.Target.position), Color.red);
+				UpdateTargetingLine(turret, 25f, Color.red);
 			}
 		} else {
 			// In this case the player has no target and is aiming to empty space, so give them a moderate line to aim with.

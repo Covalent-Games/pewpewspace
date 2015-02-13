@@ -89,6 +89,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &112496
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 412496}
+  - 54: {fileID: 5412496}
+  - 135: {fileID: 13512496}
+  - 114: {fileID: 11412496}
+  m_Layer: 12
+  m_Name: AllyRangeDetector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
@@ -124,6 +142,7 @@ Transform:
   m_LocalPosition: {x: -4.43030024, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 412496}
   - {fileID: 400012}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -151,6 +170,18 @@ Transform:
   m_Children:
   - {fileID: 400010}
   - {fileID: 400002}
+  m_Father: {fileID: 400008}
+  m_RootOrder: 1
+--- !u!4 &412496
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112496}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
   m_Father: {fileID: 400008}
   m_RootOrder: 0
 --- !u!23 &2300002
@@ -194,6 +225,21 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 116
+  m_CollisionDetection: 0
+--- !u!54 &5412496
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112496}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!64 &6400000
 MeshCollider:
@@ -241,6 +287,7 @@ MonoBehaviour:
   Movement: {fileID: 0}
   Target: {fileID: 0}
   Turret: {fileID: 0}
+  InRange: []
   FireCost: 0
   Overheated: 0
   healthBar: {fileID: 0}
@@ -264,6 +311,30 @@ MonoBehaviour:
   moveEnabled: 1
   currentMovingSpeed: 0
   rotationSpeed: 20
+--- !u!114 &11412496
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e9029fa91d0e924794f07e45dea14fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AlliesInRange: 0
+--- !u!135 &13512496
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112496}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 15
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1

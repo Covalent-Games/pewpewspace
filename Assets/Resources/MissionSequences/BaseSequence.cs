@@ -17,7 +17,7 @@ public class BaseSequence : MonoBehaviour, IMissionSequence {
 	/// <param name="parentMission">The mission that creates this sequence.</param>
 	public virtual void Init(BaseMission parentMission) {
 
-		Debug.Log(name + " has initialized.");
+		//Debug.Log(name + " has initialized.");
 
 		Running = true;
 		ParentMission = parentMission;
@@ -34,7 +34,7 @@ public class BaseSequence : MonoBehaviour, IMissionSequence {
 
 	public virtual void Finish() {
 
-		Debug.Log(name + " has finished.");
+		//Debug.Log(name + " has finished.");
 		Running = false;
 		Destroy(gameObject);
 	}

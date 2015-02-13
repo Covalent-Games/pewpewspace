@@ -31,6 +31,7 @@ public class ShipObject : Destructible {
 	public ShipMovement Movement;
 	public Transform Target;
 	public Transform Turret;
+	public List<ShipObject> InRange = new List<ShipObject>();
 	public List<Modifier> ActiveConditions = new List<Modifier>();
 	public List<Modifier> ActiveBoons = new List<Modifier>();
 	public float FireCost;
@@ -101,7 +102,15 @@ public class ShipObject : Destructible {
 			EnemyCursor = enemyCursor.GetComponent<TargetCursor>();
 			PlayerCursor = playerCursor.GetComponent<TargetCursor>();
 			Turret = turret.transform;
+			StartCoroutine(DelayLoad());
+
 		}
+	}
+
+	IEnumerator DelayLoad() {
+
+		yield return new WaitForSeconds(0.1f);
+		transform.FindChild("AllyRangeDetector").GetComponent<SphereCollider>().enabled = true;
 	}
 
 	void AssignAbilities() {
@@ -237,15 +246,11 @@ public class ShipObject : Destructible {
 					Transform.FindObjectOfType<SceneHandler>().TargetingLayerMask);
 
 			if (rayHit) {
-				print("Pointing at " + hitInfo.transform.gameObject.name);
 				string tag = hitInfo.transform.gameObject.tag;
 				TargetCursor cursor;
 				if (tag == "Enemy" & Target != hitInfo.transform) {
 					cursor = EnemyCursor;
 					PlayerCursor.Tracking = null;
-				} else if (tag == "Player" & Target != hitInfo.transform) {
-					cursor = PlayerCursor;
-					EnemyCursor.Tracking = null;
 				} else {
 					return;
 				}
@@ -294,7 +299,6 @@ public class ShipObject : Destructible {
 			Overheat();
 		}
 
-		//TODO: Could we change this to UpdateHUD or something similar? UpdateData() seems kind of ambiguous nested in Update(). 
 		UpdateHUD();
 	}
 
@@ -309,7 +313,6 @@ public class ShipObject : Destructible {
 			this.Heat = this.MaxHeat;
 			// 2. Calculate how long the player will overheat for
 			overheatTime = Mathf.Sqrt(overheatedBy);
-			Debug.Log("Overheat time = " + overheatTime);
 			if (overheatTime < 3f)
 				overheatTime = 3f;
 			coolAmount = this.MaxHeat * 0.25f;

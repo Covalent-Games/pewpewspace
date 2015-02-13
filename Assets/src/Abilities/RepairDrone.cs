@@ -27,9 +27,11 @@ public class RepairDrone : BaseAbility, IAbility {
 	public IEnumerator Execute() {
 
 		Setup();
-		foreach (ShipObject ship in SceneHandler.PlayerShips) {
-			StartCoroutine(CreateEffect(ship));
-			ship.RestoreArmor(PrimaryEffect);
+		foreach (ShipObject ship in Ship.InRange) {
+			if (ship) {
+				StartCoroutine(CreateEffect(ship));
+				ship.RestoreArmor(PrimaryEffect);
+			}
 		}
 		yield return new WaitForEndOfFrame();
 		TearDown();

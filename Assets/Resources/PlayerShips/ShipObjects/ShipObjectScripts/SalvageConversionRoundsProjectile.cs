@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SalvageConversionRoundsProjectile : Projectile, IProjectile {
 
+
+
 	void Update() {
 
 		if (Target != null) {
@@ -21,20 +23,22 @@ public class SalvageConversionRoundsProjectile : Projectile, IProjectile {
 			Destroy(gameObject);
 		}
 	}
-	
-	void OnTriggerEnter(Collider collider){
-		
+
+	void OnTriggerEnter(Collider collider) {
+
 		Destructible destructable = collider.GetComponent<Destructible>();
-		
-		if (destructable){
+
+		if (destructable) {
 			float oldHealth = destructable.Armor;
 			// TODO: Damage should be calculated elsewhere so it can be upgraded (2)
 			float damageDealt = oldHealth - destructable.DamageArmor(this.Damage / 2, Owner);
-			
-			foreach(ShipObject ship in SceneHandler.PlayerShips){
-				ship.RestoreArmor(damageDealt);
+
+			foreach (ShipObject ship in Owner.InRange) {
+				if (ship) {
+					ship.RestoreArmor(damageDealt);
+				}
 			}
-			
+
 			//TODO: Trigger destructable.projectileJustHitMe particle effect
 			Destroy(gameObject);
 		}

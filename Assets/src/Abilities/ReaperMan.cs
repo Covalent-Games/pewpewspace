@@ -51,6 +51,8 @@ public class ReaperMan : BaseAbility, IAbility {
 
 	void SetTarget(ReaperManProjectile projectile) {
 
+		//TODO: This code works, but can remove the player check at some point.
+
 		// Player has no target
 		if (Ship.Target == null) {
 			int index = Random.Range(0, SceneHandler.Enemies.Count);

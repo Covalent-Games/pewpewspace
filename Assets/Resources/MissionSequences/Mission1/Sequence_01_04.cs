@@ -22,9 +22,10 @@ public class Sequence_01_04 : BaseSequence {
 
 		StartCoroutine(SpawnOverTime());
 
-		GameObject freighter = (GameObject)Instantiate(Freighter, new Vector3(0f, 0f, 75f), Quaternion.identity);
+		GoalTarget *= GameValues.Players.Count;
+		GameObject freighter = (GameObject)Instantiate(Freighter, new Vector3(0f, -5f, 75f), Quaternion.identity);
 
-		StartCoroutine(MoveFreighter(freighter, new Vector3(0, 0, 2)));
+		StartCoroutine(MoveFreighter(freighter, new Vector3(0, -5, 2)));
 
 		// First Freighter Segment.
 		while (GoalCounter <= GoalTarget) {
@@ -33,7 +34,7 @@ public class Sequence_01_04 : BaseSequence {
 		}
 
 		GoalCounter = 0;
-		StartCoroutine(MoveFreighter(freighter, new Vector3(0, 0, -34)));
+		StartCoroutine(MoveFreighter(freighter, new Vector3(0, -5, -34)));
 
 		// Second Freighter Segment.
 		while (GoalCounter <= GoalTarget) {
@@ -42,7 +43,7 @@ public class Sequence_01_04 : BaseSequence {
 		}
 
 		GoalCounter = 0;
-		StartCoroutine(MoveFreighter(freighter, new Vector3(0, 0, -86)));
+		StartCoroutine(MoveFreighter(freighter, new Vector3(0, -5, -86)));
 
 		freighter.GetComponentInChildren<KingOfTheHill>().OnWin += Win;
 		// Third Freighter Segment.
@@ -64,7 +65,7 @@ public class Sequence_01_04 : BaseSequence {
 
 		while (enabled) {
 			if (SpawnCount < MaxEnemiesOnScreen) {
-				switch (SpawnCount % 5) {
+				switch (SpawnCount % (int)Random.Range(1f, 6f)) {
 					default:
 						xpos = Random.Range(0f, 1f);
 						ypos = Random.Range(1.02f, 1.08f);
@@ -90,12 +91,14 @@ public class Sequence_01_04 : BaseSequence {
 				ShipObject newEnemy = newEnemyGO.GetComponent<ShipObject>();
 				newEnemy.MaxArmor = EnemyArmor;
 				// Add OnDestroy callback.
-				newEnemy.GetComponent<Destructible>().OnDestroy += IncreaseGoalCounter;
+				newEnemy.OnDestroy += IncreaseGoalCounter;
 				newEnemy.AddContainers(SceneHandler.Enemies, SpawnedEntities);
 				SpawnCount += 1;
 			}
 			yield return new WaitForSeconds(SpawnDelay);
 		}
+
+		Debug.LogWarning("Spawning has stopped!");
 	}
 
 	IEnumerator MoveFreighter(GameObject freighter, Vector3 targetPosition) {
@@ -119,7 +122,6 @@ public class Sequence_01_04 : BaseSequence {
 		if (CountingEnabled) {
 			GoalCounter += 1;
 			SpawnCount -= 1;
-			Debug.Log("GoalCounter is now" + GoalCounter.ToString());
 		}
 	}
 

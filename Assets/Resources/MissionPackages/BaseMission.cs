@@ -48,7 +48,7 @@ public class BaseMission : MonoBehaviour {
 			}
 
 			if (!sequenceGO) {
-				Debug.LogWarning(name + " has null sequence at index " + index);
+				//Debug.LogWarning(name + " has null sequence at index " + index);
 				continue;
 			}
 
@@ -61,12 +61,12 @@ public class BaseMission : MonoBehaviour {
 
 			// If sequence is concurrent, continue on to next sequence.
 			if (sequence.IsConcurrent()) {
-				Debug.Log(sequenceGO.name + " is concurrent. Moving to next sequence.");
+				//Debug.Log(sequenceGO.name + " is concurrent. Moving to next sequence.");
 				continue;
 			}
 
 			// Wait for the sequence to finish running.
-			Debug.Log("Waiting for " + sequenceGO.name + " sequence to finish");
+			//Debug.Log("Waiting for " + sequenceGO.name + " sequence to finish");
 			while (sequence.Running) {
 				yield return new WaitForEndOfFrame();
 			}

@@ -155,7 +155,7 @@ MonoBehaviour:
   FloatingText: {fileID: 0}
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
   shotPerSecond: 1.20000005
-  Damage: 0
+  Damage: 6
   DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
@@ -163,6 +163,7 @@ MonoBehaviour:
   Movement: {fileID: 0}
   Target: {fileID: 0}
   Turret: {fileID: 0}
+  InRange: []
   FireCost: 0
   Overheated: 0
   healthBar: {fileID: 0}
