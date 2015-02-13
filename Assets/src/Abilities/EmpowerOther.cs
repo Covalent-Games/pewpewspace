@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class EmpowerOther : BaseAbility, IAbility {
 
+	public Object VFX;
+
 	public void Start() {
 
 		Name = "Empower Other";
@@ -12,6 +14,7 @@ public class EmpowerOther : BaseAbility, IAbility {
 		Duration = 1f / 60f;
 		string path = "AbilityObjects/EmpowerOtherProjectile";
 		Resource = Resources.Load(path, typeof(GameObject));
+		VFX = Resources.Load("Effects/EmpowerOthersEffect", typeof(GameObject));
 		Duration = 5f;
 		Percentage = 0.35f;
 	}
@@ -40,14 +43,15 @@ public class EmpowerOther : BaseAbility, IAbility {
 			Debug.Log(ship.gameObject.name);
 			if (ship) {
 				GameObject projectileGO = (GameObject)Instantiate(
-				Resource,
-				Ship.transform.position,
-				Quaternion.identity);
+						Resource,
+						Ship.transform.position,
+						Quaternion.identity);
 				EmpowerOtherProjectile projectile = projectileGO.GetComponent<EmpowerOtherProjectile>();
 
 				projectile.Target = ship;
 				projectile.DamageModifier = Percentage;
 				projectile.Duration = Duration;
+				projectile.Effect = VFX;
 
 				StartCoroutine(projectile.TrackToTarget());
 			} else {

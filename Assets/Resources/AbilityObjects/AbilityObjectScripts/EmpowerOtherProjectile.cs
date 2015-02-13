@@ -7,6 +7,7 @@ public class EmpowerOtherProjectile : MonoBehaviour {
 	public float DamageModifier;
 	public float Duration;
 	bool tracking;
+	public Object Effect;
 	
 	public IEnumerator TrackToTarget(){
 		
@@ -47,8 +48,16 @@ public class EmpowerOtherProjectile : MonoBehaviour {
 		float dmg = shipObject.GetDamage();
 		float dmgMod = dmg * DamageModifier;
 		shipObject.GetComponent<BoonHandler>().ApplyBoon(Boon.Damage, AbilityID.EmpowerOther, dmgMod, Duration);
-		
+
+		GameObject effectGO = (GameObject)Instantiate(
+						Effect,
+						shipObject.transform.position,
+						Quaternion.identity);
+		effectGO.transform.parent = shipObject.transform;
+		effectGO.transform.Rotate(new Vector3(-90, 0, 0));
+
 		tracking = false;
+
 		Destroy(gameObject);
 	}
 }
