@@ -5,12 +5,15 @@ using System.Collections.Generic;
 
 public class GoingDark : BaseAbility, IAbility {
 
+	Object VFX;
+
 	public void Start() {
 
 		Name = "Goind Dark";
 		Cost = 35f;
 		Duration = 3f;
 		Resource = Resources.Load("AbilityObjects/GoingDarkVeil");
+		VFX = Resources.Load("Effects/GoingDarkEffect");
 	}
 
 	public void Begin(ShipObject ship) {
@@ -25,16 +28,24 @@ public class GoingDark : BaseAbility, IAbility {
 	public IEnumerator Execute() {
 
 		Setup();
-		GameObject veil = (GameObject)Instantiate(Resource, transform.position, Quaternion.identity);
-		veil.transform.Rotate(Vector3.right, 90f);
+
+		//MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
+		//renderer.material.color.a = 0.3f;
+
+		gameObject.renderer.material.SetColor("_Color", new Color(gameObject.renderer.material.color.r, gameObject.renderer.material.color.g, gameObject.renderer.material.color.b, 0.2f));
+
+		
+		//GameObject veil = (GameObject)Instantiate(Resource, transform.position, Quaternion.identity);
+		//veil.transform.Rotate(Vector3.right, 90f);
 
 		while (DurationTimer < Duration) {
 			DurationTimer += Time.deltaTime;
-			veil.transform.position = transform.position + new Vector3(0, .5f, 0);
+			//veil.transform.position = transform.position + new Vector3(0, .5f, 0);
 			yield return new WaitForEndOfFrame();
 		}
+		gameObject.renderer.material.SetColor("_Color", new Color(gameObject.renderer.material.color.r, gameObject.renderer.material.color.g, gameObject.renderer.material.color.b, 1f));
 
-		Destroy(veil);
+		//Destroy(veil);
 		TearDown();
 	}
 
@@ -43,6 +54,8 @@ public class GoingDark : BaseAbility, IAbility {
 		Executing = true;
 		Ship.Heat += Cost;
 		Ship.CanBeTargetted = false;
+
+		StartCoroutine(ApplyVFX());
 
 		// Reduce all current enemy's threat table entries for this player to 0.
 		foreach (ShipObject enemy in SceneHandler.Enemies.ToArray()) {
@@ -65,6 +78,17 @@ public class GoingDark : BaseAbility, IAbility {
 		Ship.CanBeTargetted = true;
 		Executing = false;
 		DurationTimer = 0f;
+	}
+
+	public IEnumerator ApplyVFX() {
+
+		GameObject effect = (GameObject)Instantiate(VFX, transform.position, Quaternion.identity);
+		effect.transform.parent = transform;
+		//effect.transform.
+		effect.transform.Translate(0f, 0.75f, 1.4f);
+		effect.transform.Rotate(new Vector3(180, 0, 0));
+		yield return new WaitForSeconds(2f);
+		Destroy(effect);
 	}
 
 	public override void TriggerEnter(Collider collider) { }
