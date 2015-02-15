@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: b1a564adbe0c9cb4a89054e3fdf5c5b2
+guid: ce0bb5f5ec871134d90e64639a476e73
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: ArmorBarFG
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -26,7 +25,7 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0

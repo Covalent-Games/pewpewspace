@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: f479ee9bf3fbc9f4697a3024562b45d6
+guid: 14eb76e90202ec44eac8194b6709f787
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: ShieldBarFG
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -26,7 +25,7 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0

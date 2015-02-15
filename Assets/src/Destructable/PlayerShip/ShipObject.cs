@@ -305,7 +305,9 @@ public class ShipObject : Destructible {
 	/// </summary>
 	void UpdateHUD() {
 
-		float healthRatio = (float)this.Armor / (float)this.MaxArmor;
+		float remainingArmor = (float)(MaxArmor - Armor);
+
+		float healthRatio = remainingArmor / (float)this.MaxArmor;
 		float dissipationRatio = this.Heat / this.MaxHeat;
 
 		this.healthBar.GetComponent<Image>().fillAmount = healthRatio;

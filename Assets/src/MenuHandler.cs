@@ -5,12 +5,16 @@ public class MenuHandler : MonoBehaviour {
 
 	bool isPaused = false;
 
+	void Awake() {
+
+		DontDestroyOnLoad(transform.gameObject);
+	}
 
 	public void OpenEscapeMenu() {
 
 		this.isPaused = !this.isPaused;
 
-		if(this.isPaused) {
+		if (this.isPaused) {
 			Screen.showCursor = true;
 			Screen.lockCursor = false;
 			StopEverything();
@@ -48,7 +52,7 @@ public class MenuHandler : MonoBehaviour {
 
 	void Update() {
 
-		if (Input.GetKeyDown(KeyCode.Escape)){
+		if (Input.GetKeyDown(KeyCode.Escape)) {
 			OpenEscapeMenu();
 		}
 
