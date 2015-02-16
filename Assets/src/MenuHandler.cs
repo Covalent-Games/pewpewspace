@@ -4,63 +4,49 @@ using System.Collections;
 public class MenuHandler : MonoBehaviour {
 
 	bool isPaused = false;
+	Canvas PauseMenu;
 
 	void Awake() {
 
 		DontDestroyOnLoad(transform.gameObject);
+		PauseMenu = GetComponent<Canvas>();
 	}
 
-	public void OpenEscapeMenu() {
+	/// <summary>
+	/// Toggles ship functions and the PauseMenu.
+	/// </summary>
+	/// <param name="toggle"></param>
+	void ToggleEverything(bool toggle) {
 
-		this.isPaused = !this.isPaused;
+		isPaused = !isPaused;
 
-		if (this.isPaused) {
-			Screen.showCursor = true;
-			Screen.lockCursor = false;
-			StopEverything();
-		} else {
-			Screen.showCursor = false;
-			Screen.lockCursor = true;
-			ResumeEverything();
-		}
+		// If we're turning everything off (toggle = false) we want to turn the menu on (true).
+		PauseMenu.enabled = !toggle;
 
-	}
+		if (toggle == true)
+			Time.timeScale = 1;
+		else
+			Time.timeScale = 0;
 
-	// Pause
-	void StopEverything() {
-
-		Time.timeScale = 0;
 		foreach (ShipObject player in SceneHandler.PlayerShips) {
-			if (player == null) {
-				continue;
+			if (player) {
+				player.GetComponent<ShipObject>().enabled = toggle;
 			}
-			player.GetComponent<ShipObject>().enabled = false;
-		}
-	}
-
-	// Resume
-	void ResumeEverything() {
-
-		Time.timeScale = 1;
-		foreach (ShipObject player in SceneHandler.PlayerShips) {
-			if (player == null) {
-				continue;
-			}
-			player.GetComponent<ShipObject>().enabled = true;
 		}
 	}
 
 	void Update() {
 
 		if (Input.GetKeyDown(KeyCode.Escape)) {
-			OpenEscapeMenu();
+			ToggleEverything(isPaused);
 		}
 
 		foreach (var player in GameValues.Players) {
-			if (Input.GetButtonDown(player.Value.Controller.ButtonStart)) {
-				OpenEscapeMenu();
+			if (player.Value != null) {
+				if (Input.GetButtonDown(player.Value.Controller.ButtonStart)) {
+					ToggleEverything(isPaused);
+				}
 			}
 		}
 	}
-
 }
