@@ -59,9 +59,8 @@ public class SceneHandler : MonoBehaviour {
 
 	void CreateMission() {
 
-		Debug.Log("Starting " + Mission.name + " from scenehandler");
-		GameObject m = (GameObject)Instantiate(Mission);
-		CurrentMission = m.GetComponent<BaseMission>();
+		GameObject mission = (GameObject)Instantiate(Mission);
+		CurrentMission = mission.GetComponent<BaseMission>();
 		CurrentMission.DialogueCanvas = DialogueCanvas;
 		CurrentMission.DialogueText = DialogueCanvas.transform.GetComponentInChildren<Text>();
 	}

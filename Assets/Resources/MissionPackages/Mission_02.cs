@@ -17,6 +17,7 @@ public class Mission_02 : BaseMission {
 		if (Ended) {
 			AwardScrap();
 			DisplayScrapReward(RewardUI);
+			enabled = false;
 		}
 	}
 }

@@ -13,7 +13,7 @@ public class ShieldCover : BaseAbility, IAbility {
 		Cost = 60;
 		string path = "AbilityObjects/ShieldCoverObject";
 		Resource = Resources.Load(path, typeof(GameObject));
-		Duration = 3f;
+		Duration = 2.2f;
 	}
 
 	public void Begin(ShipObject ship) {
@@ -47,8 +47,17 @@ public class ShieldCover : BaseAbility, IAbility {
 	public void TearDown() {
 
 		Executing = false;
-		DurationTimer = 0f;
+		//HACK to prevent collision from breaking
+		GetComponent<MeshCollider>().convex = false;
 		Destroy(Shield);
+		StartCoroutine(EnableMeshCollider());
+	}
+
+	//HACK to prevent collision from breaking
+	IEnumerator EnableMeshCollider() {
+
+		yield return null;
+		GetComponent<MeshCollider>().convex = true;
 	}
 
 	public override void TriggerEnter(Collider collider) { }

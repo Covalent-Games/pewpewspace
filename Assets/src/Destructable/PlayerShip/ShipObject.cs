@@ -35,7 +35,6 @@ public class ShipObject : Destructible {
 	public List<Modifier> ActiveConditions = new List<Modifier>();
 	public List<Modifier> ActiveBoons = new List<Modifier>();
 	public float FireCost;
-	public bool Overheated;
 
 	// HUD elements
 	public GameObject healthBar;
@@ -44,10 +43,18 @@ public class ShipObject : Destructible {
 	public TargetCursor PlayerCursor;
 
 	// Overheat variables
+	public bool Overheated;
 	float coolAmount;
 	float overheatTime;
 	float overheatTimer;
 	float originalSpeed;
+
+	#region Audio
+
+	AudioClip SFX_DefaultTurret;
+
+	#endregion
+
 
 
 	public void Start() {
@@ -60,6 +67,8 @@ public class ShipObject : Destructible {
 			BaseShipAI ai = GetComponent<BaseShipAI>();
 			ai.StartCoroutine(ai.DissipateThreat());
 		}
+
+		GetAudioReferences();
 	}
 
 	public void SetupPlayer(int playerNumber) {
@@ -103,7 +112,6 @@ public class ShipObject : Destructible {
 			PlayerCursor = playerCursor.GetComponent<TargetCursor>();
 			Turret = turret.transform;
 			StartCoroutine(DelayLoad());
-
 		}
 	}
 
@@ -111,6 +119,18 @@ public class ShipObject : Destructible {
 
 		yield return new WaitForSeconds(0.1f);
 		transform.FindChild("AllyRangeDetector").GetComponent<SphereCollider>().enabled = true;
+	}
+
+	/// <summary>
+	/// Assigns the player HUD UI elements
+	/// </summary>
+	void AcquireHud() {
+
+		// TODO: (Jesse) Put this on a "HUD" object in the scene, or even just on the 
+		// sceneHandler, and have it just display based on ships available instead of 
+		// being attached to the ship itself.
+		healthBar = GameObject.Find(string.Format("Player{0}ArmorBar", PlayerNumber));
+		dissipationBar = GameObject.Find(string.Format("Player{0}DissipationBar", PlayerNumber));
 	}
 
 	void AssignAbilities() {
@@ -149,20 +169,17 @@ public class ShipObject : Destructible {
 	}
 
 	/// <summary>
-	/// Assigns the player HUD UI elements
+	/// Assigns all AudioLibrary AuidClip references to class members.
 	/// </summary>
-	void AcquireHud() {
+	void GetAudioReferences() {
 
-		// TODO: (Jesse) Put this on a "HUD" object in the scene, or even just on the 
-		// sceneHandler, and have it just display based on ships available instead of 
-		// being attached to the ship itself.
-		healthBar = GameObject.Find(string.Format("Player{0}ArmorBar", PlayerNumber));
-		dissipationBar = GameObject.Find(string.Format("Player{0}DissipationBar", PlayerNumber));
-	}
+		AudioLibrary library = FindObjectOfType<AudioLibrary>();
 
-	void UpdateShotTimer() {
+		if (AbilityUtils.IsPlayer(this)) {
+			SFX_DefaultTurret = library.DefaultTurret;
+		}
 
-		this.shotTimer += Time.deltaTime;
+		SFX_Explosion = library.Explosion_01;
 	}
 
 	void HandleInput() {
@@ -202,6 +219,12 @@ public class ShipObject : Destructible {
 		return 1f / this.shotPerSecond;
 	}
 
+
+	void UpdateShotTimer() {
+
+		this.shotTimer += Time.deltaTime;
+	}
+
 	/// <summary>
 	/// Creates a projectile object facing the same direction as the Turret child object.
 	/// </summary>
@@ -228,6 +251,8 @@ public class ShipObject : Destructible {
 
 		// TODO: match standard fire heat generation with cooldown
 		Heat += FireCost;
+
+		AudioLibrary.Play(SFX_DefaultTurret);
 	}
 
 	void FindNewTarget() {
@@ -280,7 +305,9 @@ public class ShipObject : Destructible {
 	/// </summary>
 	void UpdateHUD() {
 
-		float healthRatio = (float)this.Armor / (float)this.MaxArmor;
+		float remainingArmor = (float)(MaxArmor - Armor);
+
+		float healthRatio = remainingArmor / (float)this.MaxArmor;
 		float dissipationRatio = this.Heat / this.MaxHeat;
 
 		this.healthBar.GetComponent<Image>().fillAmount = healthRatio;

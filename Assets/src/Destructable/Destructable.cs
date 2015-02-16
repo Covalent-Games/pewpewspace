@@ -32,6 +32,8 @@ public class Destructible : MonoBehaviour {
 	GameObject FloatingDamage;
 	public GameObject FloatingText;
 
+	protected AudioClip SFX_Explosion;
+
 	// Delegate for destroy callback
 	public delegate void OnDestroyDelegate();
 	public OnDestroyDelegate OnDestroy;
@@ -73,6 +75,11 @@ public class Destructible : MonoBehaviour {
 
 		FloatingDamage = Resources.Load("GUIPrefabs/FloatingDamage") as GameObject;
 		FloatingText = Resources.Load("GUIPrefabs/FloatingText") as GameObject;
+	}
+
+	void Start() {
+
+		this.armor = this.MaxArmor;
 	}
 
 	/// <summary>
@@ -140,11 +147,6 @@ public class Destructible : MonoBehaviour {
 		textTransform.GetComponent<Text>().text = Mathf.RoundToInt(damage).ToString();
 	}
 
-	void Start() {
-
-		this.armor = this.MaxArmor;
-	}
-
 	public virtual void End() {
 
 		//FIXME The comment below is a lie, and I don't currently know the fix. It's a rare bug. 'gameObject'
@@ -162,6 +164,11 @@ public class Destructible : MonoBehaviour {
 			var explosions = GameObject.FindObjectOfType<SceneHandler>().Explosions;
 			var explosion = explosions[Random.Range(1, explosions.Count) - 1];
 			Instantiate(explosion, transform.position, Quaternion.identity);
+
+			if (SFX_Explosion) {
+				AudioLibrary.Play(SFX_Explosion);
+			}
+
 			Destroy(gameObject);
 		}
 	}
