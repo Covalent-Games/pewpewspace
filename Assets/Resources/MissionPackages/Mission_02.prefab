@@ -43,7 +43,7 @@ MonoBehaviour:
   Ended: 0
   DialogueCanvas: {fileID: 0}
   DialogueText: {fileID: 0}
-  ScrapReward: 0
+  ScrapReward: 100
   ScrapBonusReward: 0
   ScrapQuality: 0
   SequencePadding: []

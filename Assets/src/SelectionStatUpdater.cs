@@ -36,10 +36,10 @@ public class SelectionStatUpdater : MonoBehaviour {
 					label.text = ship.MaxArmor.ToString();
 					break;
 				case "DamageText":
-					label.text = ship.GetDamage().ToString();
+					label.text = (ship.GetDamage() * ship.shotPerSecond).ToString() + " Dmg/s";
 					break;
 				case "SpeedText":
-					label.text = ship.baseSpeed.ToString();
+					label.text = (ship.baseSpeed * 10).ToString() + " m/s";
 					break;
 				case "ShipName":
 					label.text = ship.gameObject.name;
