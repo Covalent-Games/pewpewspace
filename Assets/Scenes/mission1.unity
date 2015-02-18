@@ -5338,7 +5338,7 @@ MonoBehaviour:
   DialogueCanvas: {fileID: 1462900428}
   TargetingLayerMask:
     serializedVersion: 2
-    m_Bits: 1280
+    m_Bits: 1024
   Explosions:
   - {fileID: 100000, guid: f75468363e2394440a081e9c175e6c93, type: 2}
   RewardUI:

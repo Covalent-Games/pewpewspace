@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: Dialogue_01_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 950.554932, y: 499.787201, z: -87.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e402c509b9bb8de4bafeb30775360aa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Concurrent: 0
+  PausePlayers: 1
+  Captions:
+  - Ok! We're looking good on time, and the target is just ahead. Man I'm - ... I
+    mean we ... are going to be filthy rich after this.
+  - 'Remember, take care of my ships! No foolin'' around. You remember how to fly
+    those things, right? '
+  - Left stick steers, right stick aims the turret. The trigger on the right will
+    fire the turret, and all them funny lookin buttons on the right do all the fancy
+    stuff. Got that?
+  - Ya, ya, I know you know. I just don't want any scratches on my-
+  - Woah! Hang on. What!? This freighter has some serious guard duty going on. This
+    isn't going to be an in-and-out job. You better take out these guards first!
+  - Alright, incomin'!
+  CaptionPauses:
+  - 6
+  - 4
+  - 6
+  - 4
+  - 0
+  - 2
+  DefaultPauseLength: 5
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1

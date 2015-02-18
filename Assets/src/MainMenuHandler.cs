@@ -19,7 +19,7 @@ public class MainMenuHandler : MonoBehaviour {
 	//NOTE: Currently not used, but could be kept for keyboard input
 	public void ButtonPress(string buttonName) {
 		Debug.Log("Is this running?");
-		switch(buttonName) {
+		switch (buttonName) {
 			case "Enlist":
 				ShipSelection();
 				break;
@@ -43,34 +43,33 @@ public class MainMenuHandler : MonoBehaviour {
 	}
 
 	void Update() {
-		
+
 		UpdateSelectionDelay();
-		
+
 		if (Input.GetButtonDown(GameValues.Players[1].Controller.ButtonA)) {
 			LoadGalaxyMenu();
 		}
 
-		if(selectionTimer >= selectionDelay) {
+		if (selectionTimer >= selectionDelay) {
 			// Player goes left with joystick
-			if(Input.GetAxis(GameValues.Players[1].Controller.LeftStickX) <= -0.5 && this.playerNumber > 1) {
+			if (Input.GetAxis(GameValues.Players[1].Controller.LeftStickX) <= -0.5 && this.playerNumber > 1) {
 				playerNumberSlider.GetComponent<Slider>().value -= 1;
 				selectionTimer = 0f;
 			}
 			// Player goes right with joystick
-			if(Input.GetAxis(GameValues.Players[1].Controller.LeftStickX) >= 0.5 && this.playerNumber < 4) {
+			if (Input.GetAxis(GameValues.Players[1].Controller.LeftStickX) >= 0.5 && this.playerNumber < 4) {
 				playerNumberSlider.GetComponent<Slider>().value += 1;
 				selectionTimer = 0f;
 			}
 
 		}
 	}
-	
+
 	void ShipSelection() {
 
 		GameValues.NumberOfPlayers = playerNumber;
-		//TODO: This will likely be where the user login/data loading starts
-		for(int player = 2; player <= this.playerNumber; player++) {
-			GameValues.Players.Add(player, new Player(player));
+		for (int i = 2; i <= playerNumber; i++) {
+			GameValues.Players.Add(i, new Player(i));
 		}
 		Application.LoadLevel("ShipSelection");
 	}
@@ -78,9 +77,8 @@ public class MainMenuHandler : MonoBehaviour {
 	public void LoadGalaxyMenu() {
 
 		GameValues.NumberOfPlayers = playerNumber;
-		//TODO: This will likely be where the user login/data loading starts
-		for (int player = 2; player <= this.playerNumber; player++) {
-			GameValues.Players.Add(player, new Player(player));
+		for (int i = 2; i <= playerNumber; i++) {
+			GameValues.Players.Add(i, new Player(i));
 		}
 		Application.LoadLevel("GalaxyMenu");
 	}

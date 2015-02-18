@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: Dialogue_01_01
+  m_Name: Dialogue_01_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,27 +39,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e402c509b9bb8de4bafeb30775360aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PausePlayers: 1
+  Concurrent: 0
+  PausePlayers: 0
   Captions:
-  - Ok! We're looking good on time, and the target is just ahead. Man I'm - ... I
-    mean we ... are going to be filthy rich after this.
-  - 'Remember, take care of my ships! No foolin'' around. You remember how to fly
-    those things, right? '
-  - Left stick steers, right stick aims the turret. The trigger on the right will
-    fire the turret, and all them funny lookin buttons on the right do all the fancy
-    stuff. Got that?
-  - Ya, ya, I know you know. I just don't want any scratches on my-
-  - Woah! Hang on. What!? This freighter has some serious guard duty going on. This
-    isn't going to be an in-and-out job. You better take out these guards first!
-  - Alright, incomin'!
-  CaptionPauses:
-  - 6
-  - 4
-  - 6
-  - 4
-  - 0
-  - 2
-  DefaultPauseLength: 5
+  - There's another wave comin' in. Get ready!
+  CaptionPauses: []
+  DefaultPauseLength: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

@@ -38,9 +38,8 @@ public class EmpowerOther : BaseAbility, IAbility {
 	public void Setup() {
 
 		Executing = true;
-		Debug.Log(Resource);
+
 		foreach (ShipObject ship in Ship.InRange) {
-			Debug.Log(ship.gameObject.name);
 			if (ship) {
 				GameObject projectileGO = (GameObject)Instantiate(
 						Resource,

@@ -711,7 +711,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 425982, guid: b9138619ce6965d43bf9a6ac5284a093, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8242184, guid: b9138619ce6965d43bf9a6ac5284a093, type: 2}
       propertyPath: BypassEffects
@@ -1755,6 +1755,8 @@ MonoBehaviour:
   HUD: {fileID: 1592791881}
   MenuObject: {fileID: 272867383}
   AudioHandler: {fileID: 775882648}
+  RunMissionTester: 1
+  NumberOfTestPlayers: 1
 --- !u!4 &1869568612
 Transform:
   m_ObjectHideFlags: 0

@@ -9,6 +9,9 @@ public class StartUp : MonoBehaviour {
 	public Transform HUD;
 	public Transform MenuObject;
 	public Transform AudioHandler;
+	public bool RunMissionTester;
+	[Range(1, 4)]
+	public int NumberOfTestPlayers;
 
 
 	void Awake() {
@@ -30,8 +33,23 @@ public class StartUp : MonoBehaviour {
 		}
 
 		if (Debugging) {
-			Debug.Log("Loading " + levelToLoad);
+			if (RunMissionTester) {
+				Debug.Log("Running Mission Tester");
+			} else {
+				Debug.Log("Loading " + levelToLoad);
+			}
 		}
-		Application.LoadLevel(levelToLoad);
+
+		if (RunMissionTester) {
+			GameValues.NextScene = "MissionTest";
+			for (int i = 1; i <= NumberOfTestPlayers; i++) {
+				GameValues.Players.Add(i, new Player(i));
+			}
+			GameValues.NumberOfPlayers = NumberOfTestPlayers;
+			Application.LoadLevel("ShipSelection");
+		} else {
+			Application.LoadLevel(levelToLoad);
+		}
 	}
+
 }
