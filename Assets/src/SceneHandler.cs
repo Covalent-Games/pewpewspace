@@ -83,7 +83,7 @@ public class SceneHandler : MonoBehaviour {
 			ship.HealthBar.fillAmount = 0;
 			ship.DissipationBar.fillAmount = 0;
 			//HACK? Canvas is 2 object up the hierarchy... this works but is super hacky.
-			ship.transform.parent.parent.GetComponent<Canvas>().enabled = false;
+			ship.HealthBar.transform.parent.parent.GetComponent<Canvas>().enabled = false;
 		}
 		Application.LoadLevel("GalaxyMenu");
 	}
