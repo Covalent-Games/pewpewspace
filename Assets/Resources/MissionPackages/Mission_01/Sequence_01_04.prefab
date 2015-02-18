@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Concurrent: 0
-  GoalTarget: 8
+  GoalTarget: 6
   MaxEnemiesOnScreen: 10
   SpawnDelay: 2
   EnemyPrefab: {fileID: 100000, guid: c24d70140caeee2488b1bc92fd0d681f, type: 2}

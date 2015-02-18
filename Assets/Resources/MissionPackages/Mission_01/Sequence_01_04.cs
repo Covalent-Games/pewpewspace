@@ -95,10 +95,10 @@ public class Sequence_01_04 : BaseSequence {
 				newEnemy.AddContainers(SceneHandler.Enemies, SpawnedEntities);
 				SpawnCount += 1;
 			}
+			Debug.Log(string.Format("Spawning an enemy. SpawnCount: {0}, OnScreen: {1}", SpawnCount, MaxEnemiesOnScreen));
+			Debug.Log("Pausing for " + SpawnDelay + " seconds");
 			yield return new WaitForSeconds(SpawnDelay);
 		}
-
-		Debug.LogWarning("Spawning has stopped!");
 	}
 
 	IEnumerator MoveFreighter(GameObject freighter, Vector3 targetPosition) {
@@ -118,10 +118,10 @@ public class Sequence_01_04 : BaseSequence {
 	/// Increases the counter for how many enemies have to be destroyed to progress.
 	/// </summary>
 	public void IncreaseGoalCounter() {
-
+		Debug.Log("Dude died, decreasing count");
+		SpawnCount -= 1;
 		if (CountingEnabled) {
 			GoalCounter += 1;
-			SpawnCount -= 1;
 		}
 	}
 

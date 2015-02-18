@@ -9,8 +9,10 @@ public class StartUp : MonoBehaviour {
 	public Transform HUD;
 	public Transform MenuObject;
 	public Transform AudioHandler;
+	[Tooltip("Modify MissionPackages/MissionTester.prefab with any mission or sequence to test.")]
 	public bool RunMissionTester;
 	[Range(1, 4)]
+	[Tooltip("Only applicable when Run Mision Tester is checked.")]
 	public int NumberOfTestPlayers;
 
 

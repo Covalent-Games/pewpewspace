@@ -37,8 +37,8 @@ public class ShipObject : Destructible {
 	public float FireCost;
 
 	// HUD elements
-	public GameObject healthBar;
-	public GameObject dissipationBar;
+	public Image HealthBar;
+	public Image DissipationBar;
 	public TargetCursor EnemyCursor;
 	public TargetCursor PlayerCursor;
 
@@ -129,8 +129,10 @@ public class ShipObject : Destructible {
 		// TODO: (Jesse) Put this on a "HUD" object in the scene, or even just on the 
 		// sceneHandler, and have it just display based on ships available instead of 
 		// being attached to the ship itself.
-		healthBar = GameObject.Find(string.Format("Player{0}ArmorBar", PlayerNumber));
-		dissipationBar = GameObject.Find(string.Format("Player{0}DissipationBar", PlayerNumber));
+		GameObject healthGO = GameObject.Find(string.Format("Player{0}ArmorBar", PlayerNumber));
+		GameObject heatGo = GameObject.Find(string.Format("Player{0}DissipationBar", PlayerNumber));
+		HealthBar = healthGO.GetComponent<Image>();
+		DissipationBar = heatGo.GetComponent<Image>();
 	}
 
 	void AssignAbilities() {
@@ -310,8 +312,8 @@ public class ShipObject : Destructible {
 		float healthRatio = remainingArmor / (float)this.MaxArmor;
 		float dissipationRatio = this.Heat / this.MaxHeat;
 
-		this.healthBar.GetComponent<Image>().fillAmount = healthRatio;
-		this.dissipationBar.GetComponent<Image>().fillAmount = dissipationRatio > 1f ? 1f : dissipationRatio;
+		HealthBar.fillAmount = healthRatio;
+		DissipationBar.fillAmount = dissipationRatio > 1f ? 1f : dissipationRatio;
 
 	}
 

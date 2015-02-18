@@ -71,10 +71,21 @@ public class SceneHandler : MonoBehaviour {
 		if (CurrentMission.Ended) {
 			foreach (ShipObject ship in PlayerShips) {
 				if (Input.GetButtonDown(ship.PlayerObject.Controller.ButtonA)) {
-					Application.LoadLevel("ShipSelection");
+					UnloadScene();
 				}
 			}
 		}
+	}
+
+	void UnloadScene() {
+
+		foreach (ShipObject ship in PlayerShips) {
+			ship.HealthBar.fillAmount = 0;
+			ship.DissipationBar.fillAmount = 0;
+			//HACK? Canvas is 2 object up the hierarchy... this works but is super hacky.
+			ship.transform.parent.parent.GetComponent<Canvas>().enabled = false;
+		}
+		Application.LoadLevel("GalaxyMenu");
 	}
 
 	public static void LoadScene(string SceneToLoad, bool ShowLoadingScreen = false, string LoadingScreen = "") {
