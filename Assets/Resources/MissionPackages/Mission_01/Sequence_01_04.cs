@@ -119,7 +119,6 @@ public class Sequence_01_04 : BaseSequence {
 	/// Increases the counter for how many enemies have to be destroyed to progress.
 	/// </summary>
 	public void IncreaseGoalCounter() {
-		Debug.Log("Dude died, decreasing count");
 		SpawnCount -= 1;
 		if (CountingEnabled) {
 			GoalCounter += 1;
