@@ -40,9 +40,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Concurrent: 0
-  SpawnQuantity: 7
+  SpawnQuantity: 5
   EnemyPrefab: {fileID: 100000, guid: c24d70140caeee2488b1bc92fd0d681f, type: 2}
-  EnemyArmor: 45
+  EnemyArmor: 35
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

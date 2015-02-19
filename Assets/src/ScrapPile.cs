@@ -60,19 +60,21 @@ public class ScrapPile {
 	/// <param name="scrap">A ScrapObject instance</param>
 	public void AddScrap(ScrapObject scrap) {
 
+		int total = scrap.Quantity * (int)(1.05f * (GameValues.Players.Count) - 1);
+
 		// Allocate scrap based on quality rating.
-		switch (scrap.Quality) { 
+		switch (scrap.Quality) {
 			case ScrapObject.QualityRating.Low:
-				QualityLow += scrap.Quantity;
+				QualityLow += total;
 				break;
 			case ScrapObject.QualityRating.Medium:
-				QualityMedium += scrap.Quantity;
+				QualityMedium += total;
 				break;
 			case ScrapObject.QualityRating.High:
-				QualityHigh += scrap.Quantity;
+				QualityHigh += total;
 				break;
 		}
-		PreviousScrapGained = scrap.Quantity;
+		PreviousScrapGained = total;
 	}
 
 	/// <summary>
@@ -83,19 +85,21 @@ public class ScrapPile {
 	/// <param name="amount">The amount of scrap to be added.</param>
 	public void AddScrap(ScrapObject.QualityRating rating, int amount) {
 
+		int total = amount * (int)(1.05f * (GameValues.Players.Count) - 1);
+
 		// Allocate scrap based on quality rating.
 		switch (rating) {
 			case ScrapObject.QualityRating.Low:
-				QualityLow += amount;
+				QualityLow += total;
 				break;
 			case ScrapObject.QualityRating.Medium:
-				QualityMedium += amount;
+				QualityMedium += total;
 				break;
 			case ScrapObject.QualityRating.High:
-				QualityHigh += amount;
+				QualityHigh += total;
 				break;
 		}
-		PreviousScrapGained = amount;
+		PreviousScrapGained = total;
 	}
 
 	/// <summary>

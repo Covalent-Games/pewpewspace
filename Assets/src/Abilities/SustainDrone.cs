@@ -12,7 +12,7 @@ public class SustainDrone : BaseAbility, IAbility {
 		Name = "Sustain Drone";
 		Cost = 45f;
 		Duration = 8f;
-		PrimaryEffect = 8;
+		PrimaryEffect = 6;
 	}
 
 	public void Begin(ShipObject ship) {
@@ -31,11 +31,7 @@ public class SustainDrone : BaseAbility, IAbility {
 		}
 
 		Setup();
-		float time = Time.time;
-		while (DurationTimer < Duration) {
-			DurationTimer += Time.time - time;
-			time = Time.time;
-
+		while (enabled) {
 			Ship.RestoreArmor(PrimaryEffect * UpdateFrequency);
 			yield return new WaitForSeconds(UpdateFrequency);
 		}

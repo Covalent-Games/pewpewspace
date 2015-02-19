@@ -41,11 +41,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Concurrent: 0
   GoalTarget: 6
-  MaxEnemiesOnScreen: 10
-  SpawnDelay: 2
+  MaxEnemiesOnScreen: 4
+  SpawnDelay: 1.29999995
   EnemyPrefab: {fileID: 100000, guid: c24d70140caeee2488b1bc92fd0d681f, type: 2}
   Freighter: {fileID: 100000, guid: f00861de591707f4b929344839de2d38, type: 2}
-  EnemyArmor: 80
+  EnemyArmor: 55
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

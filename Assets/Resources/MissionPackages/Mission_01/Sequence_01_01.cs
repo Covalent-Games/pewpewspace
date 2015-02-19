@@ -11,9 +11,9 @@ public class Sequence_01_01 : BaseSequence {
 
 	public override IEnumerator ExecuteSequence() {
 
-		yield return new WaitForSeconds(3f);
+		yield return new WaitForSeconds(2f);
 
-		for (int i = 0; i < SpawnQuantity; i++) {
+		for (int i = 0; i < SpawnQuantity * GameValues.Players.Count; i++) {
 
 			float xpos;
 			float ypos;

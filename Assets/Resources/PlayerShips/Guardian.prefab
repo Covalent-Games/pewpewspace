@@ -265,9 +265,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a93a4d3f8d9682498549a4e7679dec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxArmor: 300
+  MaxArmor: 200
   MaxHeat: 100
-  baseSpeed: .800000012
+  baseSpeed: .899999976
   armor: 0
   heat: 0
   Speed: 0
@@ -279,7 +279,7 @@ MonoBehaviour:
   FloatingText: {fileID: 0}
   projectilePrefab: {fileID: 100008, guid: 2b647146b3634dc44b19aba288819b42, type: 2}
   shotPerSecond: 4
-  Damage: 8
+  Damage: 5
   DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
@@ -289,8 +289,8 @@ MonoBehaviour:
   Turret: {fileID: 0}
   InRange: []
   FireCost: 0
-  healthBar: {fileID: 0}
-  dissipationBar: {fileID: 0}
+  HealthBar: {fileID: 0}
+  DissipationBar: {fileID: 0}
   EnemyCursor: {fileID: 0}
   PlayerCursor: {fileID: 0}
   Overheated: 0
