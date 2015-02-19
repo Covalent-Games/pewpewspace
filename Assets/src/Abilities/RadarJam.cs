@@ -12,7 +12,7 @@ public class RadarJam : BaseAbility, IAbility {
 
 		Name = "Radar Jam";
 		Cost = 35f;
-		Duration = 5f;
+		Duration = 6f;
 		Resource = Resources.Load("AbilityObjects/RadarJamCone");
 	}
 
@@ -56,7 +56,11 @@ public class RadarJam : BaseAbility, IAbility {
 
 		Ship.Heat += Cost;
 		foreach (var target in targets) {
-			target.GetComponent<ConditionHandler>().ApplyCondition(Condition.Targeting, AbilityID.RadarJam, 0, Duration);
+			target.GetComponent<ConditionHandler>().ApplyCondition(
+					Condition.Targeting,
+					AbilityID.RadarJam,
+					0,
+					Duration);
 		}
 		targets.Clear();
 		Executing = false;
@@ -67,6 +71,7 @@ public class RadarJam : BaseAbility, IAbility {
 
 	public override void TriggerEnter(Collider collider) {
 
+		Debug.Log(collider.name);
 		if (collider.tag != "Enemy") {
 			return;
 		}

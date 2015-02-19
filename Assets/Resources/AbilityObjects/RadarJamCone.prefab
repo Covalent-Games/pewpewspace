@@ -13,7 +13,7 @@ GameObject:
   - 64: {fileID: 6400000}
   - 54: {fileID: 5400000}
   - 114: {fileID: 11400000}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RadarJamCone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ MeshCollider:
   m_GameObject: {fileID: 100000}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_SmoothSphereCollisions: 0
   m_Convex: 0

@@ -11,7 +11,7 @@ public class #SCRIPTNAME# : BaseAbility, IAbility{
 		Duration = 1f/60f; //DEFINE (Currently set to run for one frame)
 	}
 	
-	public void Begin(shipObject ship){
+	public void Begin(ShipObject ship){
 		
 		Ship = ship;
 		ShipMove = ship.GetComponent<ShipMovement>();
@@ -26,7 +26,7 @@ public class #SCRIPTNAME# : BaseAbility, IAbility{
 		while (DurationTimer < Duration){
 			DurationTimer += Time.deltaTime;
 			// ABILITY DURATION LOGIC
-			yield return new WaitForFixedUpdate();
+			yield return null;
 		}
 
 		TearDown();
@@ -34,6 +34,7 @@ public class #SCRIPTNAME# : BaseAbility, IAbility{
 	
 	public void Setup(){
 		
+		Ship.Heat += Cost;
 		Executing = true;
 	}
 	

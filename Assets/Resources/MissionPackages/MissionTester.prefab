@@ -48,7 +48,9 @@ MonoBehaviour:
   ScrapQuality: 2
   SequencePadding: []
   Sequences:
-  - {fileID: 100000, guid: b8267c4ba2d7230438454cb535b54b25, type: 2}
+  - {fileID: 100000, guid: 2339b9690e864fa47962ff3cbcf85c6d, type: 2}
+  - {fileID: 100000, guid: 2339b9690e864fa47962ff3cbcf85c6d, type: 2}
+  - {fileID: 100000, guid: 2339b9690e864fa47962ff3cbcf85c6d, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
