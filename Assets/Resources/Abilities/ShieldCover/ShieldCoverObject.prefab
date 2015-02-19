@@ -69,16 +69,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 361bbbc5f4ddcd446983ff6d5639b1f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Container: []
   MaxArmor: 0
   MaxHeat: 0
   baseSpeed: 0
   armor: 0
   heat: 0
   Speed: 0
+  CanBeTargetted: 1
+  CanTarget: 1
   Invulnerable: 0
   InvulnerableArmor: 0
   InvulnerableDissipation: 0
+  FloatingText: {fileID: 0}
   Size: {x: 0, y: 0, z: 0}
 --- !u!135 &13500000
 SphereCollider:

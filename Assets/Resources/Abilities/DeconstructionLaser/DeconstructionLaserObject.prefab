@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShipClass: 0
+  Name: 
   Level: 1
   Resource: {fileID: 0}
   Condition: 0

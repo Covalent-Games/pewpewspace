@@ -69,8 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63edab6266e15d42b4d1181a85cb3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  Owner: {fileID: 0}
   oldPosition: {x: 0, y: 0, z: 0}
   newPosition: {x: 0, y: 0, z: 0}
 --- !u!135 &13500000
