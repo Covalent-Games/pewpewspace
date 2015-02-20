@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 
 public enum ShipType {
-	
+
 	Guardian,
 	Raider,
 	Valkyrie,
@@ -14,28 +14,27 @@ public enum ShipType {
 
 // Order should match that of Boon
 public enum Condition {
-	
-	Damage,	
-    Speed,
+
+	Damage,
+	Speed,
 	Targeting,
 }
 
 // Order should match that of Condition
 public enum Boon {
-	
+
 	Damage,
 	FireRate,
-	
+
 }
 
-public enum MissionName {
+public enum AIState {
 
-	Mission1,
-}
-
-public enum WinCondition {
-
-	AllEnemiesKilled = 0,
+	Balanced,
+	Retreat,
+	Defensive,
+	Protective,
+	Aggressive,
 }
 
 public enum AbilityID {
@@ -55,4 +54,4 @@ public enum AbilityID {
 	ShieldCover,
 	SonicDisruption,
 	SustainDrone,
- }
+}

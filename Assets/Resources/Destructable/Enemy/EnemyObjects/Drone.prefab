@@ -127,8 +127,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BaseShip: {fileID: 0}
-  ThreatDissipationSpeed: 2
+  ThreatDissipationSpeed: 1
   DistancePerception: -1
+  State: 4
   Destination: {x: 0, y: 0, z: 0}
 --- !u!114 &11400002
 MonoBehaviour:
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxArmor: 1
   MaxHeat: 100
-  baseSpeed: 1.10000002
+  baseSpeed: 5
   armor: 0
   heat: 0
   Speed: 0

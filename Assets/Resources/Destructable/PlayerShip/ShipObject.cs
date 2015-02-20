@@ -73,15 +73,15 @@ public class ShipObject : Destructible {
 
 	public void SetupPlayer(int playerNumber) {
 
-		this.PlayerNumber = playerNumber;
+		PlayerNumber = playerNumber;
 
-		GameValues.Players.TryGetValue(playerNumber, out this.PlayerObject);
-		if (this.PlayerObject == null) {
+		GameValues.Players.TryGetValue(playerNumber, out PlayerObject);
+		if (PlayerObject == null) {
 			Debug.LogWarning("Had to manually create a new Player! Something may be wrong. Ignore this if testing.");
-			this.PlayerObject = new Player(playerNumber);
+			PlayerObject = new Player(playerNumber);
 		}
 		Movement = GetComponent<ShipMovement>();
-		Movement.player = this.PlayerObject;
+		Movement.player = PlayerObject;
 
 		SetUpBaseAttributes();
 		FireCost = 0;
@@ -89,7 +89,7 @@ public class ShipObject : Destructible {
 		AcquireHud();
 		AssignAbilities();
 
-		this.enabled = true;
+		enabled = true;
 		GetComponent<ShipMovement>().enabled = true;
 
 		// Initialize targeting cursors. TODO: This might need to be somewhere else. More graphics may eventually be needed.
@@ -106,7 +106,7 @@ public class ShipObject : Destructible {
 				Resources.Load("PlayerShips/Turret"),
 				transform.position,
 				transform.rotation);
-			turret.transform.parent = this.transform;
+			turret.transform.parent = transform;
 
 			EnemyCursor = enemyCursor.GetComponent<TargetCursor>();
 			PlayerCursor = playerCursor.GetComponent<TargetCursor>();
@@ -187,27 +187,27 @@ public class ShipObject : Destructible {
 	void HandleInput() {
 
 		triggerValue = Input.GetAxis(PlayerObject.Controller.LeftRightTrigger);
-		if (triggerValue < InputCode.AxisThresholdNegative && this.shotTimer >= GetShotTime()) {
-			this.shotTimer = 0f;
+		if (triggerValue < InputCode.AxisThresholdNegative && shotTimer >= GetShotTime()) {
+			shotTimer = 0f;
 			Fire();
 		}
 		if (Input.GetButtonDown(PlayerObject.Controller.ButtonA)) {
-			if (Heat < this.MaxHeat && !Ability1.Executing) {
+			if (Heat < MaxHeat && !Ability1.Executing) {
 				Ability1.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(PlayerObject.Controller.ButtonB)) {
-			if (Heat < this.MaxHeat && !Ability2.Executing) {
+			if (Heat < MaxHeat && !Ability2.Executing) {
 				Ability2.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(PlayerObject.Controller.ButtonX)) {
-			if (Heat < this.MaxHeat && !Ability3.Executing) {
+			if (Heat < MaxHeat && !Ability3.Executing) {
 				Ability3.Begin(GetComponent<ShipObject>());
 			}
 		}
 		if (Input.GetButtonDown(PlayerObject.Controller.ButtonY)) {
-			if (Heat < this.MaxHeat && !Ability4.Executing) {
+			if (Heat < MaxHeat && !Ability4.Executing) {
 				Ability4.Begin(GetComponent<ShipObject>());
 			}
 		}
@@ -218,13 +218,13 @@ public class ShipObject : Destructible {
 
 	public float GetShotTime() {
 
-		return 1f / this.shotPerSecond;
+		return 1f / shotPerSecond;
 	}
 
 
 	void UpdateShotTimer() {
 
-		this.shotTimer += Time.deltaTime;
+		shotTimer += Time.deltaTime;
 	}
 
 	/// <summary>
@@ -234,12 +234,12 @@ public class ShipObject : Destructible {
 
 		Vector3 projectileOrigin = transform.position;
 		GameObject projectileGO = (GameObject)Instantiate(
-				this.projectilePrefab,
+				projectilePrefab,
 				projectileOrigin,
 				Turret.rotation);
 
 		IProjectile projectile = projectileGO.GetComponent(typeof(IProjectile)) as IProjectile;
-		// TODO: It would be nice to not have to do this. 
+		// TODO: It would be nice to not have to do  
 		projectileGO.transform.Rotate(new Vector3(90, 0, 0));
 
 		// If the player has no target
@@ -299,7 +299,7 @@ public class ShipObject : Destructible {
 
 	public float GetDamage() {
 
-		return this.Damage + this.DamageMod;
+		return Damage + DamageMod;
 	}
 
 	/// <summary>
@@ -309,8 +309,8 @@ public class ShipObject : Destructible {
 
 		float remainingArmor = (float)(MaxArmor - Armor);
 
-		float healthRatio = remainingArmor / (float)this.MaxArmor;
-		float dissipationRatio = this.Heat / this.MaxHeat;
+		float healthRatio = remainingArmor / (float)MaxArmor;
+		float dissipationRatio = Heat / MaxHeat;
 
 		HealthBar.fillAmount = healthRatio;
 		DissipationBar.fillAmount = dissipationRatio > 1f ? 1f : dissipationRatio;
@@ -319,7 +319,7 @@ public class ShipObject : Destructible {
 
 	public override void Update() {
 
-		if (this.Heat < this.MaxHeat && !Overheated) {
+		if (Heat < MaxHeat && !Overheated) {
 			UpdateShotTimer();
 			FindNewTarget();
 			HandleInput();
@@ -333,43 +333,31 @@ public class ShipObject : Destructible {
 
 	public void Overheat() {
 
-		if (!this.Overheated) {
-			this.Overheated = true;
+		if (!Overheated) {
+			Overheated = true;
 			// 1. Slow player by 25%
-			originalSpeed = this.Speed;
-			this.Speed *= 0.75f;
-			float overheatedBy = this.Heat - this.MaxHeat;
-			this.Heat = this.MaxHeat;
+			originalSpeed = Speed;
+			Speed *= 0.75f;
+			float overheatedBy = Heat - MaxHeat;
+			Heat = MaxHeat;
 			// 2. Calculate how long the player will overheat for
 			overheatTime = Mathf.Sqrt(overheatedBy);
 			if (overheatTime < 3f)
 				overheatTime = 3f;
-			coolAmount = this.MaxHeat * 0.25f;
+			coolAmount = MaxHeat * 0.25f;
 			overheatTimer = 0f;
 		}
-		if (this.Overheated) {
+		if (Overheated) {
 			// 3. Overheat loop
 			float cooldown = coolAmount / overheatTime * Time.deltaTime;
-			this.Heat -= cooldown;
+			Heat -= cooldown;
 			overheatTimer += Time.deltaTime;
 
 			if (overheatTimer > overheatTime) {
 				// 4. Return player to normal
-				this.Speed = originalSpeed;
-				this.Overheated = false;
+				Speed = originalSpeed;
+				Overheated = false;
 			}
-		}
-	}
-
-	public IEnumerator AIUpdate() {
-
-		BaseShipAI ai = GetComponent<BaseShipAI>();
-		yield return new WaitForSeconds(GetShotTime());
-
-		while (true) {
-			ai.AcquireTarget();
-			ai.Fire();
-			yield return new WaitForSeconds(GetShotTime());
 		}
 	}
 
@@ -378,8 +366,8 @@ public class ShipObject : Destructible {
 		Destructible destructable = collider.GetComponent<Destructible>();
 
 		if (destructable) {
-			// On collision with another destructable object, deal 10% of max health as Damage
-			destructable.DamageArmor(Mathf.RoundToInt(MaxArmor / 10f));
+			// On collision with another destructable object, deal 15% of max health as Damage
+			destructable.DamageArmor(Mathf.RoundToInt(MaxArmor * 0.15f));
 		}
 
 	}

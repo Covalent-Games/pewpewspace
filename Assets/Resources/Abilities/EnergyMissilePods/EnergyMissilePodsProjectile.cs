@@ -4,100 +4,96 @@ using System.Collections;
 public class EnergyMissilePodsProjectile : MonoBehaviour, IProjectile {
 
 	public ShipObject Target { get; set; }
-    bool tracking;
-    public float Damage { get; set; }
+	bool tracking;
+	public float Damage { get; set; }
 	public ShipObject Owner { get; set; }
-    public Vector3 Direction { get; set; }
-    public Vector3 oldPosition;
-    public Vector3 newPosition;
+	public Vector3 Direction { get; set; }
+	public Vector3 oldPosition;
+	public Vector3 newPosition;
 
-    void Start() {
-        SetTarget();
-        StartCoroutine(TrackToTarget());
-    }
+	void Start() {
+		SetTarget();
+		StartCoroutine(TrackToTarget());
+	}
 
-    void SetTarget() {
+	void SetTarget() {
 
-        // Player has no target
-        if (Owner.Target == null && SceneHandler.Enemies.Count > 0) {
-            int index = Random.Range(0, SceneHandler.Enemies.Count);
-            ShipObject hostileTarget = SceneHandler.Enemies[index];
-            this.Target = hostileTarget;
-        } else {
+		// Player has no target
+		if (Owner.Target == null && SceneHandler.Enemies.Count > 0) {
+			int index = Random.Range(0, SceneHandler.Enemies.Count);
+			ShipObject hostileTarget = SceneHandler.Enemies[index];
+			this.Target = hostileTarget;
+		} else {
 
-            ShipObject target = Owner.Target.GetComponent<ShipObject>();
+			ShipObject target = Owner.Target.GetComponent<ShipObject>();
 
-            // The target is a player
-            if (AbilityUtils.IsPlayer(target)) {
-                if (SceneHandler.Enemies.Count > 0) {
-                    int index = Random.Range(0, SceneHandler.Enemies.Count);
-                    ShipObject hostileTarget = SceneHandler.Enemies[index];
-                    this.Target = hostileTarget;
-                }
-            } else {
-                this.Target = target;
-            }
-        }
+			// The target is a player
+			if (AbilityUtils.IsPlayer(target)) {
+				if (SceneHandler.Enemies.Count > 0) {
+					int index = Random.Range(0, SceneHandler.Enemies.Count);
+					ShipObject hostileTarget = SceneHandler.Enemies[index];
+					this.Target = hostileTarget;
+				}
+			} else {
+				this.Target = target;
+			}
+		}
 
-        if (this.Target == null) {
-            Debug.LogError("EnergyMissile target did not succesfully set!");
-        }
+		if (this.Target == null) {
+			Debug.LogError("EnergyMissile target did not succesfully set!");
+		}
 
-        //TODO: Get damage from EnergyMissilePods.cs
-        this.Damage = 20f;
+		//TODO: Get damage from EnergyMissilePods.cs
+		this.Damage = 20f;
 
-    }
+	}
 
-    public IEnumerator TrackToTarget() {
+	public IEnumerator TrackToTarget() {
 
-        tracking = true;
-        float speed = 15f;
+		tracking = true;
+		float speed = 15f;
 
-        while (tracking) {
+		while (tracking) {
 
-            if (Target == null) {
-                
-                SetTarget();
-                if (Target == null) {
-                    Destroy(gameObject);
-                    tracking = false;
-                }
-            } else {
-                Direction = Target.transform.position;
-                speed += 0.4f;
+			if (Target == null) {
 
-                transform.position = Vector3.MoveTowards(
-                        transform.position,
-                        Target.transform.position,
-                        Time.deltaTime * speed);
-            }
+				SetTarget();
+				if (Target == null) {
+					Destroy(gameObject);
+					tracking = false;
+				}
+			} else {
+				Direction = Target.transform.position;
+				speed += 0.4f;
 
-            yield return new WaitForEndOfFrame();
-        }
-    }
+				transform.position = Vector3.MoveTowards(
+						transform.position,
+						Target.transform.position,
+						Time.deltaTime * speed);
+			}
 
-    void OnTriggerEnter(Collider collider) {
-		Debug.Log("Colliding");
+			yield return new WaitForEndOfFrame();
+		}
+	}
+
+	void OnTriggerEnter(Collider collider) {
 		GameObject target = collider.gameObject;
 		if (target == null)
 			Debug.LogError("Collider does not have a gameobject");
 
-        ShipObject shipObject = target.GetComponent<ShipObject>();
+		ShipObject shipObject = target.GetComponent<ShipObject>();
 
-        if (shipObject == null) {
-			Debug.Log("shipObject is null");
-            return;
-        }
+		if (shipObject == null) {
+			return;
+		}
 
-        if (AbilityUtils.IsPlayer(shipObject)) {
-			Debug.Log("IsPlayer");
-            return;
-        }
+		if (AbilityUtils.IsPlayer(shipObject)) {
+			return;
+		}
 
-        shipObject.DamageArmor(Damage, Owner);
-        Debug.Log("Dealing " + Damage + " damage");
+		shipObject.DamageArmor(Damage, Owner);
 
-        tracking = false;
-        Destroy(this.gameObject);
-    }
+		tracking = false;
+		Destroy(this.gameObject);
+	}
 }

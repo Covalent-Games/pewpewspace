@@ -8,14 +8,25 @@ public class BaseShipAI : MonoBehaviour {
 	public ShipObject BaseShip;
 	public int ThreatDissipationSpeed = 2;
 	public int DistancePerception = -1;
+	public AIState State = AIState.Balanced;
+
 	public Dictionary<ShipObject, int> ThreatTable = new Dictionary<ShipObject, int>();
 
-	public Vector3 Destination;	
+	public Vector3 Destination;
+
+	protected void Setup() {
+
+		BaseShip = GetComponent<ShipObject>();
+		BaseShip.SetUpBaseAttributes();
+		BaseShip.Start();
+		StartCoroutine(AIUpdate());
+		StartCoroutine(DeterimineState());
+	}
 
 	/// <summary>
 	/// Chooses a target based on a threat algorithm.
 	/// </summary>
-	public void AcquireTarget(){
+	public void AcquireTarget() {
 
 		if (!BaseShip.CanTarget) {
 			BaseShip.Target = null;
@@ -38,7 +49,7 @@ public class BaseShipAI : MonoBehaviour {
 		// If no player has generated threat, pick one randomly
 		// Otherwise, pick the player with the highest generated threat.
 		if (noThreatFound) {
-			
+
 			// TODO: Determine if this should be here. It might be skipping needed logic
 			// If we already have a target we don't need to randomly pick a new one.
 			if (BaseShip.Target != null) { return; }
@@ -64,8 +75,8 @@ public class BaseShipAI : MonoBehaviour {
 
 		} else {
 			// Start threat below in case no one has generated threat and all are at 0.
-			int highestThreat = DistancePerception ;
-			foreach (var threatObject in ThreatTable){
+			int highestThreat = DistancePerception;
+			foreach (var threatObject in ThreatTable) {
 
 				// Skip the players who are in the table but are posing no threat at all
 				// If all players are posing no threat one will be randomly chosen
@@ -77,7 +88,7 @@ public class BaseShipAI : MonoBehaviour {
 				float distanceModifier = Vector3.Distance(transform.position, threatObject.Key.transform.position) / 4;
 				int threat = threatObject.Value - Mathf.RoundToInt(distanceModifier);
 
-				if (threat > highestThreat){
+				if (threat > highestThreat) {
 					BaseShip.Target = threatObject.Key.transform;
 					highestThreat = threat;
 				}
@@ -130,6 +141,32 @@ public class BaseShipAI : MonoBehaviour {
 			}
 
 			yield return new WaitForSeconds(1f);
+		}
+	}
+
+
+	IEnumerator DeterimineState() {
+
+		while (enabled) {
+			if (State != AIState.Balanced && BaseShip.Armor <= BaseShip.MaxArmor * 0.3f) {
+				State = AIState.Balanced;
+				renderer.material.color = Color.red;
+			}
+			yield return new WaitForSeconds(.25f);
+		}
+	}
+
+	public virtual IEnumerator AIUpdate() {
+
+		// Yield one frame to ensure everything is set up
+		yield return null;
+
+		yield return new WaitForSeconds(BaseShip.GetShotTime());
+
+		while (true) {
+			AcquireTarget();
+			Fire();
+			yield return new WaitForSeconds(BaseShip.GetShotTime());
 		}
 	}
 }
