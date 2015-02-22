@@ -545,19 +545,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22470518, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 476.5
+      value: 180.75
       objectReference: {fileID: 0}
     - target: {fileID: 22470518, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -246.75
+      value: -88.75
       objectReference: {fileID: 0}
     - target: {fileID: 22470518, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 953
+      value: 361.5
       objectReference: {fileID: 0}
     - target: {fileID: 22470518, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 493.5
+      value: 177.5
       objectReference: {fileID: 0}
     - target: {fileID: 22470496, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchorMin.y
@@ -569,19 +569,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22470496, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1429.5
+      value: 542.25
       objectReference: {fileID: 0}
     - target: {fileID: 22470496, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -246.75
+      value: -88.75
       objectReference: {fileID: 0}
     - target: {fileID: 22470496, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 953
+      value: 361.5
       objectReference: {fileID: 0}
     - target: {fileID: 22470496, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 493.5
+      value: 177.5
       objectReference: {fileID: 0}
     - target: {fileID: 22470498, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchorMin.y
@@ -593,19 +593,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22470498, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 476.5
+      value: 180.75
       objectReference: {fileID: 0}
     - target: {fileID: 22470498, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -246.75
+      value: -88.75
       objectReference: {fileID: 0}
     - target: {fileID: 22470498, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 953
+      value: 361.5
       objectReference: {fileID: 0}
     - target: {fileID: 22470498, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 493.5
+      value: 177.5
       objectReference: {fileID: 0}
     - target: {fileID: 22470500, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchorMin.y
@@ -617,19 +617,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22470500, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1429.5
+      value: 542.25
       objectReference: {fileID: 0}
     - target: {fileID: 22470500, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -246.75
+      value: -88.75
       objectReference: {fileID: 0}
     - target: {fileID: 22470500, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 953
+      value: 361.5
       objectReference: {fileID: 0}
     - target: {fileID: 22470500, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 493.5
+      value: 177.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c0ca25cb918e26e429cd10f303d5a0d1, type: 2}
@@ -1853,7 +1853,10 @@ MonoBehaviour:
   MenuObject: {fileID: 272867383}
   AudioHandler: {fileID: 775882648}
   RunMissionTester: 1
-  NumberOfTestPlayers: 2
+  NumberOfTestPlayers: 1
+  DisableHeat: 1
+  DisablePlayerArmor: 0
+  DisableEnemyArmor: 0
 --- !u!4 &1869568612
 Transform:
   m_ObjectHideFlags: 0

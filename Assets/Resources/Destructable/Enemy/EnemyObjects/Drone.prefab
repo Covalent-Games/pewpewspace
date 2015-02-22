@@ -157,7 +157,7 @@ MonoBehaviour:
   FloatingText: {fileID: 0}
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
   shotPerSecond: 1.20000005
-  Damage: 0
+  Damage: 4
   DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0
