@@ -11,7 +11,7 @@ public class SonicDisruption : BaseAbility, IAbility {
 	void Start() {
 
 		Name = "Sonic Disruption";
-		Resource = Resources.Load("AbilityObjects/ColliderHelper", typeof(GameObject));
+		Resource = Resources.Load("Abilities/ColliderHelper", typeof(GameObject));
 		Cost = 25f;
 		Duration = 4f;
 		PrimaryEffect = 15;

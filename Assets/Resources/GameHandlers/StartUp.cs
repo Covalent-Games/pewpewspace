@@ -15,12 +15,20 @@ public class StartUp : MonoBehaviour {
 	[Tooltip("Only applicable when Run Mision Tester is checked.")]
 	public int NumberOfTestPlayers;
 
+	public bool DisableHeat;
+	public bool DisablePlayerArmor;
+	public bool DisableEnemyArmor;
+
 
 	void Awake() {
 
 		DontDestroyOnLoad(HUD.gameObject);
 		DontDestroyOnLoad(MenuObject.gameObject);
 		DontDestroyOnLoad(AudioHandler.gameObject);
+
+		GameValues.TestingValues.DisableHeat = DisableHeat;
+		GameValues.TestingValues.DisablePlayerArmor = DisablePlayerArmor;
+		GameValues.TestingValues.DisableEnemyArmor = DisablePlayerArmor;
 
 		if (Debugging) {
 			Debug.Log("Loading Ability Components");

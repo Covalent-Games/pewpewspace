@@ -131,6 +131,7 @@ MonoBehaviour:
   DistancePerception: -1
   State: 4
   Destination: {x: 0, y: 0, z: 0}
+  Velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,7 +157,7 @@ MonoBehaviour:
   FloatingText: {fileID: 0}
   projectilePrefab: {fileID: 100008, guid: 80ea2bfae43ebdc45823812914028d1b, type: 2}
   shotPerSecond: 1.20000005
-  Damage: 4
+  Damage: 0
   DamageMod: 0
   triggerValue: 0
   PlayerNumber: 0

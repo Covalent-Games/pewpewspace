@@ -1852,8 +1852,8 @@ MonoBehaviour:
   HUD: {fileID: 1592791881}
   MenuObject: {fileID: 272867383}
   AudioHandler: {fileID: 775882648}
-  RunMissionTester: 0
-  NumberOfTestPlayers: 1
+  RunMissionTester: 1
+  NumberOfTestPlayers: 2
 --- !u!4 &1869568612
 Transform:
   m_ObjectHideFlags: 0

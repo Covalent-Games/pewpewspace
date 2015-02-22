@@ -13,6 +13,16 @@ public class BaseShipAI : MonoBehaviour {
 	public Dictionary<ShipObject, int> ThreatTable = new Dictionary<ShipObject, int>();
 
 	public Vector3 Destination;
+	public Vector3 Velocity;
+	public Vector3 DirectionToTarget {
+		get {
+			if (BaseShip.Target) {
+				return Vector3.Normalize(BaseShip.Target.position - transform.position) * BaseShip.baseSpeed;
+			} else {
+				return Vector3.zero;
+			}
+		}
+	}
 
 	protected void Setup() {
 

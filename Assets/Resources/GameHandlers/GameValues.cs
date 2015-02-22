@@ -13,4 +13,10 @@ public static class GameValues {
 	public static string PreviousScene;
 	public static string NextScene;
 
+	public struct TestingValues {
+		public static bool DisableHeat;
+		public static bool DisablePlayerArmor;
+		public static bool DisableEnemyArmor;
+	}
+
 }

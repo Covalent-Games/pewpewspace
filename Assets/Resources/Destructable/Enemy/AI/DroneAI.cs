@@ -30,11 +30,15 @@ public class DroneAI : BaseShipAI {
 				Destination = transform.position + (transform.position - BaseShip.Target.position);
 			}
 		}
+		//Velocity = Vector3.Normalize(DirectionToTarget + Velocity);
+		//transform.position = transform.position + Velocity * BaseShip.Speed * Time.deltaTime;
+
 
 		transform.position = Vector3.MoveTowards(
 				transform.position,
 				Destination,
 				Time.deltaTime * BaseShip.Speed);
+		transform.LookAt(Destination);
 
 	}
 
@@ -48,8 +52,8 @@ public class DroneAI : BaseShipAI {
 
 	void BuildDistanceTable() {
 
-		Distances.Add(AIState.Defensive, 30f);
-		Distances.Add(AIState.Balanced, 25f);
+		Distances.Add(AIState.Defensive, 60f);
+		Distances.Add(AIState.Balanced, 30f);
 		Distances.Add(AIState.Aggressive, 15f);
 	}
 
