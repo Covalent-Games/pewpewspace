@@ -20,19 +20,15 @@ public class DroneAI : BaseShipAI {
 		if (!BaseShip.Target && transform.position == Destination) {
 			AcquireDestination();
 		} else if (BaseShip.Target) {
-			float distance = Vector3.Distance(transform.position, BaseShip.Target.position);
+			float distancePercent = Distances[State] /
+					Vector3.Distance(transform.position, BaseShip.Target.position);
+			float x_Change = transform.position.x - BaseShip.Target.position.x;
+			float z_Change = transform.position.z - BaseShip.Target.position.z;
+			float xCoord = BaseShip.Target.position.x + (x_Change * distancePercent);
+			float zCoord = BaseShip.Target.position.z + (z_Change * distancePercent);
 
-			if (distance > Distances[State]) {
-				// Move towards target
-				Destination = BaseShip.Target.position;
-			} else if (distance < Distances[State]) {
-				// Move directly away from target
-				Destination = transform.position + (transform.position - BaseShip.Target.position);
-			}
+			Destination = new Vector3(xCoord, 0, zCoord);
 		}
-		//Velocity = Vector3.Normalize(DirectionToTarget + Velocity);
-		//transform.position = transform.position + Velocity * BaseShip.Speed * Time.deltaTime;
-
 
 		transform.position = Vector3.MoveTowards(
 				transform.position,
